@@ -4,16 +4,16 @@
 
 export const environment = {
   production: false,
-  firebase = {
-    apiKey: 'AIzaSyAvEDrBqbx0Wyvwa8gKDgdd4uE0OvntiKg',
-    authDomain: 'whats-happy-web.firebaseapp.com',
-    databaseURL: 'https://whats-happy-web.firebaseio.com',
-    projectId: 'whats-happy-web',
-    storageBucket: 'whats-happy-web.appspot.com',
-    messagingSenderId: '125543541966',
-    appId: '1:125543541966:web:db1492ff98b3b98f8f349f',
-    measurementId: 'G-5BGQBGKFJ5'
-  };
+  firebase : {
+    apiKey: 'AIzaSyA1bwjSkdQ1GTle-SNNKAQqoifLFIAZwn4',
+    authDomain: 'whats-happy.firebaseapp.com',
+    databaseURL: 'https://whats-happy.firebaseio.com',
+    projectId: 'whats-happy',
+    storageBucket: 'whats-happy.appspot.com',
+    messagingSenderId: '1016755620811',
+    appId: '1:1016755620811:web:d1ca66d80fe64ed570844e',
+    measurementId: 'G-SCYB6P35JD'
+  }
 };
 
 /*

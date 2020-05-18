@@ -1,11 +1,5 @@
 {
-  "targets": {
-    "whats-happy-web": {
-      "hosting": {
-        "whats-happy-web": [
-          "whats-happy-web"
-        ]
-      }
-    }
+  "projects": {
+    "default": "whats-happy"
   }
 }
