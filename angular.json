@@ -121,8 +121,13 @@
               "devServerTarget": "whats-happy-web:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {}
         }
       }
-    }},
+    }
+  },
   "defaultProject": "whats-happy-web"
 }
