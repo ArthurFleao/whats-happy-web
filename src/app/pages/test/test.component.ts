@@ -13,9 +13,15 @@ export class TestComponent implements OnInit {
   editando;
   edit;
   itemsCol: AngularFirestoreCollection;
+  loading = true;
   constructor(firestore: AngularFirestore) {
     this.itemsCol = firestore.collection('items');
     this.items = firestore.collection('items').valueChanges({ idField: 'id' });
+    this.items.subscribe(res => {
+      this.loading = false;
+    }, error => {
+      console.error(error);
+    });
   }
 
   save() {

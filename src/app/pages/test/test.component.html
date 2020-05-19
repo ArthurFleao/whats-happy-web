@@ -1,6 +1,12 @@
 WHATSHAPPY
 
 lista de teste:
+
+
+<div *ngIf="loading"  >
+
+  <mat-spinner></mat-spinner>
+</div>
 <ul>
   <li class="text"
       *ngFor="let item of items | async">
