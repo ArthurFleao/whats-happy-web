@@ -1,0 +1,19 @@
+WHATSHAPPY
+
+lista de teste:
+<ul>
+  <li class="text"
+      *ngFor="let item of items | async">
+    <div *ngIf="item != editando">
+      {{item.name}} - <button (click)="editando = item; edit = item.name">editar</button> <button (click)="deletar(item)">excluir</button>
+    </div>
+    <div *ngIf="item == editando">
+      <input type="text"
+             [(ngModel)]="edit">
+      <button (click)="editar(item)">salvar</button>
+    </div>
+  </li>
+</ul>
+
+<input type="text" [(ngModel)]="saveTest">
+<button (click)="save()"  >salvar</button>
