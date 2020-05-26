@@ -41,6 +41,9 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatButtonModule} from '@angular/material/button';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatBadgeModule} from '@angular/material/badge';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
+import { FormLoginComponent } from './shared/form-login/form-login.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 const material = [
   MatAutocompleteModule,
@@ -80,11 +83,14 @@ const material = [
 @NgModule({
   declarations: [
     AppComponent,
-    TestComponent
+    TestComponent,
+    LoginPageComponent,
+    FormLoginComponent
   ],
   imports: [
     material,
     BrowserModule,
+    FlexLayoutModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
@@ -93,6 +99,7 @@ const material = [
     AngularFirestoreModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [LoginPageComponent, FormLoginComponent]
 })
 export class AppModule { }

@@ -30,3 +30,64 @@ $whats-happy-web-theme: mat-light-theme($whats-happy-web-primary, $whats-happy-w
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.ml-1 {
+  margin-left: 10px !important;
+}
+
+.ml-2 {
+  margin-left: 20px !important;
+}
+
+.ml-3 {
+  margin-left: 30px !important;
+}
+
+.mt-1 {
+  margin-top: 10px !important;
+}
+
+.mt-2 {
+  margin-top: 20px !important;
+}
+
+.mt-3 {
+  margin-top: 30px !important;
+}
+
+.m-0 {
+  margin: 0 !important;
+}
+
+.mb-1 {
+  margin-bottom: 10px !important;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.centralizer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.text-muted {
+  color: rgba(0, 0, 0, 0.54) !important;
+}

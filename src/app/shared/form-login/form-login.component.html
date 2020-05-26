@@ -1,0 +1,42 @@
+<form class="w-100"
+      [formGroup]="form"
+      (ngSubmit)="onSubmit()">
+  <div fxLayout="column"
+       class="w-100"
+       fxLayoutAlign="center">
+    <div fxFlex="100">
+      <mat-form-field appearance="outline">
+        <mat-label>Login</mat-label>
+        <input matInput
+               formControlName="login"
+               placeholder="Ex. jose@exemplo.com">
+        <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+        <!-- <mat-error *ngIf="form.hasError('email') && !form.hasError('required')">
+            Please enter a valid email address
+          </mat-error>
+          <mat-error *ngIf="form.hasError('required')">
+            Email is <strong>required</strong>
+          </mat-error> -->
+      </mat-form-field>
+    </div>
+    <div fxFlex>
+      <mat-form-field appearance="outline">
+        <mat-label>Senha</mat-label>
+        <input matInput
+               formControlName="senha"
+               type="password"
+               placeholder="Insira sua senha">
+        <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+        <!-- <mat-error *ngIf="form.hasError('email') && !form.hasError('required')">
+            Please enter a valid email address
+          </mat-error>
+          <mat-error *ngIf="form.hasError('required')">
+            Email is <strong>required</strong>
+          </mat-error> -->
+      </mat-form-field>
+    </div>
+    <!-- O NG CONTENT, É ONDE VAI SAIR O QUE VOCÊ ENFIAR PELO COMPONENTE DE CIMA, geralmente vai ser um botão -->
+    <ng-content>
+    </ng-content>
+  </div>
+</form>
