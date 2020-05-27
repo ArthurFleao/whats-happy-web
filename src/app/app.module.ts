@@ -48,6 +48,7 @@ import { FormCadastroComponent } from './shared/form-cadastro/form-cadastro.comp
 import { FormPsicologoComponent } from './shared/form-psicologo/form-psicologo.component';
 import { ArtButtonComponent } from './shared/art-button/art-button.component';
 import { FocusInvalidDirective } from './directives/focus-invalid.directive';
+import { HomePageComponent } from './pages/home-page/home-page.component';
 
 const material = [
   MatAutocompleteModule,
@@ -94,6 +95,7 @@ const material = [
     FormPsicologoComponent,
     ArtButtonComponent,
     FocusInvalidDirective,
+    HomePageComponent
   ],
   imports: [
     material,
