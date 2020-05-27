@@ -7,7 +7,7 @@ import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, FormGroupDirective } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TestComponent } from './pages/test/test.component';
 import {MatStepperModule} from '@angular/material/stepper';

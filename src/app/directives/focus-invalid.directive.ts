@@ -6,11 +6,11 @@ import { FormGroup } from '@angular/forms';
   selector: '[focusInvalidInput]'
 })
 export class FocusInvalidDirective {
-  constructor(private el: ElementRef) {}
+  constructor(private el: ElementRef) { }
 
   @HostListener('submit')
   onFormSubmit() {
-    const invalidControl = this.el.nativeElement.querySelector('.ng-invalid');
+    const invalidControl = this.el.nativeElement.querySelector('.ng-invalid.mat-input-element');
 
     if (invalidControl) {
       invalidControl.focus();
