@@ -17,7 +17,6 @@ export class LoginPageComponent implements OnInit {
   constructor(
     private auth: AuthService,
     private snack: SnackService,
-    private authService: AuthService,
   ) { }
 
   ngOnInit(): void {
@@ -26,7 +25,7 @@ export class LoginPageComponent implements OnInit {
   onSubmit(values) { // quando clicar no botão submit
     // chama método de login de auth.service
     console.log(values);
-    this.authService.login(values.login, values.senha);
+    this.auth.login(values.login, values.senha);
   }
 
   onRegister(values) { // quando clicar no botão registrar
