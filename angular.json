@@ -129,5 +129,8 @@
       }
     }
   },
-  "defaultProject": "whats-happy-web"
+  "defaultProject": "whats-happy-web",
+  "cli": {
+    "analytics": "8bad5788-995d-4b46-b4dc-114e27025112"
+  }
 }

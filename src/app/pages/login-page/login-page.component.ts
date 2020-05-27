@@ -11,19 +11,21 @@ import { Component, OnInit, Input } from '@angular/core';
 export class LoginPageComponent implements OnInit {
   estado = 'login';
   constructor(
-    private auth: AuthService,
+    private authService: AuthService,
   ) { }
 
   ngOnInit(): void {
   }
 
   onSubmit(values) { // quando clicar no botão submit
+    //chama método de login de auth.service    
     console.log(values);
+    this.authService.login(values.login, values.senha);
   }
 
   onRegister(values) { // quando clicar no botão registrar
     console.log('values', values);
-    this.auth.register(values.dadosUsuario.email, values.dadosUsuario.senha, values.dadosUsuario.senha).then((res) => {
+    this.authService.register(values.dadosUsuario.email, values.dadosUsuario.senha, values.dadosUsuario.senha).then((res) => {
       console.log('res', res);
       const dadosUsuario: DadosUsuario = {
         cpf: values.dadosUsuario.cpf,
@@ -43,13 +45,13 @@ export class LoginPageComponent implements OnInit {
         crp: values.dadosUsuario.crp,
         dadosUsuario
       };
-      this.auth.dadosUsuarioSave(res.user.uid, dadosUsuario).then((result) => {
+      this.authService.dadosUsuarioSave(res.user.uid, dadosUsuario).then((result) => {
         console.log('salvou', result);
       }).catch((err) => {
         console.error(err);
       });
 
-      this.auth.psicologoSave(res.user.uid, psicologo).then((result) => {
+      this.authService.psicologoSave(res.user.uid, psicologo).then((result) => {
         console.log('salvou', result);
       }).catch((err) => {
         console.error(err);
@@ -58,4 +60,5 @@ export class LoginPageComponent implements OnInit {
       console.error(err);
     });
   }
+  
 }
