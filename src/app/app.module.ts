@@ -44,6 +44,8 @@ import {MatBadgeModule} from '@angular/material/badge';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { FormLoginComponent } from './shared/form-login/form-login.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormCadastroComponent } from './shared/form-cadastro/form-cadastro.component';
+import { FormPsicologoComponent } from './shared/form-psicologo/form-psicologo.component';
 
 const material = [
   MatAutocompleteModule,
@@ -85,7 +87,9 @@ const material = [
     AppComponent,
     TestComponent,
     LoginPageComponent,
-    FormLoginComponent
+    FormLoginComponent,
+    FormCadastroComponent,
+    FormPsicologoComponent
   ],
   imports: [
     material,
@@ -100,6 +104,6 @@ const material = [
   ],
   providers: [],
   bootstrap: [AppComponent],
-  exports: [LoginPageComponent, FormLoginComponent]
+  exports: [LoginPageComponent, FormLoginComponent, FormCadastroComponent]
 })
 export class AppModule { }

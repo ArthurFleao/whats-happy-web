@@ -1,0 +1,140 @@
+<form class="w-100"
+      [formGroup]="form"
+      (ngSubmit)="onSubmit()">
+  <div fxLayout="column"
+       class="w-100"
+       fxLayoutAlign="center">
+    <fieldset formArrayName="dadosUsuario">
+      <div fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label>E-mail</mat-label>
+          <input matInput
+                 formControlName="email"
+                 placeholder="Ex. jose@exemplo.com">
+
+        </mat-form-field>
+      </div>
+      <div fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label>Nome Completo</mat-label>
+          <input matInput
+                 formControlName="nomeCompleto"
+                 placeholder="Rafael de Magalhães Dias Frinhani">
+
+        </mat-form-field>
+      </div>
+      <div fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label>CPF</mat-label>
+          <input matInput
+                 formControlName="cpf"
+                 placeholder="1555555555555555555555">
+
+        </mat-form-field>
+      </div>
+      <div fxFlex="100">
+        <h4>Gênero</h4>
+        <mat-form-field appearance="outline">
+          <mat-label>Gênero:</mat-label>
+          <select matNativeControl
+                  required
+                  formControlName="sexo">
+            <option value="m">Masculino</option>
+            <option value="f">Feminino</option>
+            <option value="outro">Outro</option>
+            <option value="no">Não especificar</option>
+          </select>
+        </mat-form-field>
+      </div>
+      <div fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label>Data de Nascimento</mat-label>
+          <input matInput
+                 formControlName="data"
+                 placeholder="123123">
+
+        </mat-form-field>
+      </div>
+      <div fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label>Telefone</mat-label>
+          <input matInput
+                 formControlName="telefone"
+                 placeholder="(24) 999999999999999999999">
+
+        </mat-form-field>
+      </div>
+      <div fxFlex>
+        <mat-form-field appearance="outline">
+          <mat-label>Senha</mat-label>
+          <input matInput
+                 formControlName="senha"
+                 type="password"
+                 placeholder="Insira sua senha">
+
+        </mat-form-field>
+      </div>
+      <div fxFlex>
+        <mat-form-field appearance="outline">
+          <mat-label>Confirmar Senha</mat-label>
+          <input matInput
+                 formControlName="confirmaSenha"
+                 type="password"
+                 placeholder="Confirme sua senha">
+
+        </mat-form-field>
+      </div>
+    </fieldset>
+
+    <fieldset formArrayName="endereco">
+      <div fxFlex>
+        <mat-form-field appearance="outline">
+          <mat-label>CEP</mat-label>
+          <input matInput
+                 formControlName="cep"
+                 placeholder="999999-999">
+        </mat-form-field>
+      </div>
+
+      <div fxFlex>
+        <mat-form-field appearance="outline">
+          <mat-label>UF</mat-label>
+          <input matInput
+                 formControlName="uf"
+                 placeholder="MG">
+        </mat-form-field>
+      </div>
+
+      <div fxFlex>
+        <mat-form-field appearance="outline">
+          <mat-label>Bairro</mat-label>
+          <input matInput
+                 formControlName="bairro"
+                 placeholder="BPS">
+        </mat-form-field>
+      </div>
+
+      <div fxFlex>
+        <mat-form-field appearance="outline">
+          <mat-label>Logradouro</mat-label>
+          <input matInput
+                 formControlName="logradouro"
+                 placeholder="Av. Brasil">
+        </mat-form-field>
+      </div>
+
+      <div fxFlex>
+        <mat-form-field appearance="outline">
+          <mat-label>Número</mat-label>
+          <input matInput
+                 formControlName="numero"
+                 placeholder="99">
+        </mat-form-field>
+      </div>
+    </fieldset>
+
+  </div>
+  <!-- O NG CONTENT, É ONDE VAI SAIR O QUE VOCÊ ENFIAR PELO COMPONENTE DE CIMA, geralmente vai ser um botão -->
+  <ng-content>
+  </ng-content>
+</form>

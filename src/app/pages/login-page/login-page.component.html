@@ -6,14 +6,37 @@
     </div>
   </mat-card-header>
 
-  <mat-card-content class="content">
-    <div class="centralizer">
+  <mat-card-content [ngSwitch]="estado"
+                    class="content">
+    <div *ngSwitchCase="'login'"
+         fxLayout="column"
+         fxLayoutAlign="center center">
+      <h1 class="text-muted">Entrar</h1>
       <app-form-login (submited)="onSubmit($event)">
-        <button mat-raised-button color="primary" type="submit">Entrar</button>
-        <button mat-raised-button color="primary" type="button">Cadastre-se</button>
+        <button mat-raised-button
+                color="primary"
+                type="submit">Entrar</button>
+        <button mat-raised-button
+                class="mt-1"
+                (click)="estado = 'cadastro'"
+                color="secondary"
+                type="button">Trabalhe conosco</button>
       </app-form-login>
     </div>
-    <div class="centralizer">
+    <div *ngSwitchCase="'cadastro'"
+         fxLayout="column"
+         fxLayoutAlign="center center">
+      <h1 class="text-muted">Cadastre-se</h1>
+      <app-form-cadastro (submited)="onRegister($event)">
+        <button mat-raised-button
+                color="primary"
+                type="submit">Cadastrar</button>
+        <button mat-raised-button
+                (click)="estado = 'login'"
+                color="primary"
+                class="mt-1"
+                type="button">Voltar</button>
+      </app-form-cadastro>
     </div>
   </mat-card-content>
 </mat-card>
