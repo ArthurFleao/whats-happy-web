@@ -1,0 +1,7 @@
+<div *ngIf="showTest" class="test-box">
+  <h4 class="text-muted">Testes para devs</h4>
+  <br>
+  <ng-content></ng-content>
+  <br>
+  <button (click)="showTest = false" class="mt-1" >kill me</button>
+</div>

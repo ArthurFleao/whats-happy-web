@@ -32,8 +32,6 @@ export class FormCadastroComponent implements OnInit {
   @Output()
   formEnderecoChange = new EventEmitter(); // evento de mudança no form
 
-  showTest = environment.enableTests;
-
   @Output()
   submited = new EventEmitter(); // evento de envio no form
   constructor(

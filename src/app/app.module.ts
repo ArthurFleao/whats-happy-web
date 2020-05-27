@@ -49,6 +49,7 @@ import { FormPsicologoComponent } from './shared/form-psicologo/form-psicologo.c
 import { ArtButtonComponent } from './shared/art-button/art-button.component';
 import { FocusInvalidDirective } from './directives/focus-invalid.directive';
 import { HomePageComponent } from './pages/home-page/home-page.component';
+import { TestBoxComponent } from './shared/test-box/test-box.component';
 
 const material = [
   MatAutocompleteModule,
@@ -95,7 +96,8 @@ const material = [
     FormPsicologoComponent,
     ArtButtonComponent,
     FocusInvalidDirective,
-    HomePageComponent
+    HomePageComponent,
+    TestBoxComponent
   ],
   imports: [
     material,

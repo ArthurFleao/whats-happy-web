@@ -1,8 +1,4 @@
-<div *ngIf="showTest" class="test-box">
-  <h4 class="text-muted">Testes para devs</h4>
-  <br>
-  <button (click)="setValidTestValues()">Preencher form</button>
-</div>
+<app-test-box> <button (click)="setValidTestValues()">Preencher form</button> </app-test-box>
 
 <form focusInvalidInput class="w-100" [formGroup]="form" (ngSubmit)="onSubmit()">
   <div fxLayout="column" class="w-100" fxLayoutAlign="center">
