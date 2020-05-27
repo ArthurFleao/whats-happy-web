@@ -16,11 +16,20 @@
         <button mat-raised-button
                 color="primary"
                 type="submit">Entrar</button>
+
         <button mat-raised-button
                 class="mt-1"
                 (click)="estado = 'cadastro'"
                 color="secondary"
                 type="button">Trabalhe conosco</button>
+
+
+             <!--   <button mat-raised-button
+                class="mt-1"
+              (click)="onLogout()"
+                color="secondary"
+                type="button">Logout</button>
+              -->
       </app-form-login>
     </div>
     <div *ngSwitchCase="'cadastro'"

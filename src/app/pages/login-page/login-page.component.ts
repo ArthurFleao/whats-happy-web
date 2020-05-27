@@ -21,6 +21,12 @@ export class LoginPageComponent implements OnInit {
     //chama método de login de auth.service    
     console.log(values);
     this.authService.login(values.login, values.senha);
+    
+  }
+
+  onLogout(){
+    this.authService.logout();
+    console.log("afdad")
   }
 
   onRegister(values) { // quando clicar no botão registrar
