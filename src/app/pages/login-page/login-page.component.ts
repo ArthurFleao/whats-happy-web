@@ -15,7 +15,7 @@ export class LoginPageComponent implements OnInit {
   loading = false;
   estado = 'login';
   constructor(
-    private auth: AuthService,
+    private authService: AuthService,
     private snack: SnackService,
   ) { }
 
@@ -25,13 +25,19 @@ export class LoginPageComponent implements OnInit {
   onSubmit(values) { // quando clicar no botão submit
     // chama método de login de auth.service
     console.log(values);
-    this.auth.login(values.login, values.senha);
+    this.authService.login(values.login, values.senha);
+    
+  }
+
+  onLogout(){
+    this.authService.logout();
+    console.log("afdad")
   }
 
   onRegister(values) { // quando clicar no botão registrar
     console.log('values', values);
     this.loading = true;
-    this.auth.register(values.dadosUsuario.email, values.dadosUsuario.senha, values.dadosUsuario.senha).then((res) => {
+    this.authService.register(values.dadosUsuario.email, values.dadosUsuario.senha, values.dadosUsuario.senha).then((res) => {
       console.log('res', res);
       const dadosUsuario: DadosUsuario = {
         cpf: values.dadosUsuario.cpf,
@@ -51,8 +57,8 @@ export class LoginPageComponent implements OnInit {
         crp: values.dadosUsuario.crp,
         dadosUsuario
       };
-      this.auth.dadosUsuarioSave(res.user.uid, dadosUsuario).then((result) => {
-        this.auth.psicologoSave(res.user.uid, psicologo).then((result) => {
+      this.authService.dadosUsuarioSave(res.user.uid, dadosUsuario).then((result) => {
+        this.authService.psicologoSave(res.user.uid, psicologo).then((result) => {
           this.loading = false;
           this.snack.success('Você se registrou com sucesso!');
         }).catch((err) => {
