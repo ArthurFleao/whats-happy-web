@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { matchingPasswords } from 'src/assets/utils/app-validators';
@@ -30,6 +31,8 @@ export class FormCadastroComponent implements OnInit {
 
   @Output()
   formEnderecoChange = new EventEmitter(); // evento de mudança no form
+
+  showTest = environment.enableTests;
 
   @Output()
   submited = new EventEmitter(); // evento de envio no form
@@ -82,6 +85,34 @@ export class FormCadastroComponent implements OnInit {
     } else {
       console.log('form invalido!', this.form.value);
     }
+  }
+
+  setValidTestValues() {
+    const id = this.rand();
+    this.form.patchValue({
+      dadosUsuario: {
+        email: 'email' +   id + '@teste.com',
+        nomeCompleto: 'Nome de Teste ' + id,
+        cpf: '11111111111',
+        sexo: 'm',
+        crp: '11111111111',
+        data: '01/01/1990',
+        telefone: '99999999999',
+        senha: '123456',
+        confirmaSenha: '123456',
+      },
+      endereco: {
+        cep: '37500292',
+        uf: 'MG Teste',
+        bairro: 'BPS Teste',
+        logradouro: 'BPS Teste',
+        numero: '11',
+      }
+    });
+  }
+
+  rand() {
+    return Math.floor((Math.random() * 9999) + 1);
   }
 
 }

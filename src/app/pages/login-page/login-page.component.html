@@ -1,50 +1,23 @@
 <mat-card class="card-login">
   <mat-card-header>
     <div class="centralizer">
-      <img src="assets/img/placeholder.png"
-           alt="LOGO">
+      <img src="assets/img/placeholder.png" alt="LOGO">
     </div>
   </mat-card-header>
 
-  <mat-card-content [ngSwitch]="estado"
-                    class="content">
-    <div *ngSwitchCase="'login'"
-         fxLayout="column"
-         fxLayoutAlign="center center">
+  <mat-card-content [ngSwitch]="estado" class="content">
+    <div *ngSwitchCase="'login'" fxLayout="column" fxLayoutAlign="center center">
       <h1 class="text-muted">Entrar</h1>
-      <app-form-login (submited)="onSubmit($event)">
-        <button mat-raised-button
-                color="primary"
-                type="submit">Entrar</button>
-
-        <button mat-raised-button
-                class="mt-1"
-                (click)="estado = 'cadastro'"
-                color="secondary"
-                type="button">Trabalhe conosco</button>
-
-
-             <!--   <button mat-raised-button
-                class="mt-1"
-              (click)="onLogout()"
-                color="secondary"
-                type="button">Logout</button>
-              -->
+      <app-form-login class="w-100" (submited)="onSubmit($event)">
+        <art-button [type]="'submit'" [loading]="loading">Entrar</art-button>
+        <art-button (click)="estado = 'cadastro'" [color]="'secondary'">Trabalhe Conosco</art-button>
       </app-form-login>
     </div>
-    <div *ngSwitchCase="'cadastro'"
-         fxLayout="column"
-         fxLayoutAlign="center center">
+    <div *ngSwitchCase="'cadastro'" fxLayout="column" fxLayoutAlign="center center">
       <h1 class="text-muted">Cadastre-se</h1>
-      <app-form-cadastro (submited)="onRegister($event)">
-        <button mat-raised-button
-                color="primary"
-                type="submit">Cadastrar</button>
-        <button mat-raised-button
-                (click)="estado = 'login'"
-                color="primary"
-                class="mt-1"
-                type="button">Voltar</button>
+      <app-form-cadastro class="w-100" (submited)="onRegister($event)">
+        <art-button [type]="'submit'" [loading]="loading">Cadastrar</art-button>
+        <art-button (click)="estado = 'login'">Voltar</art-button>
       </app-form-cadastro>
     </div>
   </mat-card-content>

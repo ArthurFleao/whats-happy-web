@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -16,13 +17,15 @@ export class FormLoginComponent implements OnInit {
   @Input()
   loginBoostrap; // se quizer inicialisar o form
 
+  showTest = environment.enableTests;
+
   @Output()
   formChange = new EventEmitter(); // evento de mudança no form
   @Output()
   submited = new EventEmitter(); // evento de envio no form
   constructor(
     private fb: FormBuilder// importa o formbuilder para poder usar
-    ) {
+  ) {
   }
 
   ngOnInit(): void {
@@ -46,6 +49,16 @@ export class FormLoginComponent implements OnInit {
     if (this.form.valid) { // se o formulário estiver válido
       this.submited.emit(this.form.value); // avisar o componente de cima que o form foi enviado e mandar os valores
     }
+  }
+
+  setValidTestValues() {
+    this.form.patchValue({
+      login: 'admin@email.com',
+      senha: '123456'
+    });
+  }
+  rand() {
+    return Math.floor((Math.random() * 9999) + 1);
   }
 
 }

@@ -8,7 +8,7 @@ import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, FormGroupDirective } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TestComponent } from './pages/test/test.component';
 import {MatStepperModule} from '@angular/material/stepper';
@@ -47,6 +47,8 @@ import { FormLoginComponent } from './shared/form-login/form-login.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormCadastroComponent } from './shared/form-cadastro/form-cadastro.component';
 import { FormPsicologoComponent } from './shared/form-psicologo/form-psicologo.component';
+import { ArtButtonComponent } from './shared/art-button/art-button.component';
+import { FocusInvalidDirective } from './directives/focus-invalid.directive';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 
 const material = [
@@ -92,6 +94,8 @@ const material = [
     FormLoginComponent,
     FormCadastroComponent,
     FormPsicologoComponent,
+    ArtButtonComponent,
+    FocusInvalidDirective,
     HomePageComponent
   ],
   imports: [

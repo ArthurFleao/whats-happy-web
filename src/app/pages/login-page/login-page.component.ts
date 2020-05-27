@@ -1,24 +1,29 @@
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { Observable } from 'rxjs';
 import { Psicologo } from './../../model/psicologo';
 import { DadosUsuario, Endereco } from './../../model/dadosUsuario';
 import { AuthService } from './../../services/auth.service';
 import { FormGroup } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
+import { SnackService } from 'src/app/services/snack.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss']
 })
 export class LoginPageComponent implements OnInit {
+  loading = false;
   estado = 'login';
   constructor(
     private authService: AuthService,
+    private snack: SnackService,
   ) { }
 
   ngOnInit(): void {
   }
 
   onSubmit(values) { // quando clicar no botão submit
-    //chama método de login de auth.service    
+    // chama método de login de auth.service
     console.log(values);
     this.authService.login(values.login, values.senha);
     
@@ -31,6 +36,7 @@ export class LoginPageComponent implements OnInit {
 
   onRegister(values) { // quando clicar no botão registrar
     console.log('values', values);
+    this.loading = true;
     this.authService.register(values.dadosUsuario.email, values.dadosUsuario.senha, values.dadosUsuario.senha).then((res) => {
       console.log('res', res);
       const dadosUsuario: DadosUsuario = {
@@ -52,19 +58,19 @@ export class LoginPageComponent implements OnInit {
         dadosUsuario
       };
       this.authService.dadosUsuarioSave(res.user.uid, dadosUsuario).then((result) => {
-        console.log('salvou', result);
+        this.authService.psicologoSave(res.user.uid, psicologo).then((result) => {
+          this.loading = false;
+          this.snack.success('Você se registrou com sucesso!');
+        }).catch((err) => {
+          console.error(err);
+        });
       }).catch((err) => {
         console.error(err);
       });
 
-      this.authService.psicologoSave(res.user.uid, psicologo).then((result) => {
-        console.log('salvou', result);
-      }).catch((err) => {
-        console.error(err);
-      });
     }).catch((err) => {
       console.error(err);
     });
   }
-  
+
 }
