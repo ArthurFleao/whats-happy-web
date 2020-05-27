@@ -46,6 +46,8 @@ import { FormLoginComponent } from './shared/form-login/form-login.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormCadastroComponent } from './shared/form-cadastro/form-cadastro.component';
 import { FormPsicologoComponent } from './shared/form-psicologo/form-psicologo.component';
+import { ArtButtonComponent } from './shared/art-button/art-button.component';
+import { FocusInvalidDirective } from './directives/focus-invalid.directive';
 
 const material = [
   MatAutocompleteModule,
@@ -89,7 +91,9 @@ const material = [
     LoginPageComponent,
     FormLoginComponent,
     FormCadastroComponent,
-    FormPsicologoComponent
+    FormPsicologoComponent,
+    ArtButtonComponent,
+    FocusInvalidDirective,
   ],
   imports: [
     material,

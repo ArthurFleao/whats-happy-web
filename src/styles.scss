@@ -91,3 +91,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .text-muted {
   color: rgba(0, 0, 0, 0.54) !important;
 }
+
+fieldset {
+  border: none;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.success-snack {
+background-color: greenyellow;
+}

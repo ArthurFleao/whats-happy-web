@@ -1,0 +1,13 @@
+<button mat-raised-button
+        [class]="bclass"
+        [disabled]="disable || loading"
+        [color]="color"
+        [type]="type">
+  <ng-content></ng-content>
+  <div class="centralizer b-spinner">
+    <mat-spinner *ngIf="spin || loading"
+                 color="accent"
+                 diameter="30">
+    </mat-spinner>
+  </div>
+</button>
