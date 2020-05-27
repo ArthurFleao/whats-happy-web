@@ -20,4 +20,8 @@ export class AuthService {
   dadosUsuarioSave(id, dados: DadosUsuario){
     return this.afs.collection('dadosUsuario').doc(id).set(dados);
   }
+
+  psicologoSave(id, objeto) {
+    return this.afs.collection('psicologos').doc(id).set(objeto);
+  }
 }

@@ -9,6 +9,8 @@ import { matchingPasswords } from 'src/assets/utils/app-validators';
 })
 export class FormCadastroComponent implements OnInit {
 
+  @Input()
+  includeCrp: boolean;
   // Form Group controla N Form Controls
   // Form Control controla UM campo.
   @Input()
@@ -46,6 +48,7 @@ export class FormCadastroComponent implements OnInit {
         nomeCompleto: [this.bootstrap?.nomeCompleto || '', Validators.required],
         cpf: [this.bootstrap?.cpf || '', Validators.required],
         sexo: [this.bootstrap?.sexo || '', Validators.required],
+        crp: [this.bootstrap?.sexo || '', this.includeCrp ? Validators.required : null],
         data: [this.bootstrap?.data || '', Validators.required],
         telefone: [this.bootstrap?.telefone || '', Validators.required],
         senha: [this.bootstrap?.senha || '', Validators.required],
