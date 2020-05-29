@@ -1,3 +1,5 @@
+import { Paciente } from './../model/paciente';
+import { Psicologo } from './../model/psicologo';
 import { DadosUsuario, User } from './../model/dadosUsuario';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -36,8 +38,13 @@ export class AuthService {
   }
 
   // armazenar dados do psicologo (CRP)
-  psicologoSave(id, objeto) {
+  psicologoSave(id, objeto: Psicologo) {
     return this.afs.collection('psicologos').doc(id).set(objeto);
+  }
+
+  // armazenar dados do psicologo (CRP)
+  pacienteSave(id, objeto: Paciente) {
+    return this.afs.collection('pacientes').doc(id).set(objeto);
   }
 
   // realiza login no sistema
