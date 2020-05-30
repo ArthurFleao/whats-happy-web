@@ -55,16 +55,7 @@ export class AuthService {
 
   // realiza login no sistema
   public login(email: string, password: string) {
-    this.auth
-    .signInWithEmailAndPassword(email, password)
-    .then(value => {
-      console.log('deu certo');
-      // redireciona para a pagina home do sistema
-      this.router.navigate(['home']);
-    })
-    .catch(err => {
-      console.log('Erro:', err.message);
-    });
+    return this.auth.signInWithEmailAndPassword(email, password);
   }
 
   // sair do sistema

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { Psicologo } from './../../model/psicologo';
@@ -15,6 +16,7 @@ export class LoginPageComponent implements OnInit {
   loading = false;
   estado = 'login';
   constructor(
+    private router: Router,
     private authService: AuthService,
     private snack: SnackService,
   ) { }
@@ -25,13 +27,22 @@ export class LoginPageComponent implements OnInit {
   onSubmit(values) { // quando clicar no botão submit
     // chama método de login de auth.service
     console.log(values);
-    this.authService.login(values.login, values.senha);
-    
+    this.loading = true;
+    this.authService.login(values.login, values.senha).then(value => {
+      this.loading = false;
+      console.log('deu certo');
+      // redireciona para a pagina home do sistema
+      this.router.navigate(['home']);
+    })
+    .catch(err => {
+      console.log('Erro:', err.message);
+    });
+
   }
 
   onLogout(){
     this.authService.logout();
-    console.log("afdad")
+    console.log('afdad');
   }
 
   onRegister(values) { // quando clicar no botão registrar
