@@ -5,6 +5,8 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import {Observable} from 'rxjs';
+import { first, take } from 'rxjs/operators';
+
 
 // redirecionamento de rotas
 import { Router } from '@angular/router';
@@ -32,6 +34,10 @@ export class AuthService {
     return this.auth.createUserWithEmailAndPassword(email, senha);
   }
 
+  me() {
+    return this.auth.currentUser;
+  }
+
   // armazenar os dados de usuario (endereco, cpf, telefone....)
   dadosUsuarioSave(id, dados: DadosUsuario){
     return this.afs.collection('dadosUsuario').doc(id).set(dados);
@@ -49,16 +55,7 @@ export class AuthService {
 
   // realiza login no sistema
   public login(email: string, password: string) {
-    this.auth
-    .signInWithEmailAndPassword(email, password)
-    .then(value => {
-      console.log('deu certo');
-      // redireciona para a pagina home do sistema
-      this.router.navigate(['home']);
-    })
-    .catch(err => {
-      console.log('Erro:', err.message);
-    });
+    return this.auth.signInWithEmailAndPassword(email, password);
   }
 
   // sair do sistema

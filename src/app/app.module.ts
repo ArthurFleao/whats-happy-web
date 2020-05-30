@@ -55,6 +55,7 @@ import { CadastrarPacienteComponent } from './pages/cadastrar-paciente/cadastrar
 import { EnviarRelatoPageComponent } from './pages/enviar-relato-page/enviar-relato-page.component';
 import { FormEnviarRelatoComponent } from './shared/form-enviar-relato/form-enviar-relato.component';
 import { MenuLateralComponent } from './shared/menu-lateral/menu-lateral.component';
+import { ListarPacientesPageComponent } from './pages/listar-pacientes-page/listar-pacientes-page.component';
 
 const material = [
   MatAutocompleteModule,
@@ -106,7 +107,8 @@ const material = [
     CadastrarPacienteComponent,
     EnviarRelatoPageComponent,
     FormEnviarRelatoComponent,
-    MenuLateralComponent
+    MenuLateralComponent,
+    ListarPacientesPageComponent
   ],
   imports: [
     material,
