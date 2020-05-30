@@ -1,1 +1,24 @@
-<p>home-page works!</p>
+<!-- Menu lateral -->
+<mat-drawer-container class="container-side-nav" autosize>
+    <!-- Menu que será exibido ao clicar no botão -->
+    <mat-drawer #drawer class="itens-sidenav" mode="side">
+            <!-- Menu criado pelo array menu, no arquivo home-page.component.ts -->
+            <ul>
+                <ng-container *ngFor="let item of menu">
+                    <li *ngIf="item.perfilUsuario == perfilUser || item.perfilUsuario == 'ambos'" class="listMenu">
+                      <span>
+                        <mat-icon>{{item.icone}}</mat-icon>
+                        <a [routerLink]="item.link">{{item.tituloItemMenu}}</a>
+                      </span>
+                    </li>
+                </ng-container>
+            </ul>
+    </mat-drawer>
+
+    <div class="show-sidenav-content">
+      <button type="button" mat-button (click)="drawer.toggle()">
+        Abrir menu
+      </button>
+    </div>
+
+  </mat-drawer-container>
