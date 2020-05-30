@@ -1,0 +1,70 @@
+<form focusInvalidInput class="w-100" [formGroup]="form" (ngSubmit)="onSubmit()">
+
+  <div fxLayout="column" class="w-100" fxLayoutAlign="center">
+
+    <!-- Escala Grau de Felicidade -->
+    <div fxFlex="100">
+      <h4>Grau de Felicidade</h4>
+      <mat-form-field appearance="outline">
+        <mat-label>Como vocês avalia seu grau de felicidade?</mat-label>
+        <select matNativeControl required formControlName="grauFelicidade">
+          <option value="0">Muito Triste</option>
+          <option value="1">Triste</option>
+          <option value="2">Pouco Triste</option>
+          <option value="3">Apático</option>
+          <option value="4">Um Pouco Feliz</option>
+          <option value="5">Muito Feliz</option>
+        </select>
+      </mat-form-field>
+    </div>
+
+    <!-- Escala Grau de Disposição -->
+    <div fxFlex="100">
+      <h4>Grau de Disposição</h4>
+      <mat-form-field appearance="outline">
+        <mat-label>Como vocês avalia a sua disposição?</mat-label>
+        <select matNativeControl required formControlName="grauDisposicao">
+          <option value="0">Muito Indisposto</option>
+          <option value="1">Indisposto</option>
+          <option value="2">Pouco Disposto</option>
+          <option value="3">Disposto</option>
+          <option value="4">Muito Disposto</option>
+          <option value="5">Extremamente Disposto</option>
+        </select>
+      </mat-form-field>
+    </div>
+
+    <!-- Escala Grau de Irritabilidade  -->
+    <div fxFlex="100">
+      <h4>Grau de Irritabilidade</h4>
+      <mat-form-field appearance="outline">
+        <mat-label>Como vocês avalia o seu grau de irritabilidade?</mat-label>
+        <select matNativeControl required formControlName="grauIrritabilidade">
+          <option value="0">Muito Facilmente Irritável</option>
+          <option value="1">Facilmente Irritável</option>
+          <option value="2">Irritável</option>
+          <option value="3">Não Muito Irritável</option>
+          <option value="4">De Bom Humor</option>
+          <option value="5">De Muito Bom Humor</option>
+        </select>
+      </mat-form-field>
+    </div>
+
+    <div fxFlex="100">
+      <mat-form-field class="example-full-width">
+        <mat-label>Relato</mat-label>
+        <textarea
+        cdkTextareaAutosize
+        #autosize="cdkTextareaAutosize"
+        cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="10"
+        matInput formControlName="relato"
+        matInput placeholder="Ex. Hoje estou me sentindo..."></textarea>
+      </mat-form-field>
+  </div>
+
+  </div>
+  <!-- O NG CONTENT, É ONDE VAI SAIR O QUE VOCÊ ENFIAR PELO COMPONENTE DE CIMA, geralmente vai ser um botão -->
+  <ng-content>
+  </ng-content>
+</form>

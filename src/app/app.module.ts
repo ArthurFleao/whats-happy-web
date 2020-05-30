@@ -52,6 +52,9 @@ import { FocusInvalidDirective } from './directives/focus-invalid.directive';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { TestBoxComponent } from './shared/test-box/test-box.component';
 import { CadastrarPacienteComponent } from './pages/cadastrar-paciente/cadastrar-paciente.component';
+import { EnviarRelatoPageComponent } from './pages/enviar-relato-page/enviar-relato-page.component';
+import { FormEnviarRelatoComponent } from './shared/form-enviar-relato/form-enviar-relato.component';
+import { MenuLateralComponent } from './shared/menu-lateral/menu-lateral.component';
 
 const material = [
   MatAutocompleteModule,
@@ -100,7 +103,10 @@ const material = [
     FocusInvalidDirective,
     HomePageComponent,
     TestBoxComponent,
-    CadastrarPacienteComponent
+    CadastrarPacienteComponent,
+    EnviarRelatoPageComponent,
+    FormEnviarRelatoComponent,
+    MenuLateralComponent
   ],
   imports: [
     material,

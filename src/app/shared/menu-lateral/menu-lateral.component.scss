@@ -1,0 +1,29 @@
+.container-side-nav {
+  width: 500px;
+  height: 300px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.show-sidenav-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.itens-sidenav {
+  padding: 20px;
+}
+
+.listMenu{
+  list-style-type: none;
+}
+
+span {
+  display: flex;
+  align-items: center;
+}
+
+a{
+  padding-left: 5px;
+}
