@@ -5,6 +5,8 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import {Observable} from 'rxjs';
+import { first, take } from 'rxjs/operators';
+
 
 // redirecionamento de rotas
 import { Router } from '@angular/router';
@@ -30,6 +32,10 @@ export class AuthService {
   // criar usuario
   register(email, senha, dados?: DadosUsuario): Promise<firebase.auth.UserCredential> {
     return this.auth.createUserWithEmailAndPassword(email, senha);
+  }
+
+  me() {
+    return this.auth.currentUser;
   }
 
   // armazenar os dados de usuario (endereco, cpf, telefone....)

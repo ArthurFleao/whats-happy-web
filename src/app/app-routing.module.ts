@@ -15,9 +15,8 @@ const routes: Routes = [
   {path: '',  redirectTo: 'login', pathMatch: 'full'},
   {path: 'teste', component: TestComponent, canActivate: [AngularFireAuthGuard]},
   {path: 'login', component: LoginPageComponent},
-  {path: 'cadastro', component: CadastrarPacienteComponent},
+  {path: 'cadastro', component: CadastrarPacienteComponent, canActivate: [AngularFireAuthGuard]},
   {path: 'home', component: HomePageComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToHome }},
-
 ];
 
 @NgModule({

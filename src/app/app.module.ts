@@ -52,6 +52,7 @@ import { FocusInvalidDirective } from './directives/focus-invalid.directive';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { TestBoxComponent } from './shared/test-box/test-box.component';
 import { CadastrarPacienteComponent } from './pages/cadastrar-paciente/cadastrar-paciente.component';
+import { ListarPacientesPageComponent } from './pages/listar-pacientes-page/listar-pacientes-page.component';
 
 const material = [
   MatAutocompleteModule,
@@ -100,7 +101,8 @@ const material = [
     FocusInvalidDirective,
     HomePageComponent,
     TestBoxComponent,
-    CadastrarPacienteComponent
+    CadastrarPacienteComponent,
+    ListarPacientesPageComponent
   ],
   imports: [
     material,

@@ -3,6 +3,7 @@ import { DadosUsuario } from './../../model/dadosUsuario';
 import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { SnackService } from 'src/app/services/snack.service';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-cadastrar-paciente',
@@ -11,8 +12,19 @@ import { SnackService } from 'src/app/services/snack.service';
 })
 export class CadastrarPacienteComponent implements OnInit {
   loading = false;
+  myUid: string;
 
-  constructor(private auth: AuthService, private snack: SnackService) { }
+  constructor(private auth: AuthService, private snack: SnackService, private afs: AngularFirestore) {
+    this.auth.me().then(res => {
+      this.myUid = res.uid;
+      console.log('my uid', this.myUid);
+      console.log('display name', res.displayName);
+      console.log('all of it', res);
+
+    }, error => {
+      console.error(error);
+    });
+  }
 
   ngOnInit(): void {
   }
@@ -35,21 +47,25 @@ export class CadastrarPacienteComponent implements OnInit {
         }
       };
       const paciente: Paciente = {
-        responsavel: 'TODO: meu id',
+        responsavel: this.afs.collection('psicologos').doc(this.myUid).ref,
         dadosUsuario
       };
-      this.auth.dadosUsuarioSave(res.user.uid, dadosUsuario).then((result) => {
+      this.auth.dadosUsuarioSave(res.user.uid, dadosUsuario).then((user) => {
         this.auth.pacienteSave(res.user.uid, paciente).then((result) => {
-          this.loading = false;
-          this.snack.success('Paciente registrado com sucesso!');
-        }).catch((err) => {
-          console.error(err);
+          this.afs.collection('psicologos/' + this.myUid + '/pacientes').doc(res.user.uid).set({
+            paciente: this.afs.collection('pacientes').doc(res.user.uid).ref
+          }).then((finli) => {
+            this.loading = false;
+            this.snack.success('Paciente cadastrado com sucesso!');
+          }).catch((err) => {
+            console.error(err);
+          });
         });
       }).catch((err) => {
         console.error(err);
       });
-
-
+    }).catch((err) => {
+      console.error(err);
     });
   }
 
