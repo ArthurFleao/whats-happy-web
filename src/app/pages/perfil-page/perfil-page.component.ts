@@ -1,8 +1,9 @@
+import { DadosService } from './../../service/dados.service';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-//formulário
+// formulário
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-//model para usuario
+// model para usuario
 import { DadosUsuario } from './../../model/dadosUsuario';
 
 @Component({
@@ -19,20 +20,21 @@ export class PerfilPageComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
+    private db: DadosService,
     fb: FormBuilder
     ) {
 
-    //recupera id do usuário logado
+    // recupera id do usuário logado
     this.authService.me().then(res => {
       this.myUid = res.uid;
       console.log('my uid', this.myUid);
 
-      //chama funcao do auth.service para recuperar dados do usuario logado
-      this.authService.getUserData(this.myUid).subscribe((resDadosUsuario:DadosUsuario) => {
+      // chama funcao do auth.service para recuperar dados do usuario logado
+      this.db.getUserData(this.myUid).subscribe((resDadosUsuario: DadosUsuario) => {
         this.dadosUsuario = resDadosUsuario;
         this.dadosUsuario.email = res.email;
         this.loading = false;
-        console.log("tudo: ", this.dadosUsuario)
+        console.log('tudo: ', this.dadosUsuario);
     }, error => {
       console.error(error);
       this.loading = false;

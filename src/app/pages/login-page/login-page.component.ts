@@ -1,3 +1,4 @@
+import { DadosService } from './../../service/dados.service';
 import { Router } from '@angular/router';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
@@ -17,6 +18,7 @@ export class LoginPageComponent implements OnInit {
   estado = 'login';
   constructor(
     private router: Router,
+    private db: DadosService,
     private authService: AuthService,
     private snack: SnackService,
   ) { }
@@ -68,8 +70,8 @@ export class LoginPageComponent implements OnInit {
         crp: values.dadosUsuario.crp,
         dadosUsuario
       };
-      this.authService.dadosUsuarioSave(res.user.uid, dadosUsuario).then((result) => {
-        this.authService.psicologoSave(res.user.uid, psicologo).then((result) => {
+      this.db.dadosUsuarioSave(res.user.uid, dadosUsuario).then((result) => {
+        this.db.psicologoSave(res.user.uid, psicologo).then((result) => {
           this.loading = false;
           this.snack.success('Você se registrou com sucesso!');
         }).catch((err) => {

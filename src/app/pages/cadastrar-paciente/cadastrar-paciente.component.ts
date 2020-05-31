@@ -1,3 +1,4 @@
+import { DadosService } from './../../service/dados.service';
 import { Paciente } from './../../model/paciente';
 import { DadosUsuario } from './../../model/dadosUsuario';
 import { AuthService } from './../../services/auth.service';
@@ -14,7 +15,7 @@ export class CadastrarPacienteComponent implements OnInit {
   loading = false;
   myUid: string;
 
-  constructor(private auth: AuthService, private snack: SnackService, private afs: AngularFirestore) {
+  constructor(private auth: AuthService, private snack: SnackService, private afs: AngularFirestore, private db: DadosService) {
     this.auth.me().then(res => {
       this.myUid = res.uid;
       console.log('my uid', this.myUid);
@@ -50,8 +51,8 @@ export class CadastrarPacienteComponent implements OnInit {
         responsavel: this.afs.collection('psicologos').doc(this.myUid).ref,
         dadosUsuario
       };
-      this.auth.dadosUsuarioSave(res.user.uid, dadosUsuario).then((user) => {
-        this.auth.pacienteSave(res.user.uid, paciente).then((result) => {
+      this.db.dadosUsuarioSave(res.user.uid, dadosUsuario).then((user) => {
+        this.db.pacienteSave(res.user.uid, paciente).then((result) => {
           this.afs.collection('psicologos/' + this.myUid + '/pacientes').doc(res.user.uid).set({
             paciente: this.afs.collection('pacientes').doc(res.user.uid).ref
           }).then((finli) => {

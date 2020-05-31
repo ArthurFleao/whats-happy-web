@@ -1,3 +1,4 @@
+import { DadosService } from './../service/dados.service';
 import { Paciente } from './../model/paciente';
 import { Psicologo } from './../model/psicologo';
 import { DadosUsuario } from './../model/dadosUsuario';
@@ -22,13 +23,13 @@ export class AuthService {
 
   constructor(
     private auth: AngularFireAuth,
-    private afs: AngularFirestore,
+    private db: DadosService,
     private router: Router
   ) {
     this.user$ = new Observable((observer) => {
       auth.authState.subscribe(userRes => {
         if (userRes?.uid) {
-          this.getUserData(userRes.uid).subscribe((res: DadosUsuario) => {
+          this.db.getUserData(userRes.uid).subscribe((res: DadosUsuario) => {
             const nUser = {
               uid: userRes.uid,
               dadosUsuario: res
@@ -59,21 +60,6 @@ export class AuthService {
     return this.auth.currentUser;
   }
 
-  // armazenar os dados de usuario (endereco, cpf, telefone....)
-  dadosUsuarioSave(id, dados: DadosUsuario) {
-    return this.afs.collection('dadosUsuario').doc(id).set(dados);
-  }
-
-  // armazenar dados do psicologo (CRP)
-  psicologoSave(id, objeto: Psicologo) {
-    return this.afs.collection('psicologos').doc(id).set(objeto);
-  }
-
-  // armazenar dados do psicologo (CRP)
-  pacienteSave(id, objeto: Paciente) {
-    return this.afs.collection('pacientes').doc(id).set(objeto);
-  }
-
   // realiza login no sistema
   public login(email: string, password: string) {
     return this.auth.signInWithEmailAndPassword(email, password);
@@ -82,12 +68,6 @@ export class AuthService {
   // sair do sistema
   logout() {
     this.auth.signOut();
-  }
-
-  // recupera dados do usuario, com base na id fornecida
-  getUserData(uid) {
-    // pesquisa da colection dadosUsuario, no documento com o nome da id do usuario
-    return this.afs.collection('dadosUsuario').doc(uid).valueChanges();
   }
 
 }
