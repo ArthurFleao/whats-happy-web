@@ -58,6 +58,7 @@ import { FormEnviarRelatoComponent } from './shared/form-enviar-relato/form-envi
 import { MenuLateralComponent } from './shared/menu-lateral/menu-lateral.component';
 import { ListarPacientesPageComponent } from './pages/listar-pacientes-page/listar-pacientes-page.component';
 import { PerfilPageComponent } from './pages/perfil-page/perfil-page.component';
+import { AppCardComponent } from './shared/app-card/app-card.component';
 
 const material = [
   MatAutocompleteModule,
@@ -112,7 +113,8 @@ const material = [
     MenuLateralComponent,
     HeaderMenuComponent,
     ListarPacientesPageComponent,
-    PerfilPageComponent
+    PerfilPageComponent,
+    AppCardComponent
   ],
   imports: [
     material,

@@ -1,13 +1,5 @@
-<mat-card>
-  <mat-card-header>
-    <div class="centralizer">
-      <h1>Registro de Atividades</h1>
-    </div>
-  </mat-card-header>
-
-  <mat-card-content>
-      <app-form-enviar-relato class="w-100">
-        <art-button [type]="'submit'">Enviar Relato</art-button>
-      </app-form-enviar-relato>
-  </mat-card-content>
-</mat-card>
+<app-card [title]="'Enviar relato'">
+  <app-form-enviar-relato class="w-100">
+    <art-button [type]="'submit'">Enviar Relato</art-button>
+  </app-form-enviar-relato>
+</app-card>
