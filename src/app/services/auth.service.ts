@@ -27,24 +27,26 @@ export class AuthService {
   ) {
     this.user$ = new Observable((observer) => {
       auth.authState.subscribe(userRes => {
-        this.getUserData(userRes.uid).subscribe((res: DadosUsuario) => {
-          const nUser = {
-            uid: userRes.uid,
-            dadosUsuario: res
-          };
-          console.log('user changed');
-
-          observer.next(nUser);
-        }, error => {
-          observer.error();
-          console.error(error);
-        });
+        if (userRes?.uid) {
+          this.getUserData(userRes.uid).subscribe((res: DadosUsuario) => {
+            const nUser = {
+              uid: userRes.uid,
+              dadosUsuario: res
+            };
+            console.log('user changed', nUser);
+            observer.next(nUser);
+          }, error => {
+            observer.error();
+            console.error(error);
+          });
+        } else {
+          observer.next(undefined);
+        }
       }, error => {
         observer.error();
         console.error(error);
       });
     });
-
   }
 
   // criar usuario
