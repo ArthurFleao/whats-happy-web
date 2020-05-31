@@ -8,7 +8,7 @@ import { Component, OnInit, HostListener } from '@angular/core';
 })
 export class MenuLateralComponent implements OnInit {
   sideMenuOpened = true; // estado atual do side menu (aberto/fechado)
-  showHeaders = true; // mostrar o menu?
+  showHeaders = false; // mostrar o menu?
   perfilUser = 'paciente';
 
   // array de objetos para criar itens de menu do psicologo
