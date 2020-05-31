@@ -7,6 +7,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable, Observer } from 'rxjs';
 import { first, take } from 'rxjs/operators';
+import { AngularFireFunctions } from '@angular/fire/functions';
 
 
 // redirecionamento de rotas
@@ -23,6 +24,7 @@ export class AuthService {
 
   constructor(
     private auth: AngularFireAuth,
+    private fns: AngularFireFunctions,
     private db: DadosService,
     private router: Router
   ) {
@@ -68,6 +70,10 @@ export class AuthService {
   // sair do sistema
   logout() {
     this.auth.signOut();
+  }
+
+  testRegister() {
+    return this.fns.httpsCallable('register');
   }
 
 }

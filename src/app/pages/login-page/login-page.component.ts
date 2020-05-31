@@ -25,6 +25,14 @@ export class LoginPageComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  test() {
+    console.log('trying');
+    this.authService.testRegister()({ test: 'wtf' }).subscribe(res => {
+      console.log(res);
+    }, error => {
+      console.error(error);
+    });
+  }
 
   onSubmit(values) { // quando clicar no botão submit
     // chama método de login de auth.service
@@ -36,13 +44,13 @@ export class LoginPageComponent implements OnInit {
       // redireciona para a pagina home do sistema
       this.router.navigate(['home']);
     })
-    .catch(err => {
-      console.log('Erro:', err.message);
-    });
+      .catch(err => {
+        console.log('Erro:', err.message);
+      });
 
   }
 
-  onLogout(){
+  onLogout() {
     this.authService.logout();
     console.log('afdad');
   }

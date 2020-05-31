@@ -59,6 +59,7 @@ import { MenuLateralComponent } from './shared/menu-lateral/menu-lateral.compone
 import { ListarPacientesPageComponent } from './pages/listar-pacientes-page/listar-pacientes-page.component';
 import { PerfilPageComponent } from './pages/perfil-page/perfil-page.component';
 import { AppCardComponent } from './shared/app-card/app-card.component';
+import { AngularFireFunctionsModule, REGION } from '@angular/fire/functions';
 
 const material = [
   MatAutocompleteModule,
@@ -123,12 +124,14 @@ const material = [
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    AngularFireFunctionsModule,
     AngularFireModule.initializeApp(environment.firebase),
     BrowserAnimationsModule,
     AngularFirestoreModule,
   ],
   providers: [
-    AngularFireAuthGuard
+    AngularFireAuthGuard,
+    { provide: REGION, useValue: 'us-central1' }
   ],
   bootstrap: [AppComponent],
   exports: [LoginPageComponent, FormLoginComponent, FormCadastroComponent]
