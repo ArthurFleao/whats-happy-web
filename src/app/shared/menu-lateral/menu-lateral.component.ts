@@ -82,7 +82,7 @@ export class MenuLateralComponent implements OnInit {
     router.events.subscribe((val: NavigationEnd) => {
       if (val instanceof NavigationEnd) {
         console.log(val);
-        if (val.url === '/login') {
+        if (val.urlAfterRedirects === '/login') {
           this.showHeaders = false; // esconde sidebar e header se for a page de login
           this.background = this.tree; // mudar o background para a imagem
         } else {
