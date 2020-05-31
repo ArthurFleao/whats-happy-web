@@ -33,11 +33,11 @@ export class PerfilPageComponent implements OnInit {
       this.db.getUserData(this.myUid).subscribe((resDadosUsuario: DadosUsuario) => {
         this.dadosUsuario = resDadosUsuario;
         this.dadosUsuario.email = res.email;
-        this.loading = false;
+        this.loading = false; // indica que terminou de carregar
         console.log('tudo: ', this.dadosUsuario);
     }, error => {
       console.error(error);
-      this.loading = false;
+      this.loading = false; // indica que terminou de carregar
     });
 
    });

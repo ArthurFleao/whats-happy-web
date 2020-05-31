@@ -29,9 +29,9 @@ export class LoginPageComponent implements OnInit {
   onSubmit(values) { // quando clicar no botão submit
     // chama método de login de auth.service
     console.log(values);
-    this.loading = true;
+    this.loading = true; // indica que está carregando algo
     this.authService.login(values.login, values.senha).then(value => {
-      this.loading = false;
+      this.loading = false; // indica que terminou de carregar
       console.log('deu certo');
       // redireciona para a pagina home do sistema
       this.router.navigate(['home']);
@@ -49,7 +49,7 @@ export class LoginPageComponent implements OnInit {
 
   onRegister(values) { // quando clicar no botão registrar
     console.log('values', values);
-    this.loading = true;
+    this.loading = true; // indica que está carregando algo
     this.authService.register(values.dadosUsuario.email, values.dadosUsuario.senha, values.dadosUsuario.senha).then((res) => {
       console.log('res', res);
       const dadosUsuario: DadosUsuario = {
@@ -72,7 +72,7 @@ export class LoginPageComponent implements OnInit {
       };
       this.db.dadosUsuarioSave(res.user.uid, dadosUsuario).then((result) => {
         this.db.psicologoSave(res.user.uid, psicologo).then((result) => {
-          this.loading = false;
+          this.loading = false; // indica que terminou de carregar
           this.snack.success('Você se registrou com sucesso!');
         }).catch((err) => {
           console.error(err);

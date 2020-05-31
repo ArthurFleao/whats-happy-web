@@ -7,7 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./test-box.component.scss']
 })
 export class TestBoxComponent implements OnInit {
-  showTest = environment.enableTests;
+  showTest = environment.enableTests; // olha o arquivo environment, que é usado no build, para ver se pode mostrar os testes
+  // quando rodado em produção, o environment não permite mostrar testes.
   constructor() { }
 
   ngOnInit(): void {

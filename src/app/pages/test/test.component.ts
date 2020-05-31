@@ -18,7 +18,7 @@ export class TestComponent implements OnInit {
     this.itemsCol = firestore.collection('items');
     this.items = firestore.collection('items').valueChanges({ idField: 'id' });
     this.items.subscribe(res => {
-      this.loading = false;
+      this.loading = false; // indica que terminou de carregar
     }, error => {
       console.error(error);
     });

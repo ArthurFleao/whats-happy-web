@@ -12,16 +12,12 @@ import { AngularFirestore } from '@angular/fire/firestore';
   styleUrls: ['./cadastrar-paciente.component.scss']
 })
 export class CadastrarPacienteComponent implements OnInit {
-  loading = false;
-  myUid: string;
+  loading = false; // carregando?
+  myUid: string; // uid do usuário
 
   constructor(private auth: AuthService, private snack: SnackService, private afs: AngularFirestore, private db: DadosService) {
-    this.auth.me().then(res => {
-      this.myUid = res.uid;
-      console.log('my uid', this.myUid);
-      console.log('display name', res.displayName);
-      console.log('all of it', res);
-
+    this.auth.me().then(res => { // recupera info do usuario
+      this.myUid = res.uid; // salva uid do usuario
     }, error => {
       console.error(error);
     });
@@ -30,8 +26,8 @@ export class CadastrarPacienteComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onRegister(values) {
-    this.loading = true;
+  onRegister(values) { // ao clicar em cadastrar
+    this.loading = true; // indica que está carregando algo // indica que está carregando algo
     this.auth.register(values.dadosUsuario.email, values.dadosUsuario.senha).then((res) => {
       const dadosUsuario: DadosUsuario = {
         cpf: values.dadosUsuario.cpf,
@@ -56,7 +52,7 @@ export class CadastrarPacienteComponent implements OnInit {
           this.afs.collection('psicologos/' + this.myUid + '/pacientes').doc(res.user.uid).set({
             paciente: this.afs.collection('pacientes').doc(res.user.uid).ref
           }).then((finli) => {
-            this.loading = false;
+            this.loading = false; // indica que terminou de carregar
             this.snack.success('Paciente cadastrado com sucesso!');
           }).catch((err) => {
             console.error(err);
