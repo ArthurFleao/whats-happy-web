@@ -51,7 +51,7 @@ export class MenuLateralComponent implements OnInit {
   {
     perfilUsuario: 'ambos',
     tituloItemMenu: 'Meus Dados',
-    link: '/login',
+    link: '/perfil',
     icone: 'person'
   },
 ]

@@ -19,6 +19,7 @@ export class AuthService {
   // Obsevable para usuário
   user: Observable<firebase.User>;
 
+
   constructor(
     private auth: AngularFireAuth,
     private afs: AngularFirestore,
@@ -34,6 +35,7 @@ export class AuthService {
     return this.auth.createUserWithEmailAndPassword(email, senha);
   }
 
+  //usuario logado
   me() {
     return this.auth.currentUser;
   }
@@ -63,5 +65,10 @@ export class AuthService {
     this.auth.signOut();
   }
 
+  //recupera dados do usuario, com base na id fornecida
+  getUserData(uid) {
+    //pesquisa da colection dadosUsuario, no documento com o nome da id do usuario
+    return this.afs.collection('dadosUsuario').doc(uid).valueChanges()
+  }
 
 }

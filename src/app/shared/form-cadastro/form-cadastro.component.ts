@@ -2,6 +2,8 @@ import { environment } from './../../../environments/environment';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { matchingPasswords } from 'src/assets/utils/app-validators';
+//model para usuario
+import { DadosUsuario } from './../../model/dadosUsuario';
 
 @Component({
   selector: 'app-form-cadastro',
@@ -9,6 +11,10 @@ import { matchingPasswords } from 'src/assets/utils/app-validators';
   styleUrls: ['./form-cadastro.component.scss']
 })
 export class FormCadastroComponent implements OnInit {
+
+  //variavel para travar campo(seu status é alterado por que utilizar o componente)
+  @Input()
+  flagTravarCampo: boolean
 
   @Input()
   includeCrp: boolean;
@@ -60,11 +66,11 @@ export class FormCadastroComponent implements OnInit {
       // ------------------------ CAMPOS ENDEREÇO -------------
       endereco: this.fb.group({
         // formName: ['valorInicial', Validator]
-        cep: [this.bootstrap?.cep || '', Validators.required],
-        uf: [this.bootstrap?.uf || '', Validators.required],
-        bairro: [this.bootstrap?.bairro || '', Validators.required],
-        logradouro: [this.bootstrap?.logradouro || '', Validators.required],
-        numero: [this.bootstrap?.numero || '', Validators.required],
+        cep: [this.bootstrap?.endereco?.cep || '', Validators.required],
+        uf: [this.bootstrap?.endereco?.uf || '', Validators.required],
+        bairro: [this.bootstrap?.endereco?.bairro || '', Validators.required],
+        logradouro: [this.bootstrap?.endereco?.logradouro || '', Validators.required],
+        numero: [this.bootstrap?.endereco?.numero || '', Validators.required],
       })
     });
     // ------------------------ FIM CAMPOS ENDEREÇO -------------

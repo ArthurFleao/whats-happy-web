@@ -1,0 +1,7 @@
+<div *ngIf="loading"  class="centralizer">
+  <mat-spinner color="primary"></mat-spinner>
+</div>
+
+<app-form-cadastro class="w-100" [bootstrap] = "dadosUsuario" *ngIf="!loading" [flagTravarCampo]="true">
+
+</app-form-cadastro>

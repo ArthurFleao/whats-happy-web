@@ -56,6 +56,7 @@ import { EnviarRelatoPageComponent } from './pages/enviar-relato-page/enviar-rel
 import { FormEnviarRelatoComponent } from './shared/form-enviar-relato/form-enviar-relato.component';
 import { MenuLateralComponent } from './shared/menu-lateral/menu-lateral.component';
 import { ListarPacientesPageComponent } from './pages/listar-pacientes-page/listar-pacientes-page.component';
+import { PerfilPageComponent } from './pages/perfil-page/perfil-page.component';
 
 const material = [
   MatAutocompleteModule,
@@ -108,7 +109,8 @@ const material = [
     EnviarRelatoPageComponent,
     FormEnviarRelatoComponent,
     MenuLateralComponent,
-    ListarPacientesPageComponent
+    ListarPacientesPageComponent,
+    PerfilPageComponent
   ],
   imports: [
     material,
