@@ -10,13 +10,23 @@ export class MenuLateralComponent implements OnInit {
   sideMenuOpened = true; // estado atual do side menu (aberto/fechado)
   showHeaders = false; // mostrar o menu?
   perfilUser = 'paciente';
+
+  // -------------------------- BACKGROUNDS ----------------------------
   tree = {
     'background-image': 'url(\'../../../assets/img/backs/background.jpg\')'
-  };
+};
   white = {
     background: 'white'
   };
+
+  bluish = {
+    background: '#edf2f6'
+  };
+  greysh = {
+    background: '#fafafa'
+  };
   background: any = this.tree;
+  // -------------------------- BACKGROUNDS ----------------------------
 
 
   // array de objetos para criar itens de menu do psicologo
@@ -73,20 +83,20 @@ export class MenuLateralComponent implements OnInit {
       if (val instanceof NavigationEnd) {
         console.log(val);
         if (val.url === '/login') {
-          this.showHeaders = false;
-          this.background = this.tree;
+          this.showHeaders = false; // esconde sidebar e header se for a page de login
+          this.background = this.tree; // mudar o background para a imagem
         } else {
-          this.showHeaders = true;
-          this.background = this.white;
+          this.showHeaders = true; // mostra sidebar e header em qualquer outra page
+          this.background = this.greysh; // muda o background para a cor
         }
       }
-      this.checkWindow();
+      this.checkWindow(); // verifica se está rodando em mobile ou desktop
     });
   }
 
   @HostListener('window:resize', ['event']) // se o usuário mudar o tamanho de tela
   onResize(event) {
-    this.checkWindow();
+    this.checkWindow(); // verifica se está rodando em mobile ou desktop
   }
 
   checkWindow() {
