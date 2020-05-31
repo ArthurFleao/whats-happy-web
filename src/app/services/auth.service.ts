@@ -1,15 +1,16 @@
 import { Paciente } from './../model/paciente';
 import { Psicologo } from './../model/psicologo';
-import { DadosUsuario, User } from './../model/dadosUsuario';
-import { Injectable } from '@angular/core';
+import { DadosUsuario } from './../model/dadosUsuario';
+import { Injectable, EventEmitter } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
-import {Observable} from 'rxjs';
+import { Observable, Observer } from 'rxjs';
 import { first, take } from 'rxjs/operators';
 
 
 // redirecionamento de rotas
 import { Router } from '@angular/router';
+import { User } from '../model/user';
 
 @Injectable({
   providedIn: 'root'
@@ -17,31 +18,47 @@ import { Router } from '@angular/router';
 export class AuthService {
 
   // Obsevable para usuário
-  user: Observable<firebase.User>;
-
+  user$: Observable<User>;
 
   constructor(
     private auth: AngularFireAuth,
     private afs: AngularFirestore,
     private router: Router
-    ) {
+  ) {
+    this.user$ = new Observable((observer) => {
+      auth.authState.subscribe(userRes => {
+        this.getUserData(userRes.uid).subscribe((res: DadosUsuario) => {
+          const nUser = {
+            uid: userRes.uid,
+            dadosUsuario: res
+          };
+          console.log('user changed');
 
-      this.user = auth.authState;
+          observer.next(nUser);
+        }, error => {
+          observer.error();
+          console.error(error);
+        });
+      }, error => {
+        observer.error();
+        console.error(error);
+      });
+    });
 
-     }
+  }
 
   // criar usuario
   register(email, senha, dados?: DadosUsuario): Promise<firebase.auth.UserCredential> {
     return this.auth.createUserWithEmailAndPassword(email, senha);
   }
 
-  //usuario logado
+  // usuario logado
   me() {
     return this.auth.currentUser;
   }
 
   // armazenar os dados de usuario (endereco, cpf, telefone....)
-  dadosUsuarioSave(id, dados: DadosUsuario){
+  dadosUsuarioSave(id, dados: DadosUsuario) {
     return this.afs.collection('dadosUsuario').doc(id).set(dados);
   }
 
@@ -65,10 +82,10 @@ export class AuthService {
     this.auth.signOut();
   }
 
-  //recupera dados do usuario, com base na id fornecida
+  // recupera dados do usuario, com base na id fornecida
   getUserData(uid) {
-    //pesquisa da colection dadosUsuario, no documento com o nome da id do usuario
-    return this.afs.collection('dadosUsuario').doc(uid).valueChanges()
+    // pesquisa da colection dadosUsuario, no documento com o nome da id do usuario
+    return this.afs.collection('dadosUsuario').doc(uid).valueChanges();
   }
 
 }

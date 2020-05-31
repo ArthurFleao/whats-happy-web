@@ -1,8 +1,3 @@
-export class User {
-  email: string;
-  senha: string;
-}
-
 export class DadosUsuario {
   cpf: string;
   dataNascimento: string;
