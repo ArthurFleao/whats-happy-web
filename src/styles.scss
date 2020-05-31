@@ -114,6 +114,7 @@ background-color: greenyellow;
 
 mat-sidenav-container {
   height: 100%;
+  background-size: cover;
 }
 
 button:focus,
@@ -122,4 +123,8 @@ select:focus,
 div:focus,
 textarea:focus {
   outline: none !important;
+}
+
+.content-container {
+  margin: 50px;
 }

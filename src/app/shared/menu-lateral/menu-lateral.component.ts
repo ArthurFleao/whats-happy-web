@@ -10,6 +10,14 @@ export class MenuLateralComponent implements OnInit {
   sideMenuOpened = true; // estado atual do side menu (aberto/fechado)
   showHeaders = false; // mostrar o menu?
   perfilUser = 'paciente';
+  tree = {
+    'background-image': 'url(\'../../../assets/img/backs/background.jpg\')'
+  };
+  white = {
+    background: 'white'
+  };
+  background: any = this.tree;
+
 
   // array de objetos para criar itens de menu do psicologo
   // perfilUsuario, descricao, link, icone
@@ -66,8 +74,10 @@ export class MenuLateralComponent implements OnInit {
         console.log(val);
         if (val.url === '/login') {
           this.showHeaders = false;
+          this.background = this.tree;
         } else {
           this.showHeaders = true;
+          this.background = this.white;
         }
       }
       this.checkWindow();

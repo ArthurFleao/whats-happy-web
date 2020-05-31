@@ -1,41 +1,31 @@
-<mat-sidenav-container>
+<mat-sidenav-container [ngStyle]="background">
   <!-- Menu que será exibido ao clicar no botão -->
-  <mat-sidenav *ngIf="showHeaders"
-               #sidenav
-               [mode]="isMobile? 'over' : 'side'"
-               [(opened)]="sideMenuOpened">
-               <div class="logo" [routerLink]="['/home']">
-                <img src="assets/img/logo.png">
-              </div>
-              <div class="container">
-                <!-- Menu criado pelo array menu, no arquivo home-page.component.ts -->
-                <ng-container *ngFor="let item of menu">
-                      <div *ngIf="item.perfilUsuario == perfilUser || item.perfilUsuario == 'ambos'"
-                            fxLayout="row center"
-                            class="item"
-                            matRipple
-                            [routerLink]="item.link"
-                            routerLinkActive="router-link-active">
-                        <div fxFlex="20"
-                             fxLayoutAlign="center center">
-                          <mat-icon>
-                            {{item.icone}}
-                          </mat-icon>
-                        </div>
-                        <div fxFlex="80"
-                             fxLayoutAlign="start center">
-                          <p>
-                            {{item.tituloItemMenu}}
-                          </p>
-                        </div>
-                      </div>
-                </ng-container>
-              </div>
+  <mat-sidenav *ngIf="showHeaders" #sidenav [mode]="isMobile? 'over' : 'side'" [(opened)]="sideMenuOpened">
+    <div class="logo" [routerLink]="['/home']">
+      <img src="assets/img/logo.png">
+    </div>
+    <div class="container">
+      <!-- Menu criado pelo array menu, no arquivo home-page.component.ts -->
+      <ng-container *ngFor="let item of menu">
+        <div *ngIf="item.perfilUsuario == perfilUser || item.perfilUsuario == 'ambos'" fxLayout="row center"
+             class="item" matRipple [routerLink]="item.link" routerLinkActive="router-link-active">
+          <div fxFlex="20" fxLayoutAlign="center center">
+            <mat-icon>
+              {{item.icone}}
+            </mat-icon>
+          </div>
+          <div fxFlex="80" fxLayoutAlign="start center">
+            <p>
+              {{item.tituloItemMenu}}
+            </p>
+          </div>
+        </div>
+      </ng-container>
+    </div>
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <app-header-menu *ngIf="showHeaders"
-                     [(openedSideMenu)]="sideMenuOpened"></app-header-menu>
+    <app-header-menu *ngIf="showHeaders" [(openedSideMenu)]="sideMenuOpened"></app-header-menu>
     <div [ngClass]="{'content-container': showHeaders}">
       <ng-content></ng-content>
     </div>
