@@ -1,3 +1,4 @@
+import { HeaderMenuComponent } from './shared/header-menu/header-menu.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -109,6 +110,7 @@ const material = [
     EnviarRelatoPageComponent,
     FormEnviarRelatoComponent,
     MenuLateralComponent,
+    HeaderMenuComponent,
     ListarPacientesPageComponent,
     PerfilPageComponent
   ],

@@ -34,8 +34,8 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <!-- <app-header-menu *ngIf="showHeaders"
-                     [(openedSideMenu)]="sideMenuOpened"></app-header-menu> -->
+    <app-header-menu *ngIf="showHeaders"
+                     [(openedSideMenu)]="sideMenuOpened"></app-header-menu>
     <div [ngClass]="{'content-container': showHeaders}">
       <ng-content></ng-content>
     </div>

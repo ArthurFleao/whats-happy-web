@@ -1,3 +1,4 @@
+import { Router, NavigationEnd } from '@angular/router';
 import { Component, OnInit, HostListener } from '@angular/core';
 
 @Component({
@@ -59,16 +60,26 @@ export class MenuLateralComponent implements OnInit {
   isMobile: boolean;
 
 
-  constructor() {
-    this.checkMenu();
+  constructor(private router: Router) {
+    router.events.subscribe((val: NavigationEnd) => {
+      if (val instanceof NavigationEnd) {
+        console.log(val);
+        if (val.url === '/login') {
+          this.showHeaders = false;
+        } else {
+          this.showHeaders = true;
+        }
+      }
+      this.checkWindow();
+    });
   }
 
   @HostListener('window:resize', ['event']) // se o usuário mudar o tamanho de tela
   onResize(event) {
-    this.checkMenu();
+    this.checkWindow();
   }
 
-  checkMenu() {
+  checkWindow() {
     this.isMobile =  (window.innerWidth < 769); // o tamanho da tela é menor que 769? Se sim é mobile
     this.sideMenuOpened = !this.isMobile; // side menu começa fechado se for mobile, ou aberto se for desktop.
   }

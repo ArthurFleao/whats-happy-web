@@ -1,0 +1,26 @@
+<div class="header-toolbar">
+  <button mat-icon-button (click)="toggleSideMenu()">
+    <mat-icon>{{openedSideMenu ? 'clear' : 'menu'}}</mat-icon>
+  </button>
+  <div fxLayout="row" fxLayoutAlign="end center">
+    <p class="person-name" *ngIf="!isMobile">
+      {{(user | async)?.dadosUsuario?.nomeCompleto? 'Bem-vindo(a), ' + (user | async)?.dadosUsuario?.nomeCompleto + '!' : 'Bem-vindo(a)!'}}
+    </p>
+    <div>
+      <!-- <i class="fas fa-bell header-icon"
+         [matBadge]="quantidadeNotificacoesNaoLidas"
+         [matBadgeHidden]="quantidadeNotificacoesNaoLidas < 1"
+         [matBadgeSize]="'small'"
+         matBadgeColor="warn"
+         [ngStyle]="{'color': showNotificacoes ? '#01afc3' : '#000000de'}"
+         (click)="openNotificacoes()"></i> -->
+      <mat-icon matRipple (click)="logout()">power_settings_new</mat-icon>
+    </div>
+    <!-- <app-notificacoes-popover [notificacoes]="notificacoes"
+                              [config]="notificationConfig"
+                              (delete)="onDeleteNotification($event)"
+                              [hidden]="!showNotificacoes"
+                              (mouseleave)="showNotificacoes = false"
+    ></app-notificacoes-popover> -->
+  </div>
+</div>
