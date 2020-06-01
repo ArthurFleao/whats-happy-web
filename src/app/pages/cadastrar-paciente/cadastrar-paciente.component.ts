@@ -1,3 +1,4 @@
+import { ConvitesService } from './../../services/convites.service';
 import { DadosService } from '../../services/dados.service';
 import { Paciente } from './../../model/paciente';
 import { DadosUsuario } from './../../model/dadosUsuario';
@@ -5,21 +6,31 @@ import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { SnackService } from 'src/app/services/snack.service';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-cadastrar-paciente',
   templateUrl: './cadastrar-paciente.component.html',
   styleUrls: ['./cadastrar-paciente.component.scss']
 })
-export class CadastrarPacienteComponent implements OnInit {
+export class CadastroPacienteComponent implements OnInit {
   loading = false; // carregando?
   myUid: string; // uid do usuário
+  convite;
 
-  constructor(private auth: AuthService, private snack: SnackService, private afs: AngularFirestore, private db: DadosService) {
-    this.auth.me().then(res => { // recupera info do usuario
-      this.myUid = res.uid; // salva uid do usuario
-    }, error => {
-      console.error(error);
+  constructor(private auth: AuthService,
+              private snack: SnackService,
+              private afs: AngularFirestore,
+              private convites: ConvitesService,
+              private db: DadosService,
+              private route: ActivatedRoute) {
+    this.route.paramMap.subscribe(params => {
+      this.convites.getConvite(params.get('id')).subscribe(res => {
+        this.convite = res;
+        console.log('convite', res);
+      }, error => {
+        console.error(error);
+      });
     });
   }
 

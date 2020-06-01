@@ -1,5 +1,5 @@
 import { ConvidarPacientePageComponent } from './pages/convidar-paciente-page/convidar-paciente-page.component';
-import { CadastrarPacienteComponent } from './pages/cadastrar-paciente/cadastrar-paciente.component';
+import { CadastroPacienteComponent } from './pages/cadastrar-paciente/cadastrar-paciente.component';
 import { TestComponent } from './pages/test/test.component';
 import { AppComponent } from './app.component';
 import { NgModule } from '@angular/core';
@@ -19,6 +19,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'teste', component: TestComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'login', component: LoginPageComponent },
+  { path: 'convite/:id', component: CadastroPacienteComponent },
   { path: 'convidar', component: ConvidarPacientePageComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToHome } },
   { path: 'home', component: HomePageComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToHome } },
   { path: 'enviarRelato', component: EnviarRelatoPageComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToHome } },

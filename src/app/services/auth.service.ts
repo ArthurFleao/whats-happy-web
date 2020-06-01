@@ -36,7 +36,7 @@ export class AuthService {
           // USER DATA SUBSCRIBE
           this.db.getUserData(userRes.uid).subscribe((res: DadosUsuario) => {
             this.user.dadosUsuario = res;
-            console.log('dadosUsuario changed', this.user);
+            // console.log('dadosUsuario changed', this.user);
             observer.next(this.user);
           }, error => {
             observer.error();
@@ -48,7 +48,7 @@ export class AuthService {
           this.db.getPsicologoData(userRes.uid).subscribe((res: Psicologo) => {
             this.user.dadosPsicologo = res;
             this.user.isPsicologo = !!res;
-            console.log('dadosPsicologo changed', this.user);
+            // console.log('dadosPsicologo changed', this.user);
             observer.next(this.user);
           }, error => {
             observer.error();
@@ -60,7 +60,7 @@ export class AuthService {
           this.db.getPacienteData(userRes.uid).subscribe((res: Paciente) => {
             this.user.dadosPaciente = res;
             this.user.isPaciente = !!res;
-            console.log('dadosPaciente changed', this.user);
+            // console.log('dadosPaciente changed', this.user);
             observer.next(this.user);
           }, error => {
             observer.error();

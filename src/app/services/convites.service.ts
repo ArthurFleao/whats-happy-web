@@ -19,4 +19,8 @@ export class ConvitesService {
 
     return this.afs.collection('convites').add(data);
   }
+
+  getConvite(id) {
+    return this.afs.collection('convites').doc(id).valueChanges();
+  }
 }

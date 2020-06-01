@@ -1,0 +1,11 @@
+.test-box {
+  opacity: 0.05;
+  position: absolute;
+  left: 0;
+  z-index: 999;
+  border: red 3px dotted;
+}
+
+.test-box:hover {
+  opacity: 1;
+}
