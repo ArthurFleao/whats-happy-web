@@ -1,10 +1,16 @@
 import { DadosService } from './../../service/dados.service';
 import { Component, OnInit } from '@angular/core';
+//Firebase
+import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthService } from 'src/app/services/auth.service';
 // formulário
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 // model para usuario
 import { DadosUsuario } from './../../model/dadosUsuario';
+//service para mensagens
+import { SnackService } from 'src/app/services/snack.service';
+//redirecionamento
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-perfil-page',
@@ -21,6 +27,9 @@ export class PerfilPageComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private db: DadosService,
+    private afs: AngularFirestore,
+    private snack: SnackService,
+    private router: Router,
     fb: FormBuilder
     ) {
 
@@ -44,6 +53,32 @@ export class PerfilPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  updateData(values){
+
+    this.loading = true; // indica que está carregando algo // indica que está carregando algo
+    this.afs.collection('dadosUsuario').doc(this.myUid).update({
+      cpf: values.dadosUsuario.cpf,
+      nomeCompleto: values.dadosUsuario.nomeCompleto,
+      dataNascimento: values.dadosUsuario.data,
+      sexo: values.dadosUsuario.sexo,
+      telefone: values.dadosUsuario.telefone,
+      endereco: {
+        bairro: values.endereco.bairro,
+        cep: values.endereco.cep,
+        logradouro: values.endereco.logradouro,
+        numero: values.endereco.numero,
+        uf: values.endereco.uf,
+      }
+    }).then((finli) => {
+      this.loading = false; // indica que terminou de carregar
+      this.snack.success('Perfil editado com sucesso!');
+      //FIX
+      this.router.navigate(['/home']);
+    }).catch((err) => {
+      console.error(err);
+    });
   }
 
 }
