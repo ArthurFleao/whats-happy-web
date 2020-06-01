@@ -1,5 +1,7 @@
+import { AuthService } from 'src/app/services/auth.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { Component, OnInit, HostListener } from '@angular/core';
+import { User } from 'src/app/model/user';
 
 @Component({
   selector: 'app-menu-lateral',
@@ -14,7 +16,7 @@ export class MenuLateralComponent implements OnInit {
   // -------------------------- BACKGROUNDS ----------------------------
   tree = {
     'background-image': 'url(\'../../../assets/img/backs/background.jpg\')'
-};
+  };
   white = {
     background: 'white'
   };
@@ -43,7 +45,7 @@ export class MenuLateralComponent implements OnInit {
     {
       perfilUsuario: 'psicologo',
       tituloItemMenu: 'Cadastrar Paciente',
-      link: '/cadastro',
+      link: '/convidar',
       icone: 'person_add'
     },
 
@@ -76,9 +78,13 @@ export class MenuLateralComponent implements OnInit {
     },
   ];
   isMobile: boolean;
+  user: User;
 
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private auth: AuthService) {
+    this.auth.user$.subscribe(user => {
+      this.user = user;
+    });
     router.events.subscribe((val: NavigationEnd) => {
       if (val instanceof NavigationEnd) {
         console.log(val);
@@ -99,8 +105,27 @@ export class MenuLateralComponent implements OnInit {
     this.checkWindow(); // verifica se está rodando em mobile ou desktop
   }
 
+  hasAccess(type) {
+    if (this.user) {
+      switch (type) {
+        case 'psicologo':
+          return this.user.isPsicologo;
+          break;
+        case 'paciente':
+          return this.user.isPaciente;
+          break;
+
+        default:
+          return true;
+          break;
+      }
+    } else {
+      return false;
+    }
+  }
+
   checkWindow() {
-    this.isMobile =  (window.innerWidth < 769); // o tamanho da tela é menor que 769? Se sim é mobile
+    this.isMobile = (window.innerWidth < 769); // o tamanho da tela é menor que 769? Se sim é mobile
     this.sideMenuOpened = !this.isMobile; // side menu começa fechado se for mobile, ou aberto se for desktop.
   }
 

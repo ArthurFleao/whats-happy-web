@@ -7,7 +7,7 @@
     <div class="container">
       <!-- Menu criado pelo array menu, no arquivo home-page.component.ts -->
       <ng-container *ngFor="let item of menu">
-        <div *ngIf="item.perfilUsuario == perfilUser || item.perfilUsuario == 'ambos'" fxLayout="row center"
+        <div *ngIf="hasAccess(item.perfilUsuario) || item.perfilUsuario == 'ambos'" fxLayout="row center"
              class="item" matRipple [routerLink]="item.link" routerLinkActive="router-link-active">
           <div fxFlex="20" fxLayoutAlign="center center">
             <mat-icon>

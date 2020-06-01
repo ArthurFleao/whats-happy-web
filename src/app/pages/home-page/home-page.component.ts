@@ -13,13 +13,4 @@ export class HomePageComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  test() {
-    console.log('trying');
-    this.auth.testRegister()({ test: 'wtf' }).subscribe(res => {
-      console.log(res);
-    }, error => {
-      console.error(error);
-    });
-  }
-
 }

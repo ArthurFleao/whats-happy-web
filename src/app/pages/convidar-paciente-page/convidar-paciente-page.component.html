@@ -1,0 +1,8 @@
+<app-card [title]="'Cadastrar Paciente'">
+  <div *ngIf="!myUid" class="centralizer">
+    <mat-spinner color="primary"></mat-spinner>
+  </div>
+  <app-form-convidar-paciente *ngIf="myUid" class="w-100" (submited)="onRegister($event)">
+    <art-button [type]="'submit'" [loading]="loading">Cadastrar</art-button>
+  </app-form-convidar-paciente>
+</app-card>

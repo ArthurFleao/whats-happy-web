@@ -1,0 +1,23 @@
+<app-test-box> <button (click)="setValidTestValues()">Preencher form</button> </app-test-box>
+
+<form focusInvalidInput class="w-100" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div fxLayout="column" class="w-100" fxLayoutAlign="center">
+    <div fxFlex="100">
+      <mat-form-field appearance="outline">
+        <mat-label>Nome Completo</mat-label>
+        <input matInput required formControlName="nomeCompleto" placeholder="Rafael de Magalhães Dias Frinhani"
+               [readonly]="flagTravarCampos">
+      </mat-form-field>
+    </div>
+    <div fxFlex="100">
+      <mat-form-field appearance="outline">
+        <mat-label>E-mail <small class="text-muted">(opcional)</small></mat-label>
+        <input matInput formControlName="email" placeholder="Ex. jose@exemplo.com"
+               [readonly]="flagTravarCampos">
+      </mat-form-field>
+    </div>
+  </div>
+  <!-- O NG CONTENT, É ONDE VAI SAIR O QUE VOCÊ ENFIAR PELO COMPONENTE DE CIMA, geralmente vai ser um botão -->
+  <ng-content>
+  </ng-content>
+</form>

@@ -21,6 +21,7 @@ export class AuthService {
 
   // Obsevable para usuário
   user$: Observable<User>;
+  private user = new User();
 
   constructor(
     private auth: AngularFireAuth,
@@ -31,17 +32,43 @@ export class AuthService {
     this.user$ = new Observable((observer) => {
       auth.authState.subscribe(userRes => {
         if (userRes?.uid) {
+          this.user.uid = userRes.uid;
+          // USER DATA SUBSCRIBE
           this.db.getUserData(userRes.uid).subscribe((res: DadosUsuario) => {
-            const nUser = {
-              uid: userRes.uid,
-              dadosUsuario: res
-            };
-            console.log('user changed', nUser);
-            observer.next(nUser);
+            this.user.dadosUsuario = res;
+            console.log('dadosUsuario changed', this.user);
+            observer.next(this.user);
           }, error => {
             observer.error();
             console.error(error);
           });
+          // USER DATA SUBSCRIBE
+
+          // DADOS PSICOLOGO SUBSCRIBE
+          this.db.getPsicologoData(userRes.uid).subscribe((res: Psicologo) => {
+            this.user.dadosPsicologo = res;
+            this.user.isPsicologo = !!res;
+            console.log('dadosPsicologo changed', this.user);
+            observer.next(this.user);
+          }, error => {
+            observer.error();
+            console.error(error);
+          });
+          // DADOS PSICOLOGO SUBSCRIBE
+
+          // DADOS Paciente SUBSCRIBE
+          this.db.getPacienteData(userRes.uid).subscribe((res: Paciente) => {
+            this.user.dadosPaciente = res;
+            this.user.isPaciente = !!res;
+            console.log('dadosPaciente changed', this.user);
+            observer.next(this.user);
+          }, error => {
+            observer.error();
+            console.error(error);
+          });
+          // DADOS Paciente SUBSCRIBE
+
+
         } else {
           observer.next(undefined);
         }

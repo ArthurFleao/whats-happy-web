@@ -16,6 +16,13 @@ export class DadosService {
     // pesquisa da colection dadosUsuario, no documento com o nome da id do usuario
     return this.afs.collection('dadosUsuario').doc(uid).valueChanges();
   }
+  getPacienteData(uid) {
+    return this.afs.collection('pacientes').doc(uid).valueChanges();
+  }
+
+  getPsicologoData(uid) {
+    return this.afs.collection('psicologos').doc(uid).valueChanges();
+  }
 
   // armazenar os dados de usuario (endereco, cpf, telefone....)
   dadosUsuarioSave(id, dados: DadosUsuario) {

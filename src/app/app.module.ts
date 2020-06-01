@@ -60,6 +60,8 @@ import { ListarPacientesPageComponent } from './pages/listar-pacientes-page/list
 import { PerfilPageComponent } from './pages/perfil-page/perfil-page.component';
 import { AppCardComponent } from './shared/app-card/app-card.component';
 import { AngularFireFunctionsModule, REGION } from '@angular/fire/functions';
+import { FormConvidarPacienteComponent } from './shared/form-convidar-paciente/form-convidar-paciente.component';
+import { ConvidarPacientePageComponent } from './pages/convidar-paciente-page/convidar-paciente-page.component';
 
 const material = [
   MatAutocompleteModule,
@@ -115,7 +117,9 @@ const material = [
     HeaderMenuComponent,
     ListarPacientesPageComponent,
     PerfilPageComponent,
-    AppCardComponent
+    AppCardComponent,
+    FormConvidarPacienteComponent,
+    ConvidarPacientePageComponent
   ],
   imports: [
     material,
