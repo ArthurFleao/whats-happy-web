@@ -1,5 +1,5 @@
 <app-card [title]="'Enviar relato'">
-  <app-form-enviar-relato class="w-100">
+  <app-form-enviar-relato class="w-100" (submited)="enviarRelato($event)">
     <art-button [type]="'submit'">Enviar Relato</art-button>
   </app-form-enviar-relato>
 </app-card>

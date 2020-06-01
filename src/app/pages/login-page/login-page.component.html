@@ -16,7 +16,7 @@
         <h1 class="text-muted animate__animated animate__fadeInDown">Entrar</h1>
         <app-form-login class="w-100 text-muted animate__animated animate__fadeIn" (submited)="onSubmit($event)">
           <art-button [type]="'submit'" [loading]="loading">Entrar</art-button>
-          <art-button (click)="estado = 'cadastro'" [color]="'secondary'">Trabalhe Conosco</art-button>
+          <art-button (click)="estado = 'cadastro'" [color]="'secondary'">Cadastrar</art-button>
         </app-form-login>
       </div>
       <div *ngSwitchCase="'cadastro'" fxLayout="column" fxLayoutAlign="center center">
