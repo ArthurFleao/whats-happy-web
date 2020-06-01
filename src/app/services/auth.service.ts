@@ -1,4 +1,4 @@
-import { DadosService } from './../service/dados.service';
+import { DadosService } from './dados.service';
 import { Paciente } from './../model/paciente';
 import { Psicologo } from './../model/psicologo';
 import { DadosUsuario } from './../model/dadosUsuario';

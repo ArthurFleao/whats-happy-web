@@ -1,4 +1,4 @@
-import { DadosService } from './../../service/dados.service';
+import { DadosService } from '../../services/dados.service';
 import { Router } from '@angular/router';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';

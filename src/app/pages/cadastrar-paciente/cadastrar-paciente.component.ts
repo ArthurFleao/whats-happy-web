@@ -1,4 +1,4 @@
-import { DadosService } from './../../service/dados.service';
+import { DadosService } from '../../services/dados.service';
 import { Paciente } from './../../model/paciente';
 import { DadosUsuario } from './../../model/dadosUsuario';
 import { AuthService } from './../../services/auth.service';

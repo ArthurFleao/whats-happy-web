@@ -1,4 +1,4 @@
-import { DadosService } from './../../service/dados.service';
+import { DadosService } from '../../services/dados.service';
 import { Component, OnInit } from '@angular/core';
 //Firebase
 import { AngularFirestore } from '@angular/fire/firestore';
