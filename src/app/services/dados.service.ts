@@ -36,9 +36,24 @@ export class DadosService {
     return this.afs.collection('psicologos').doc(id).set(objeto);
   }
 
-  // armazenar dados do psicologo (CRP)
   pacienteSave(id, objeto: Paciente) {
     return this.afs.collection('pacientes').doc(id).set(objeto);
+  }
+
+  registerPaciente(dados: {uid: string, responsavelUid: string, dadosUsuario: any}) {
+    const pac = this.afs.collection('pacientes').doc(dados.uid).set({
+      responsavel: this.afs.collection('psicologos').doc(dados.responsavelUid).ref,
+      dadosUsuario: dados.dadosUsuario
+    });
+
+    const data = this.afs.collection('dadosUsuario').doc(dados.uid).set(dados.dadosUsuario);
+
+    const psi = this.afs.collection('psicologos/' + dados.responsavelUid + '/pacientes').doc(dados.uid).set({
+      paciente: this.afs.collection('pacientes').doc(dados.uid).ref
+    });
+
+    return Promise.all([pac, data, psi]);
+
   }
 
   // superGet(doc) {

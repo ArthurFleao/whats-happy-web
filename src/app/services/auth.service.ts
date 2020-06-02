@@ -1,3 +1,4 @@
+import { registerPaciente } from './../../../functions/src/index';
 import { DadosService } from './dados.service';
 import { Paciente } from './../model/paciente';
 import { Psicologo } from './../model/psicologo';
@@ -23,7 +24,7 @@ export class AuthService {
   user$: Observable<User>;
   private user = new User();
 
-  registerPaciente = this.fns.httpsCallable('registerPaciente');
+  // registerPaciente = this.fns.httpsCallable('registerPaciente');
 
   constructor(
     private auth: AngularFireAuth,

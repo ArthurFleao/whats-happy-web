@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment.prod';
 import { ConvitesService } from './../../services/convites.service';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
@@ -14,6 +15,7 @@ export class ConvidarPacientePageComponent implements OnInit {
   loading = false; // carregando?
   myUid: string; // uid do usuário
   conviteId;
+  link: any;
 
   constructor(
     private auth: AuthService,
@@ -38,6 +40,7 @@ export class ConvidarPacientePageComponent implements OnInit {
       this.loading = false;
       this.snack.success('Convite para ' + values.nomeCompleto + ' criado com sucesso!');
       this.conviteId = result.id;
+      this.link = window.location.origin + '/convite/' + this.conviteId;
     }).catch((err) => {
 
     });

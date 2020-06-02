@@ -6,7 +6,7 @@ import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { SnackService } from 'src/app/services/snack.service';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-cadastrar-paciente',
@@ -20,6 +20,7 @@ export class CadastroPacienteComponent implements OnInit {
   constructor(private auth: AuthService,
               private snack: SnackService,
               private afs: AngularFirestore,
+              private router: Router,
               private convites: ConvitesService,
               private db: DadosService,
               private route: ActivatedRoute) {
@@ -39,6 +40,7 @@ export class CadastroPacienteComponent implements OnInit {
   }
 
   onRegister(values) { // ao clicar em cadastrar
+    this.loading = true;
     this.auth.register(values.dadosUsuario.email, values.dadosUsuario.senha).then((res) => {
       const dadosUsuario: DadosUsuario = {
         cpf: values.dadosUsuario.cpf,
@@ -54,17 +56,21 @@ export class CadastroPacienteComponent implements OnInit {
           uf: values.endereco.uf,
         }
       };
-
-      this.auth.registerPaciente({
+      this.db.registerPaciente({
         uid: res.user.uid,
         responsavelUid: this.convite.psicologo.uid,
         dadosUsuario
-      }).subscribe(res => {
-        console.log('Registered!');
-
-      }, error => {
-        console.error(error);
+      }).then((result) => {
+        this.loading = false;
+        this.snack.success('Você se registrou com sucesso!');
+        this.router.navigate(['/home']);
+      }).catch((err) => {
+        this.loading = false;
+        console.error(err);
       });
+    }).catch((err) => {
+      this.loading = false;
+      console.error(err);
     });
   }
 
