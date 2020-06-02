@@ -1,13 +1,13 @@
-[debug] [2020-06-02T02:25:32.603Z] ----------------------------------------------------------------------
-[debug] [2020-06-02T02:25:32.607Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Art\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
-[debug] [2020-06-02T02:25:32.607Z] CLI Version:   8.3.0
-[debug] [2020-06-02T02:25:32.607Z] Platform:      win32
-[debug] [2020-06-02T02:25:32.608Z] Node Version:  v10.15.1
-[debug] [2020-06-02T02:25:32.610Z] Time:          Mon Jun 01 2020 23:25:32 GMT-0300 (GMT-03:00)
-[debug] [2020-06-02T02:25:32.610Z] ----------------------------------------------------------------------
-[debug] [2020-06-02T02:25:32.610Z] 
-[debug] [2020-06-02T02:25:32.626Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2020-06-02T02:25:32.627Z] > authorizing via signed-in user
-[debug] [2020-06-02T02:25:32.627Z] [iam] checking project whats-happy for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get","firebasehosting.sites.update"]
-[debug] [2020-06-02T02:25:32.633Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/whats-happy:testIamPermissions  
+[debug] [2020-06-02T02:31:45.277Z] ----------------------------------------------------------------------
+[debug] [2020-06-02T02:31:45.280Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Art\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2020-06-02T02:31:45.281Z] CLI Version:   8.3.0
+[debug] [2020-06-02T02:31:45.281Z] Platform:      win32
+[debug] [2020-06-02T02:31:45.281Z] Node Version:  v10.15.1
+[debug] [2020-06-02T02:31:45.282Z] Time:          Mon Jun 01 2020 23:31:45 GMT-0300 (GMT-03:00)
+[debug] [2020-06-02T02:31:45.282Z] ----------------------------------------------------------------------
+[debug] [2020-06-02T02:31:45.283Z] 
+[debug] [2020-06-02T02:31:45.295Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-06-02T02:31:45.296Z] > authorizing via signed-in user
+[debug] [2020-06-02T02:31:45.296Z] [iam] checking project whats-happy for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2020-06-02T02:31:45.300Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/whats-happy:testIamPermissions  
  {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get","firebasehosting.sites.update"]}
