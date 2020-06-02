@@ -47,7 +47,6 @@ export class EnviarRelatoPageComponent implements OnInit {
     }).then((finli) => {
       this.loading = false; // indica que terminou de carregar
       this.snack.success('Relato enviado com sucesso!');
-      //FIX
       this.router.navigate(['/home']);
     }).catch((err) => {
       console.error(err);
