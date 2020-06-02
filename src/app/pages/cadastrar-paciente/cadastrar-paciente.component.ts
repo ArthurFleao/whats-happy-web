@@ -27,6 +27,12 @@ export class CadastroPacienteComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.convites.getConvite(params.get('id')).subscribe(res => {
         this.convite = res;
+        const subs = [];
+        this.db.superGet(res).subscribe(rr => {
+          console.log('rr', rr);
+
+        });
+
         console.log('convite', res);
       }, error => {
         console.error(error);

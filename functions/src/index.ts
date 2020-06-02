@@ -3,6 +3,8 @@ import * as admin from 'firebase-admin'; // importa ações de admin
 // admin.initializeApp(functions.config().firebase);
 admin.initializeApp();
 const db = admin.firestore();
+console.log(db);
+
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
 
@@ -51,7 +53,7 @@ export const getUserData = functions.https.onRequest((req, res) => {
   if (req.method === 'OPTIONS') {
     res.status(200).send('só vai');
   } else {
-
+    console.log('else');
   }
 });
 // export const funcao = functions.https.onRequest((req, res) => {

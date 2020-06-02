@@ -1,3 +1,4 @@
+import { Observable, forkJoin } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { DadosUsuario } from '../model/dadosUsuario';
@@ -37,6 +38,28 @@ export class DadosService {
   // armazenar dados do psicologo (CRP)
   pacienteSave(id, objeto: Paciente) {
     return this.afs.collection('pacientes').doc(id).set(objeto);
+  }
+
+  superGet(doc) {
+    const subs = [];
+    this.findRefs(doc, subs);
+    return forkJoin(subs);
+  }
+
+  private findRefs(doc, subs?) {
+    if (doc.firestore) { // se doc for uma referência
+      if (!subs) {
+        subs = [];
+      }
+      subs.push(this.afs.doc(doc).valueChanges().subscribe(res => { doc = res; }));
+      return subs;
+    } else { // se doc for um objeto
+      Object.values(doc).forEach((element: any) => {
+        if (typeof (element) === 'object') {
+          this.findRefs(element, subs);
+        }
+      });
+    }
   }
 
 }

@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { matchingPasswords } from 'docs/assets/utils/app-validators';
 
 @Component({
   selector: 'app-form-convidar-paciente',
