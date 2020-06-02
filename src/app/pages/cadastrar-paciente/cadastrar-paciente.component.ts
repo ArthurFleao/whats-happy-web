@@ -15,8 +15,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class CadastroPacienteComponent implements OnInit {
   loading = false; // carregando?
-  myUid: string; // uid do usuário
-  convite;
+  convite: any;
 
   constructor(private auth: AuthService,
               private snack: SnackService,
@@ -27,13 +26,6 @@ export class CadastroPacienteComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.convites.getConvite(params.get('id')).subscribe(res => {
         this.convite = res;
-        const subs = [];
-        this.db.superGet(res).subscribe(rr => {
-          console.log('rr', rr);
-
-        });
-
-        console.log('convite', res);
       }, error => {
         console.error(error);
       });
@@ -42,9 +34,11 @@ export class CadastroPacienteComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  test() {
+    console.log('test convite', this.convite);
+  }
 
   onRegister(values) { // ao clicar em cadastrar
-    this.loading = true; // indica que está carregando algo // indica que está carregando algo
     this.auth.register(values.dadosUsuario.email, values.dadosUsuario.senha).then((res) => {
       const dadosUsuario: DadosUsuario = {
         cpf: values.dadosUsuario.cpf,
@@ -60,26 +54,17 @@ export class CadastroPacienteComponent implements OnInit {
           uf: values.endereco.uf,
         }
       };
-      const paciente: Paciente = {
-        responsavel: this.afs.collection('psicologos').doc(this.myUid).ref,
+
+      this.auth.registerPaciente({
+        uid: res.user.uid,
+        responsavelUid: this.convite.psicologo.uid,
         dadosUsuario
-      };
-      this.db.dadosUsuarioSave(res.user.uid, dadosUsuario).then((user) => {
-        this.db.pacienteSave(res.user.uid, paciente).then((result) => {
-          this.afs.collection('psicologos/' + this.myUid + '/pacientes').doc(res.user.uid).set({
-            paciente: this.afs.collection('pacientes').doc(res.user.uid).ref
-          }).then((finli) => {
-            this.loading = false; // indica que terminou de carregar
-            this.snack.success('Paciente cadastrado com sucesso!');
-          }).catch((err) => {
-            console.error(err);
-          });
-        });
-      }).catch((err) => {
-        console.error(err);
+      }).subscribe(res => {
+        console.log('Registered!');
+
+      }, error => {
+        console.error(error);
       });
-    }).catch((err) => {
-      console.error(err);
     });
   }
 

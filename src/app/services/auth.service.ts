@@ -23,6 +23,8 @@ export class AuthService {
   user$: Observable<User>;
   private user = new User();
 
+  registerPaciente = this.fns.httpsCallable('registerPaciente');
+
   constructor(
     private auth: AngularFireAuth,
     private fns: AngularFireFunctions,
@@ -83,6 +85,7 @@ export class AuthService {
   register(email, senha, dados?: DadosUsuario): Promise<firebase.auth.UserCredential> {
     return this.auth.createUserWithEmailAndPassword(email, senha);
   }
+
 
   // usuario logado
   me() {

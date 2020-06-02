@@ -1,9 +1,10 @@
-import { Observable, forkJoin } from 'rxjs';
+import { Observable, forkJoin, Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { DadosUsuario } from '../model/dadosUsuario';
 import { Psicologo } from '../model/psicologo';
 import { Paciente } from '../model/paciente';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -40,26 +41,44 @@ export class DadosService {
     return this.afs.collection('pacientes').doc(id).set(objeto);
   }
 
-  superGet(doc) {
-    const subs = [];
-    this.findRefs(doc, subs);
-    return forkJoin(subs);
-  }
+  // superGet(doc) {
+  //   const subs = [];
+  //   this.findRefs(doc, subs);
+  //   console.log('found refs', subs);
+  //   return forkJoin(subs);
+  // }
 
-  private findRefs(doc, subs?) {
-    if (doc.firestore) { // se doc for uma referência
-      if (!subs) {
-        subs = [];
-      }
-      subs.push(this.afs.doc(doc).valueChanges().subscribe(res => { doc = res; }));
-      return subs;
-    } else { // se doc for um objeto
-      Object.values(doc).forEach((element: any) => {
-        if (typeof (element) === 'object') {
-          this.findRefs(element, subs);
-        }
-      });
-    }
-  }
+  // private findRefs(doc, subs?, loading?: Array<any>) {
+  //     Object.values(doc).forEach((element: any) => {
+  //       if (typeof (element) === 'object') {
+  //         if (element.firestore) {
+  //           this.afs.doc(doc).
+  //         }
+  //       }
+  //     });
+  // }
+  // private findRefs(doc, subs?, loading?: Array<any>) {
+  //   if (doc.firestore) { // se doc for uma referência
+  //     if (!subs) {
+  //       subs = [];
+  //     }
+  //     if (!loading) {
+  //       loading = [];
+  //     }
+  //     loading.push(doc);
+  //     // subs.push(this.afs.doc(doc).valueChanges().pipe(map(res => doc = res)));
+  //     this.afs.doc(doc).valueChanges().subscribe(res => {
+  //       doc = res;
+  //       console.log('new value', res);
+  //     });
+  //     return subs;
+  //   } else { // se doc for um objeto
+  //     Object.values(doc).forEach((element: any) => {
+  //       if (typeof (element) === 'object') {
+  //         this.findRefs(element, subs);
+  //       }
+  //     });
+  //   }
+  // }
 
 }

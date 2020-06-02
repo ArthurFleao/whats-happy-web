@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +23,25 @@ export class ConvitesService {
   }
 
   getConvite(id) {
-    return this.afs.collection('convites').doc(id).valueChanges();
+    const convite$ = new Observable(observer => {
+      this.afs.collection('convites').doc(id).valueChanges().subscribe((cv: any) => {
+        this.afs.doc(cv.psicologo).valueChanges().subscribe(psi => {
+          const convite = cv;
+          const psiUid = this.afs.doc(cv.psicologo).ref.id;
+          cv.psicologo = psi;
+          cv.psicologo.uid = psiUid;
+          observer.next(convite);
+          observer.complete();
+        }, error => {
+          console.error(error);
+          observer.error();
+        });
+      }, error => {
+        console.error(error);
+        observer.error();
+      });
+    });
+    return convite$;
   }
+
 }
