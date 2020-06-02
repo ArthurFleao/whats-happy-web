@@ -62,6 +62,8 @@ import { AppCardComponent } from './shared/app-card/app-card.component';
 import { AngularFireFunctionsModule, REGION } from '@angular/fire/functions';
 import { FormConvidarPacienteComponent } from './shared/form-convidar-paciente/form-convidar-paciente.component';
 import { ConvidarPacientePageComponent } from './pages/convidar-paciente-page/convidar-paciente-page.component';
+import { ProntuarioPageComponent } from './pages/prontuario-page/prontuario-page.component';
+import { FormProntuarioComponent } from './shared/form-prontuario/form-prontuario.component';
 
 const material = [
   MatAutocompleteModule,
@@ -119,7 +121,9 @@ const material = [
     PerfilPageComponent,
     AppCardComponent,
     FormConvidarPacienteComponent,
-    ConvidarPacientePageComponent
+    ConvidarPacientePageComponent,
+    ProntuarioPageComponent,
+    FormProntuarioComponent
   ],
   imports: [
     material,

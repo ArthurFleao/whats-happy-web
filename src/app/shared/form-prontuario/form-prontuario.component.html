@@ -1,0 +1,99 @@
+<form focusInvalidInput class="w-100" [formGroup]="form" (ngSubmit)="onSubmit()">
+
+
+  <div fxLayout="column" class="w-100" fxLayoutAlign="center">
+    <fieldset formArrayName="dadosUsuario">
+      <div fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label>Paciente</mat-label>
+          <input matInput required formControlName="nomePaciente" placeholder="paciente">
+
+        </mat-form-field>
+      </div>
+      <div fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label>Sexo</mat-label>
+          <input matInput required formControlName="sexo" placeholder="sexo" readonly>
+
+        </mat-form-field>
+      </div>
+      <div fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label>Data Nascimento</mat-label>
+          <input matInput required formControlName="dataNascimento" placeholder="data nascimento" readonly>
+
+        </mat-form-field>
+      </div>
+      <div fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label>Psicólogo</mat-label>
+          <input matInput required formControlName="psicologo" placeholder="psicologo" readonly>
+        </mat-form-field>
+      </div>
+    </fieldset>
+
+    <!-- protuario -->
+    <fieldset formArrayName="prontuario">
+      <div fxFlex>
+        <mat-form-field appearance="outline">
+          <mat-label>DC/HDA - Diagnoóstigo clinico e história da doença atual</mat-label>
+          <input matInput required formControlName="dcHda" placeholder="DC/HDA - Diagnoóstigo clinico e história da doença atual">
+        </mat-form-field>
+      </div>
+
+      <div fxFlex>
+        <mat-form-field appearance="outline">
+          <mat-label>Reações frente ao diagnóstico</mat-label>
+          <input matInput required formControlName="reacoesFrenteDiagnostico" placeholder="Reações frente ao diagnóstico">
+        </mat-form-field>
+      </div>
+
+      <div fxFlex>
+        <mat-form-field appearance="outline">
+          <mat-label>Estado emocional atual e mecanismo de enfrentamento</mat-label>
+          <input matInput required formControlName="estadoEmocionalAtual" placeholder="Estado emocional atual e mecanismo de enfrentamento">
+        </mat-form-field>
+      </div>
+
+      <div fxFlex>
+        <mat-form-field appearance="outline">
+          <mat-label>Histórico pessoal e familiar (avaliação psicossocial)</mat-label>
+          <input matInput required formControlName="historicoPessoal" placeholder="Histórico pessoal e familiar (avaliação psicossocial)">
+        </mat-form-field>
+      </div>
+
+      <div fxFlex>
+        <mat-form-field appearance="outline">
+          <mat-label>Exame psiquico / sinais e sintomas piscopatológicos</mat-label>
+          <input matInput required formControlName="examePsiquico" placeholder="Exame psiquico / sinais e sintomas piscopatológicos">
+        </mat-form-field>
+      </div>
+
+      <div fxFlex>
+        <mat-form-field appearance="outline">
+          <mat-label>Conduta psicológica</mat-label>
+          <input matInput required formControlName="condutaPsicologica" placeholder="Conduta psicológica">
+        </mat-form-field>
+      </div>
+
+      <div fxFlex>
+        <mat-form-field appearance="outline">
+          <mat-label>Orientação à equipe e/ou familiares - acompanhantes</mat-label>
+          <input matInput required formControlName="orientacao" placeholder="Orientação à equipe e/ou familiares - acompanhantes">
+        </mat-form-field>
+      </div>
+
+      <div fxFlex>
+        <mat-form-field appearance="outline">
+          <mat-label>Outros</mat-label>
+          <input matInput required formControlName="Outros" placeholder="Orientação à equipe e/ou familiares - acompanhantes">
+        </mat-form-field>
+      </div>
+
+    </fieldset>
+
+  </div>
+  <!-- O NG CONTENT, É ONDE VAI SAIR O QUE VOCÊ ENFIAR PELO COMPONENTE DE CIMA, geralmente vai ser um botão -->
+  <ng-content>
+  </ng-content>
+</form>
