@@ -1,10 +1,11 @@
 import { Observable, forkJoin, Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { DadosUsuario } from '../model/dadosUsuario';
 import { Psicologo } from '../model/psicologo';
 import { Paciente } from '../model/paciente';
 import { map } from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,12 @@ export class DadosService {
     // pesquisa da colection dadosUsuario, no documento com o nome da id do usuario
     return this.afs.collection('dadosUsuario').doc(uid).valueChanges();
   }
+
+  //retorna a lista de pacientes do psicólogo logado
+  getListaPacientes(uid){
+    return this.afs.collection('psicologos').doc(uid).collection('pacientes').valueChanges();
+  }
+
   getPacienteData(uid) {
     return this.afs.collection('pacientes').doc(uid).valueChanges();
   }

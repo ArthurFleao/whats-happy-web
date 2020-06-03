@@ -12,6 +12,7 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 import { EnviarRelatoPageComponent } from './pages/enviar-relato-page/enviar-relato-page.component';
 import { PerfilPageComponent } from './pages/perfil-page/perfil-page.component';
 import { ProntuarioPageComponent } from './pages/prontuario-page/prontuario-page.component';
+import { ListarPacientesPageComponent } from './pages/listar-pacientes-page/listar-pacientes-page.component';
 
 
 const redirectUnauthorizedToHome = () => redirectUnauthorizedTo(['login']);
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'enviarRelato', component: EnviarRelatoPageComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToHome } },
   { path: 'perfil', component: PerfilPageComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToHome } },
   { path: 'prontuario', component: ProntuarioPageComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToHome } },
+  { path: 'listarPacientes', component: ListarPacientesPageComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToHome } },
 ];
 
 @NgModule({

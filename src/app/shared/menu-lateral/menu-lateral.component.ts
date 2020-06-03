@@ -52,7 +52,7 @@ export class MenuLateralComponent implements OnInit {
     {
       perfilUsuario: 'psicologo',
       tituloItemMenu: 'Lista de Pacientes',
-      link: '/login',
+      link: '/listarPacientes',
       icone: 'list'
     },
 

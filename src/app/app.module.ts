@@ -123,7 +123,7 @@ const material = [
     FormConvidarPacienteComponent,
     ConvidarPacientePageComponent,
     ProntuarioPageComponent,
-    FormProntuarioComponent
+    FormProntuarioComponent,
   ],
   imports: [
     material,
