@@ -24,7 +24,7 @@
 
         </mat-form-field>
       </div>
-      <div fxFlex="100">
+      <div *ngIf="includeCrp"  fxFlex="100">
         <mat-form-field appearance="outline">
           <mat-label>CRP</mat-label>
           <input matInput required formControlName="crp" placeholder="TODO: 1555555555555555555555">
@@ -57,14 +57,14 @@
 
         </mat-form-field>
       </div>
-      <div fxFlex>
+      <div *ngIf="!flagTravarCampo"  fxFlex>
         <mat-form-field appearance="outline">
           <mat-label>Senha</mat-label>
           <input matInput required formControlName="senha" type="password" placeholder="Insira sua senha">
 
         </mat-form-field>
       </div>
-      <div fxFlex>
+      <div *ngIf="!flagTravarCampo"  fxFlex>
         <mat-form-field appearance="outline">
           <mat-label>Confirmar Senha</mat-label>
           <input matInput required formControlName="confirmaSenha" type="password" placeholder="Confirme sua senha">
@@ -85,6 +85,13 @@
         <mat-form-field appearance="outline">
           <mat-label>UF</mat-label>
           <input matInput required formControlName="uf" placeholder="MG">
+        </mat-form-field>
+      </div>
+
+      <div fxFlex>
+        <mat-form-field appearance="outline">
+          <mat-label>Cidade</mat-label>
+          <input matInput required formControlName="cidade" placeholder="Itajubá">
         </mat-form-field>
       </div>
 
