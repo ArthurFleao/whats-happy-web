@@ -2,7 +2,7 @@ import { environment } from './../../../environments/environment';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { matchingPasswords } from 'src/assets/utils/app-validators';
-//model para usuario
+// model para usuario
 import { DadosUsuario } from './../../model/dadosUsuario';
 
 @Component({
@@ -12,9 +12,9 @@ import { DadosUsuario } from './../../model/dadosUsuario';
 })
 export class FormCadastroComponent implements OnInit {
 
-  //variavel para travar campo(seu status é alterado por que utilizar o componente)
+  // variavel para travar campo(seu status é alterado por que utilizar o componente)
   @Input()
-  flagTravarCampo: boolean
+  flagTravarCampo: boolean;
 
   @Input()
   includeCrp: boolean;
@@ -55,12 +55,12 @@ export class FormCadastroComponent implements OnInit {
         nomeCompleto: [this.bootstrap?.nomeCompleto || '', Validators.required],
         cpf: [this.bootstrap?.cpf || '', Validators.required],
         sexo: [this.bootstrap?.sexo || '', Validators.required],
-        crp: [this.bootstrap?.sexo || '', this.includeCrp ? Validators.required : null],
-        data: [this.bootstrap?.data || '', Validators.required],
+        crp: [this.bootstrap?.sexo || '', this.includeCrp ? Validators.required : undefined],
+        data: [this.bootstrap?.dataNascimento || '', Validators.required],
         telefone: [this.bootstrap?.telefone || '', Validators.required],
-        senha: [this.bootstrap?.senha || '', Validators.required],
-        confirmaSenha: [this.bootstrap?.confirmaSenha || '', Validators.required],
-      }, { validator: matchingPasswords('senha', 'confirmaSenha') }),
+        senha: [this.bootstrap?.senha || '', this.flagTravarCampo ? undefined : Validators.required],
+        confirmaSenha: [this.bootstrap?.confirmaSenha || '', this.flagTravarCampo ? undefined : Validators.required],
+      }, { validator: this.flagTravarCampo ? undefined : matchingPasswords('senha', 'confirmaSenha') }),
       // ------------------------ FIM CAMPOS -------------
 
       // ------------------------ CAMPOS ENDEREÇO -------------
@@ -70,6 +70,7 @@ export class FormCadastroComponent implements OnInit {
         uf: [this.bootstrap?.endereco?.uf || '', Validators.required],
         bairro: [this.bootstrap?.endereco?.bairro || '', Validators.required],
         logradouro: [this.bootstrap?.endereco?.logradouro || '', Validators.required],
+        cidade: [this.bootstrap?.endereco?.cidade || '', Validators.required],
         numero: [this.bootstrap?.endereco?.numero || '', Validators.required],
       })
     });
@@ -109,6 +110,7 @@ export class FormCadastroComponent implements OnInit {
         cep: '37500292',
         uf: 'MG Teste',
         bairro: 'BPS Teste',
+        cidade: 'Itajubá',
         logradouro: 'BPS Teste',
         numero: '11',
       }

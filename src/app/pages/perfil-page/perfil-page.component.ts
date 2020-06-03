@@ -1,15 +1,15 @@
 import { DadosService } from '../../services/dados.service';
 import { Component, OnInit } from '@angular/core';
-//Firebase
+// Firebase
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthService } from 'src/app/services/auth.service';
 // formulário
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 // model para usuario
 import { DadosUsuario } from './../../model/dadosUsuario';
-//service para mensagens
+// service para mensagens
 import { SnackService } from 'src/app/services/snack.service';
-//redirecionamento
+// redirecionamento
 import { Router } from '@angular/router';
 
 @Component({
@@ -21,7 +21,8 @@ export class PerfilPageComponent implements OnInit {
 
   formGroup: FormGroup;
   dadosUsuario: any;
-  loading = true;
+  loading = false;
+  loadingData = true;
   myUid: string;
 
   constructor(
@@ -42,11 +43,11 @@ export class PerfilPageComponent implements OnInit {
       this.db.getUserData(this.myUid).subscribe((resDadosUsuario: DadosUsuario) => {
         this.dadosUsuario = resDadosUsuario;
         this.dadosUsuario.email = res.email;
-        this.loading = false; // indica que terminou de carregar
+        this.loadingData = false; // indica que terminou de carregar
         console.log('tudo: ', this.dadosUsuario);
     }, error => {
       console.error(error);
-      this.loading = false; // indica que terminou de carregar
+      this.loadingData = false; // indica que terminou de carregar
     });
 
    });
@@ -58,25 +59,13 @@ export class PerfilPageComponent implements OnInit {
   updateData(values){
 
     this.loading = true; // indica que está carregando algo // indica que está carregando algo
-    this.afs.collection('dadosUsuario').doc(this.myUid).update({
-      cpf: values.dadosUsuario.cpf,
-      nomeCompleto: values.dadosUsuario.nomeCompleto,
-      dataNascimento: values.dadosUsuario.data,
-      sexo: values.dadosUsuario.sexo,
-      telefone: values.dadosUsuario.telefone,
-      endereco: {
-        bairro: values.endereco.bairro,
-        cep: values.endereco.cep,
-        logradouro: values.endereco.logradouro,
-        numero: values.endereco.numero,
-        uf: values.endereco.uf,
-      }
-    }).then((finli) => {
+    this.afs.collection('dadosUsuario').doc(this.myUid).update(values).then((finli) => {
       this.loading = false; // indica que terminou de carregar
       this.snack.success('Perfil editado com sucesso!');
-      //FIX
+      // FIX
       this.router.navigate(['/home']);
     }).catch((err) => {
+      this.loading = false; // indica que terminou de carregar
       console.error(err);
     });
   }
