@@ -1,3 +1,4 @@
+import { ErrorHandlerService } from './../../services/error-handler.service';
 import { environment } from './../../../environments/environment.prod';
 import { ConvitesService } from './../../services/convites.service';
 import { Component, OnInit } from '@angular/core';
@@ -20,13 +21,14 @@ export class ConvidarPacientePageComponent implements OnInit {
   constructor(
     private auth: AuthService,
     private snack: SnackService,
+    private eh: ErrorHandlerService,
     private convites: ConvitesService,
     private afs: AngularFirestore,
     private db: DadosService) {
     this.auth.me().then(res => { // recupera info do usuario
       this.myUid = res.uid; // salva uid do usuario
     }, error => {
-      console.error(error);
+      this.eh.handle(error);
     });
   }
 

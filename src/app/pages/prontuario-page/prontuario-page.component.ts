@@ -1,3 +1,4 @@
+import { ErrorHandlerService } from './../../services/error-handler.service';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { DadosService } from 'src/app/services/dados.service';
@@ -22,6 +23,7 @@ export class ProntuarioPageComponent implements OnInit {
     private authService: AuthService,
     private db: DadosService,
     private afs: AngularFirestore,
+    private eh: ErrorHandlerService,
     private snack: SnackService,
     private router: Router
   ) {
@@ -38,7 +40,7 @@ export class ProntuarioPageComponent implements OnInit {
         this.loading = false; // indica que terminou de carregar
         console.log('tudo: ', this.dadosUsuario);
       }, error => {
-        console.error(error);
+        this.eh.handle(error);
         this.loading = false; // indica que terminou de carregar
       });
 

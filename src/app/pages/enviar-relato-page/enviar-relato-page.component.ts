@@ -1,3 +1,4 @@
+import { ErrorHandlerService } from './../../services/error-handler.service';
 import { Component, OnInit } from '@angular/core';
 import { SnackService } from 'src/app/services/snack.service';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -19,13 +20,14 @@ export class EnviarRelatoPageComponent implements OnInit {
     private auth: AuthService,
     private afs: AngularFirestore,
     private snack: SnackService,
-    private router: Router
+    private router: Router,
+    private eh: ErrorHandlerService,
   ) {
 
     this.auth.me().then(res => { // recupera info do usuario
       this.myUid = res.uid; // salva uid do usuario logado
     }, error => {
-      console.error(error);
+      this.eh.handle(error);
     });
 
    }
@@ -35,7 +37,7 @@ export class EnviarRelatoPageComponent implements OnInit {
 
   enviarRelato(values){
     this.loading = true;
-    //salva o relato na collection paciente => documento com a id do paciente que enviou o relato => subcollection relatos
+    // salva o relato na collection paciente => documento com a id do paciente que enviou o relato => subcollection relatos
     this.afs.collection('pacientes').doc(this.myUid).collection('relatos').add({
 
       grauFelicidade: values.grauFelicidade,

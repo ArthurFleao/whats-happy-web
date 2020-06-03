@@ -94,10 +94,19 @@ export class MenuLateralComponent implements OnInit {
     });
     router.events.subscribe((val: NavigationEnd) => {
       if (val instanceof NavigationEnd) {
-        const str = val.urlAfterRedirects.substring(
+        let str = val.urlAfterRedirects.substring(
           val.urlAfterRedirects.indexOf('/', 0) + 1,
-          val.urlAfterRedirects.indexOf('/', 1)
-      );
+          );
+        console.log('str tart', str);
+        console.log('index 0', str.indexOf('/', 0));
+        console.log('index 1', str.indexOf('/', 1));
+        if (str.indexOf('/', 0) !== -1) {
+          console.log('redoing');
+          str = str.substring(0,
+            str.indexOf('/', 0)
+          );
+        }
+        console.log('str aft', str);
 
         switch (str) {
 

@@ -1,3 +1,4 @@
+import { ErrorHandlerService } from './../../services/error-handler.service';
 import { DadosService } from '../../services/dados.service';
 import { Component, OnInit } from '@angular/core';
 // Firebase
@@ -29,6 +30,7 @@ export class PerfilPageComponent implements OnInit {
     private authService: AuthService,
     private db: DadosService,
     private afs: AngularFirestore,
+    private eh: ErrorHandlerService,
     private snack: SnackService,
     private router: Router,
     fb: FormBuilder
@@ -46,7 +48,7 @@ export class PerfilPageComponent implements OnInit {
         this.loadingData = false; // indica que terminou de carregar
         console.log('tudo: ', this.dadosUsuario);
     }, error => {
-      console.error(error);
+      this.eh.handle(error);
       this.loadingData = false; // indica que terminou de carregar
     });
 

@@ -56,7 +56,7 @@ export class HeaderMenuComponent implements OnInit, OnDestroy {
     // this.contaService.get().subscribe(res => {
     //   this.conta = res;
     // }, error => {
-    //   console.error(error);
+    //   this.eh.handle(error);
     // });
     // this.listNotificacoes();
     // this.notificationConfig = {

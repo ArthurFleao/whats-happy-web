@@ -1,3 +1,4 @@
+import { HttpErrorInterceptor } from './services/http-error.interceptor';
 import { HeaderMenuComponent } from './shared/header-menu/header-menu.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -64,6 +65,7 @@ import { FormConvidarPacienteComponent } from './shared/form-convidar-paciente/f
 import { ConvidarPacientePageComponent } from './pages/convidar-paciente-page/convidar-paciente-page.component';
 import { ProntuarioPageComponent } from './pages/prontuario-page/prontuario-page.component';
 import { FormProntuarioComponent } from './shared/form-prontuario/form-prontuario.component';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 const material = [
   MatAutocompleteModule,
@@ -130,6 +132,7 @@ const material = [
     BrowserModule,
     FlexLayoutModule,
     AppRoutingModule,
+    HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     AngularFireFunctionsModule,
@@ -139,7 +142,12 @@ const material = [
   ],
   providers: [
     AngularFireAuthGuard,
-    { provide: REGION, useValue: 'us-central1' }
+    { provide: REGION, useValue: 'us-central1' },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true
+    },
   ],
   bootstrap: [AppComponent],
   exports: [LoginPageComponent, FormLoginComponent, FormCadastroComponent]

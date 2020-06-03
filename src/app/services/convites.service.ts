@@ -1,3 +1,4 @@
+import { ErrorHandlerService } from './error-handler.service';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
@@ -8,7 +9,9 @@ import { Observable } from 'rxjs';
 })
 export class ConvitesService {
 
-  constructor(private afs: AngularFirestore) { }
+  constructor(private afs: AngularFirestore,
+    private eh: ErrorHandlerService,
+  ) { }
 
   newConvite(myUid: string, nomeCompleto: string, email?: string) {
     const data = {
@@ -33,11 +36,11 @@ export class ConvitesService {
           observer.next(convite);
           observer.complete();
         }, error => {
-          console.error(error);
+          this.eh.handle(error);
           observer.error();
         });
       }, error => {
-        console.error(error);
+        this.eh.handle(error);
         observer.error();
       });
     });

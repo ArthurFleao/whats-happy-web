@@ -1,3 +1,4 @@
+import { ErrorHandlerService } from './../../services/error-handler.service';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { DadosService } from 'src/app/services/dados.service';
@@ -13,14 +14,15 @@ import { first } from 'rxjs/operators';
 })
 export class ListarPacientesPageComponent implements OnInit {
 
-  //loading = true;
+  // loading = true;
   myUid: string;
   dadosUsuario: any;
 
   constructor(
     private authService: AuthService,
     private db: DadosService,
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
+    private eh: ErrorHandlerService,
   ) {
 
     // recupera id do usuário logado
@@ -31,32 +33,32 @@ export class ListarPacientesPageComponent implements OnInit {
       // chama funcao do auth.service para recuperar dados do usuario logado
       this.db.getListaPacientes(this.myUid).subscribe( res => {
 
-        let arrayTodosPacientes = []
+        const arrayTodosPacientes = [];
 
-        console.log("res: ", res)
+        console.log('res: ', res);
 
         res.forEach( (paciente: any) => {
-          //coloca todos os pacientes do psicologo no array
+          // coloca todos os pacientes do psicologo no array
           console.log(this.afs.doc(paciente.paciente).ref.id);
-           this.afs.doc(paciente.paciente).valueChanges().subscribe(eae => {
+          this.afs.doc(paciente.paciente).valueChanges().subscribe(eae => {
 console.log('Oi', eae);
 
-           })
-          arrayTodosPacientes.push( this.afs.doc(paciente.paciente).valueChanges().pipe(first()) )
-          console.log("arrayTodosPacientes: ", arrayTodosPacientes)
-        })
-          forkJoin(arrayTodosPacientes).subscribe(
+           });
+          arrayTodosPacientes.push( this.afs.doc(paciente.paciente).valueChanges().pipe(first()) );
+          console.log('arrayTodosPacientes: ', arrayTodosPacientes);
+        });
+        forkJoin(arrayTodosPacientes).subscribe(
             arrayPacientes => {
-              console.log("arrayPacientes: ", arrayPacientes)
+              console.log('arrayPacientes: ', arrayPacientes);
           }, err => {
             console.error(err);
 
-          })
+          });
 
 
 
       }, error => {
-        console.error(error);
+        this.eh.handle(error);
       });
     });
 

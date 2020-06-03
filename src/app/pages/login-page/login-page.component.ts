@@ -1,3 +1,4 @@
+import { ErrorHandlerService } from './../../services/error-handler.service';
 import { DadosService } from '../../services/dados.service';
 import { Router } from '@angular/router';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -20,6 +21,7 @@ export class LoginPageComponent implements OnInit {
     private router: Router,
     private db: DadosService,
     private authService: AuthService,
+    private eh: ErrorHandlerService,
     private snack: SnackService,
   ) { }
 
@@ -30,7 +32,7 @@ export class LoginPageComponent implements OnInit {
     this.authService.testRegister()({ test: 'wtf' }).subscribe(res => {
       console.log(res);
     }, error => {
-      console.error(error);
+      this.eh.handle(error);
     });
   }
 

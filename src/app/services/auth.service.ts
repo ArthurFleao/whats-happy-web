@@ -1,3 +1,4 @@
+import { ErrorHandlerService } from './error-handler.service';
 import { registerPaciente } from './../../../functions/src/index';
 import { DadosService } from './dados.service';
 import { Paciente } from './../model/paciente';
@@ -30,6 +31,7 @@ export class AuthService {
     private auth: AngularFireAuth,
     private fns: AngularFireFunctions,
     private db: DadosService,
+    private eh: ErrorHandlerService,
     private router: Router
   ) {
     this.user$ = new Observable((observer) => {
@@ -43,7 +45,7 @@ export class AuthService {
             observer.next(this.user);
           }, error => {
             observer.error();
-            console.error(error);
+            this.eh.handle(error);
           });
           // USER DATA SUBSCRIBE
 
@@ -55,7 +57,7 @@ export class AuthService {
             observer.next(this.user);
           }, error => {
             observer.error();
-            console.error(error);
+            this.eh.handle(error);
           });
           // DADOS PSICOLOGO SUBSCRIBE
 
@@ -67,7 +69,7 @@ export class AuthService {
             observer.next(this.user);
           }, error => {
             observer.error();
-            console.error(error);
+            this.eh.handle(error);
           });
           // DADOS Paciente SUBSCRIBE
 
@@ -77,7 +79,7 @@ export class AuthService {
         }
       }, error => {
         observer.error();
-        console.error(error);
+        this.eh.handle(error);
       });
     });
   }

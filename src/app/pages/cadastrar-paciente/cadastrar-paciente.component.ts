@@ -1,3 +1,4 @@
+import { ErrorHandlerService } from './../../services/error-handler.service';
 import { ConvitesService } from './../../services/convites.service';
 import { DadosService } from '../../services/dados.service';
 import { Paciente } from './../../model/paciente';
@@ -21,6 +22,7 @@ export class CadastroPacienteComponent implements OnInit {
               private snack: SnackService,
               private afs: AngularFirestore,
               private router: Router,
+              private eh: ErrorHandlerService,
               private convites: ConvitesService,
               private db: DadosService,
               private route: ActivatedRoute) {
@@ -28,7 +30,7 @@ export class CadastroPacienteComponent implements OnInit {
       this.convites.getConvite(params.get('id')).subscribe(res => {
         this.convite = res;
       }, error => {
-        console.error(error);
+        this.eh.handle(error);
       });
     });
   }
