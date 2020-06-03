@@ -94,12 +94,24 @@ export class MenuLateralComponent implements OnInit {
     });
     router.events.subscribe((val: NavigationEnd) => {
       if (val instanceof NavigationEnd) {
-        if (val.urlAfterRedirects === '/login') {
-          this.showHeaders = false; // esconde sidebar e header se for a page de login
-          this.background = this.tree; // mudar o background para a imagem
-        } else {
-          this.showHeaders = true; // mostra sidebar e header em qualquer outra page
-          this.background = this.greysh; // muda o background para a cor
+        const str = val.urlAfterRedirects.substring(
+          val.urlAfterRedirects.indexOf('/', 0) + 1,
+          val.urlAfterRedirects.indexOf('/', 1)
+      );
+
+        switch (str) {
+
+          case 'login':
+            this.showHeaders = false; // esconde sidebar e header se for a page de login
+            this.background = this.tree; // mudar o background para a imagem'
+            break;
+          case 'convite':
+            this.showHeaders = false;
+            break;
+          default:
+            this.showHeaders = true; // mostra sidebar e header em qualquer outra page
+            this.background = this.greysh; // muda o background para a cor
+            break;
         }
       }
       this.checkWindow(); // verifica se está rodando em mobile ou desktop

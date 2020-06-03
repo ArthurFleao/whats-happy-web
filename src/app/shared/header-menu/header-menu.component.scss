@@ -47,7 +47,11 @@ app-notificacoes-popover {
 }
 
 .logout-icon {
+  transition: all 250ms ease-in-out;
   cursor: pointer;
   margin-left: 20px;
   margin-right: 10px;
+}
+.logout-icon:hover {
+  color: red;
 }

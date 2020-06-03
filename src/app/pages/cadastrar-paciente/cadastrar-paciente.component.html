@@ -1,15 +1,16 @@
-<app-card [title]="'Cadastrar-se como Paciente'">
-
-  <div *ngIf="!convite" class="centralizer">
-    <mat-spinner color="primary"></mat-spinner>
-  </div>
-  <div *ngIf="convite">
-    Você foi convidado por {{convite.psicologo.dadosUsuario.nomeCompleto}}
-    <app-form-cadastro class="w-100" (submited)="onRegister($event)">
-      <art-button [type]="'submit'" [loading]="loading">Cadastrar</art-button>
-    </app-form-cadastro>
-  </div>
-  <app-test-box>
-    <button (click)="test()">log convite</button>
-  </app-test-box>
-</app-card>
+<div class="main-card">
+  <app-card [title]="'Cadastrar-se como Paciente'">
+    <div *ngIf="!convite" class="centralizer">
+      <mat-spinner color="primary"></mat-spinner>
+    </div>
+    <div *ngIf="convite">
+      Você foi convidado por {{convite.psicologo.dadosUsuario.nomeCompleto}}
+      <app-form-cadastro class="w-100" (submited)="onRegister($event)">
+        <art-button [type]="'submit'" [loading]="loading">Cadastrar</art-button>
+      </app-form-cadastro>
+    </div>
+    <app-test-box>
+      <button (click)="test()">log convite</button>
+    </app-test-box>
+  </app-card>
+</div>
