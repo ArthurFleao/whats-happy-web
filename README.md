@@ -29,3 +29,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## Create a new component in a folder
 
 ng g c folder/component-name
+
+## Install CLI Fibase
+
+npm install -g firebase-tools
