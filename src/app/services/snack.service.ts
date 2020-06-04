@@ -12,22 +12,22 @@ export class SnackService {
 
   success(message: string) {
     this.snack.open(message, 'Que bom!', {
-      duration: message.length * 550,
+      duration: 5000,
       verticalPosition: 'bottom',
       panelClass: 'success-snack'
     });
 
   }
   warning(message: string) {
-    this.snack.open(message, 'Nossa...', {
-      duration: message.length * 550,
+    this.snack.open(message, 'Opa...', {
+      duration: 5000,
       verticalPosition: 'bottom',
       panelClass: 'warning-snack'
     });
   }
   danger(message: string) {
     this.snack.open(message, 'Essa não!', {
-      duration: message.length * 550,
+      duration: 5000,
       verticalPosition: 'bottom',
       panelClass: 'danger-snack'
     });

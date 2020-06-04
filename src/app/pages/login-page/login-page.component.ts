@@ -47,7 +47,8 @@ export class LoginPageComponent implements OnInit {
       this.router.navigate(['home']);
     })
       .catch(err => {
-        console.log('Erro:', err.message);
+        this.loading = false;
+        this.eh.handle(err);
       });
 
   }
@@ -85,14 +86,17 @@ export class LoginPageComponent implements OnInit {
           this.loading = false; // indica que terminou de carregar
           this.snack.success('Você se registrou com sucesso!');
         }).catch((err) => {
-          console.error(err);
+          this.loading = false; // indica que terminou de carregar
+          this.eh.handle(err);
         });
       }).catch((err) => {
-        console.error(err);
+        this.loading = false; // indica que terminou de carregar
+        this.eh.handle(err);
       });
 
     }).catch((err) => {
-      console.error(err);
+      this.loading = false; // indica que terminou de carregar
+      this.eh.handle(err);
     });
   }
 

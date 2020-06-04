@@ -51,7 +51,7 @@ export class EnviarRelatoPageComponent implements OnInit {
       this.snack.success('Relato enviado com sucesso!');
       this.router.navigate(['/home']);
     }).catch((err) => {
-      console.error(err);
+      this.eh.handle(err);
     });
   }
 

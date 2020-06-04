@@ -17,7 +17,7 @@ export const maintainUserData = functions.firestore.document('dadosUsuario/{user
         }).then((result) => {
           console.log(result);
         }).catch((err) => {
-          console.error(err);
+          this.eh.handle(err);
         });
     }
   }).catch(function (error) {
@@ -31,7 +31,7 @@ export const maintainUserData = functions.firestore.document('dadosUsuario/{user
         }).then((result) => {
           console.log(result);
         }).catch((err) => {
-          console.error(err);
+          this.eh.handle(err);
         });
     }
   }).catch(function (error) {
@@ -63,7 +63,7 @@ export const registerPaciente = functions.https.onRequest((req, res) => {
     }).then((result) => {
       console.log('done');
     }).catch((err) => {
-      console.error(err);
+      this.eh.handle(err);
     });
 
     db.collection('psicologos').doc(responsavelUid).update({
@@ -71,7 +71,7 @@ export const registerPaciente = functions.https.onRequest((req, res) => {
     }).then((result) => {
       console.log('done');
     }).catch((err) => {
-      console.error(err);
+      this.eh.handle(err);
     });
 
     res.status(200).send('Created!');

@@ -68,7 +68,7 @@ export class PerfilPageComponent implements OnInit {
       this.router.navigate(['/home']);
     }).catch((err) => {
       this.loading = false; // indica que terminou de carregar
-      console.error(err);
+      this.eh.handle(err);
     });
   }
 

@@ -3,7 +3,7 @@
     <mat-icon>{{openedSideMenu ? 'clear' : 'menu'}}</mat-icon>
   </button>
   <div fxLayout="row" fxLayoutAlign="end center">
-    <p class="person-name" *ngIf="!isMobile">
+    <p class="person-name animate__animated animate__fadeIn animate__delay-2s" *ngIf="!isMobile">
       {{(user | async)?.dadosUsuario?.nomeCompleto? 'Bem-vindo(a), ' + (user | async)?.dadosUsuario?.nomeCompleto + '!' : 'Bem-vindo(a)!'}}
     </p>
     <div>

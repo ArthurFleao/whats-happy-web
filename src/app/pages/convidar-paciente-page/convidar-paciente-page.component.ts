@@ -77,14 +77,14 @@ export class ConvidarPacientePageComponent implements OnInit {
   //           this.loading = false; // indica que terminou de carregar
   //           this.snack.success('Paciente cadastrado com sucesso!');
   //         }).catch((err) => {
-  //           console.error(err);
+  //           this.eh.handle(err);
   //         });
   //       });
   //     }).catch((err) => {
-  //       console.error(err);
+  //       this.eh.handle(err);
   //     });
   //   }).catch((err) => {
-  //     console.error(err);
+  //     this.eh.handle(err);
   //   });
   // }
 

@@ -73,7 +73,7 @@ export class ProntuarioPageComponent implements OnInit {
       this.snack.success('Prontuário cadastrado com sucesso!');
       this.router.navigate(['/home']);
     }).catch((err) => {
-      console.error(err);
+      this.eh.handle(err);
     });
 
 

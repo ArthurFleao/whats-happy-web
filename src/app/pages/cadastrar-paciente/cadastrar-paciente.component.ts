@@ -68,11 +68,11 @@ export class CadastroPacienteComponent implements OnInit {
         this.router.navigate(['/home']);
       }).catch((err) => {
         this.loading = false;
-        console.error(err);
+        this.eh.handle(err);
       });
     }).catch((err) => {
       this.loading = false;
-      console.error(err);
+      this.eh.handle(err);
     });
   }
 

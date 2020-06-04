@@ -51,7 +51,7 @@ console.log('Oi', eae);
             arrayPacientes => {
               console.log('arrayPacientes: ', arrayPacientes);
           }, err => {
-            console.error(err);
+            this.eh.handle(err);
 
           });
 
