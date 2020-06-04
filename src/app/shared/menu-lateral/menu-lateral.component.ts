@@ -59,7 +59,7 @@ export class MenuLateralComponent implements OnInit {
     {
       perfilUsuario: 'psicologo',
       tituloItemMenu: 'Relatórios',
-      link: '/login',
+      link: '/relatorios',
       icone: 'source'
     },
 

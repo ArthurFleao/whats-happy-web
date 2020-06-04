@@ -47,6 +47,10 @@ export class DadosService {
     return this.afs.collection('pacientes').doc(id).set(objeto);
   }
 
+  listRelatos(idPaciente) {
+    return this.afs.collection(`pacientes/${idPaciente}/relatos/`).valueChanges({idField: 'uid'});
+  }
+
   registerPaciente(dados: {uid: string, responsavelUid: string, dadosUsuario: any}) {
     const pac = this.afs.collection('pacientes').doc(dados.uid).set({
       responsavel: this.afs.collection('psicologos').doc(dados.responsavelUid).ref,

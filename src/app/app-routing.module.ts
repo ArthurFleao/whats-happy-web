@@ -1,3 +1,4 @@
+import { ListarRelatosPageComponent } from './pages/listar-relatos-page/listar-relatos-page.component';
 import { ConvidarPacientePageComponent } from './pages/convidar-paciente-page/convidar-paciente-page.component';
 import { CadastroPacienteComponent } from './pages/cadastrar-paciente/cadastrar-paciente.component';
 import { TestComponent } from './pages/test/test.component';
@@ -28,6 +29,12 @@ const routes: Routes = [
   { path: 'perfil', component: PerfilPageComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToHome } },
   { path: 'prontuario', component: ProntuarioPageComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToHome } },
   { path: 'listarPacientes', component: ListarPacientesPageComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToHome } },
+  {
+    path: 'paciente/:id', canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToHome },
+    children: [
+      { path: 'relatos', component: ListarRelatosPageComponent }
+    ]
+  },
 ];
 
 @NgModule({

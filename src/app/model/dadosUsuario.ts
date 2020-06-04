@@ -5,6 +5,7 @@ export class DadosUsuario {
   sexo: string;
   telefone: string;
   endereco: Endereco;
+  email?: string;
 }
 
 export class Endereco {

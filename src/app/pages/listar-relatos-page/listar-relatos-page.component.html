@@ -1,0 +1,18 @@
+<app-card [title]="'Lista de relatos'">
+  <div class="centralizer" *ngIf="loading">
+    <mat-spinner color="primary"></mat-spinner>
+  </div>
+
+  <div *ngIf="paciente">
+    <app-person-card [person]="paciente"></app-person-card>
+  </div>
+
+  <div class="centralizer" *ngIf="loadingRelatos">
+    <mat-spinner color="primary"></mat-spinner>
+  </div>
+  <div class="relatos" *ngIf="relatos">
+    <app-relato-card *ngFor="let relato of relatos" [relato]="relato">
+
+    </app-relato-card>
+  </div>
+</app-card>

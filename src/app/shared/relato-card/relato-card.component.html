@@ -1,0 +1,11 @@
+<mat-expansion-panel [hideToggle]="false">
+  <mat-expansion-panel-header>
+    <mat-panel-title>{{relato.uid || 'Sem id'}}</mat-panel-title>
+    <mat-panel-description>
+      {{relato.grauFelicidade | grau : 'f'}} -
+      {{relato.grauDisposicao | grau: 'd'}} -
+      {{relato.grauIrritabilidade | grau : 'i'}}
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  {{relato.relato || 'Sem relato'}}
+</mat-expansion-panel>

@@ -53,7 +53,13 @@ export class FormLoginComponent implements OnInit {
 
   setValidTestValues() {
     this.form.patchValue({
-      login: 'admin@email.com',
+      login: 'email3232@teste.com',
+      senha: '123456'
+    });
+  }
+  setValidTestValuesAdmin() {
+    this.form.patchValue({
+      login: 'admin@teste.com',
       senha: '123456'
     });
   }

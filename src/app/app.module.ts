@@ -66,6 +66,10 @@ import { ConvidarPacientePageComponent } from './pages/convidar-paciente-page/co
 import { ProntuarioPageComponent } from './pages/prontuario-page/prontuario-page.component';
 import { FormProntuarioComponent } from './shared/form-prontuario/form-prontuario.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { PersonCardComponent } from './shared/person-card/person-card.component';
+import { ListarRelatosPageComponent } from './pages/listar-relatos-page/listar-relatos-page.component';
+import { RelatoCardComponent } from './shared/relato-card/relato-card.component';
+import { GrauPipe } from './pipes/grau.pipe';
 
 const material = [
   MatAutocompleteModule,
@@ -126,6 +130,10 @@ const material = [
     ConvidarPacientePageComponent,
     ProntuarioPageComponent,
     FormProntuarioComponent,
+    PersonCardComponent,
+    ListarRelatosPageComponent,
+    RelatoCardComponent,
+    GrauPipe,
   ],
   imports: [
     material,
