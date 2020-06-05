@@ -70,8 +70,10 @@ import { PersonCardComponent } from './shared/person-card/person-card.component'
 import { ListarRelatosPageComponent } from './pages/listar-relatos-page/listar-relatos-page.component';
 import { RelatoCardComponent } from './shared/relato-card/relato-card.component';
 import { GrauPipe } from './pipes/grau.pipe';
+import {ClipboardModule} from '@angular/cdk/clipboard';
 
 const material = [
+  ClipboardModule,
   MatAutocompleteModule,
   MatButtonModule,
   MatButtonToggleModule,

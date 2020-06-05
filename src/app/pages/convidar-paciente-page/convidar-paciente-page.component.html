@@ -1,4 +1,4 @@
-<app-card [title]="'Cadastrar Paciente'">
+<app-card [title]="link? 'Convite criado:' : 'Cadastrar Paciente'">
   <div *ngIf="!myUid" class="centralizer">
     <mat-spinner color="primary"></mat-spinner>
   </div>
@@ -6,7 +6,17 @@
     <art-button [type]="'submit'" [loading]="loading">Cadastrar</art-button>
   </app-form-convidar-paciente>
   <div *ngIf="link"  >
-    Convite criado!
-    link: <a [href]="link" >{{link}}</a>
+    <p>Envie este link para seu paciente, e ele poderá se cadastrar na plataforma. Você será automaticamente atribuído(a) como responsável por ele(a) após o registro.</p>
+    <div fxLayout="row" fxLayoutAlign="center">
+      <div style="max-width: 360px;" fxFlex="50">
+        <mat-form-field class="example-form-field">
+          <mat-label>Link de convite:</mat-label>
+          <input matInput type="text" [(ngModel)]="link" [readOnly]="true">
+        </mat-form-field>
+      </div>
+      <button matTooltip="Copiar" mat-button matSuffix mat-icon-button (click)="copyLink()">
+        <mat-icon class="copy">collections_bookmark</mat-icon>
+      </button>
+    </div>
   </div>
 </app-card>

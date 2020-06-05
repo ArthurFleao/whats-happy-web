@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 export class ConvitesService {
 
   constructor(private afs: AngularFirestore,
-    private eh: ErrorHandlerService,
+              private eh: ErrorHandlerService,
   ) { }
 
   newConvite(myUid: string, nomeCompleto: string, email?: string) {
@@ -28,23 +28,40 @@ export class ConvitesService {
   getConvite(id) {
     const convite$ = new Observable(observer => {
       this.afs.collection('convites').doc(id).valueChanges().subscribe((cv: any) => {
-        this.afs.doc(cv.psicologo).valueChanges().subscribe(psi => {
-          const convite = cv;
-          const psiUid = this.afs.doc(cv.psicologo).ref.id;
-          cv.psicologo = psi;
-          cv.psicologo.uid = psiUid;
-          observer.next(convite);
+        console.log('cv:', cv);
+
+        if (cv) {
+          this.afs.doc(cv.psicologo).valueChanges().subscribe(psi => {
+            const convite = cv;
+            const psiUid = this.afs.doc(cv.psicologo).ref.id;
+            cv.psicologo = psi;
+            cv.psicologo.uid = psiUid;
+            observer.next(convite);
+            observer.complete();
+          }, error => {
+            this.eh.handle(error);
+            observer.error();
+          });
+        } else {
+          observer.next(undefined);
           observer.complete();
-        }, error => {
-          this.eh.handle(error);
-          observer.error();
-        });
+        }
       }, error => {
         this.eh.handle(error);
         observer.error();
       });
     });
     return convite$;
+  }
+
+  useConvite(id) {
+    this.afs.collection('convites').doc(id).update({
+      used: true
+    }).then((result) => {
+
+    }).catch((err) => {
+      this.eh.handle(err);
+    });
   }
 
 }

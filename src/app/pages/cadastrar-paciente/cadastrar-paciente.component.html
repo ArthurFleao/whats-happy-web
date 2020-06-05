@@ -4,8 +4,17 @@
       <mat-spinner color="primary"></mat-spinner>
     </div>
     <div *ngIf="convite">
-      Você foi convidado por {{convite.psicologo.dadosUsuario.nomeCompleto}}
-      <app-form-cadastro class="w-100" (submited)="onRegister($event)">
+      <div fxLayout="row wrap" fxLayoutAlign="center">
+        <div fxFlex="50">
+          <div class="centralizer">
+            <h1> Você foi convidado por: </h1>
+          </div>
+        </div>
+        <div fxFlex="50">
+          <app-person-card [person]="convite.psicologo"></app-person-card>
+        </div>
+      </div>
+      <app-form-cadastro class="w-100" [bootstrap]="bootstrap" (submited)="onRegister($event)">
         <art-button [type]="'submit'" [loading]="loading">Cadastrar</art-button>
       </app-form-cadastro>
     </div>

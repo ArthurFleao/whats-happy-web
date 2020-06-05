@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { SnackService } from 'src/app/services/snack.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { DadosService } from 'src/app/services/dados.service';
+import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'app-convidar-paciente-page',
@@ -21,6 +22,7 @@ export class ConvidarPacientePageComponent implements OnInit {
   constructor(
     private auth: AuthService,
     private snack: SnackService,
+    private clipboard: Clipboard,
     private eh: ErrorHandlerService,
     private convites: ConvitesService,
     private afs: AngularFirestore,
@@ -33,6 +35,11 @@ export class ConvidarPacientePageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  copyLink() {
+    this.clipboard.copy(this.link);
+    this.snack.success('Link copiado para a àrea de transferência!');
   }
 
   onRegister(values) {

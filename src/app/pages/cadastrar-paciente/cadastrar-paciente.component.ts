@@ -17,6 +17,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class CadastroPacienteComponent implements OnInit {
   loading = false; // carregando?
   convite: any;
+  conviteId;
+  bootstrap = {
+    email: undefined,
+    nomeCompleto: undefined
+  };
 
   constructor(private auth: AuthService,
               private snack: SnackService,
@@ -27,10 +32,24 @@ export class CadastroPacienteComponent implements OnInit {
               private db: DadosService,
               private route: ActivatedRoute) {
     this.route.paramMap.subscribe(params => {
+      this.conviteId = params.get('id');
       this.convites.getConvite(params.get('id')).subscribe(res => {
         this.convite = res;
+        console.log('convite:', res);
+        this.bootstrap.email = this.convite?.email;
+        this.bootstrap.nomeCompleto = this.convite?.nomeCompleto;
+
+        if (!this.convite) {
+          this.snack.warning('Link de convite inválido!');
+          this.router.navigate(['/login']);
+        }
+        if (this.convite.used === true) {
+          this.snack.warning('Esse convite já foi usado!');
+          this.router.navigate(['/login']);
+        }
       }, error => {
-        this.eh.handle(error);
+          this.router.navigate(['/login']);
+          this.eh.handle(error);
       });
     });
   }
@@ -48,6 +67,7 @@ export class CadastroPacienteComponent implements OnInit {
         cpf: values.dadosUsuario.cpf,
         nomeCompleto: values.dadosUsuario.nomeCompleto,
         dataNascimento: values.dadosUsuario.data,
+        email: values.dadosUsuario.email,
         sexo: values.dadosUsuario.sexo,
         telefone: values.dadosUsuario.telefone,
         endereco: {
@@ -64,6 +84,7 @@ export class CadastroPacienteComponent implements OnInit {
         dadosUsuario
       }).then((result) => {
         this.loading = false;
+        this.convites.useConvite(this.conviteId);
         this.snack.success('Você se registrou com sucesso!');
         this.router.navigate(['/home']);
       }).catch((err) => {

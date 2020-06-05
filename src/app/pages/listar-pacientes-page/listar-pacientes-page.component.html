@@ -1,17 +1,23 @@
 <app-card [title]="'Lista de pacientes'">
 
-  <art-button class="enable-b" (click)="changeShouldShow()" *ngIf="!loading"  >Mostrar pacientes {{showDesabilitados?  'habilitados' : 'desabilitados'}}</art-button>
+  <art-button class="enable-b" (click)="changeShouldShow()" *ngIf="!loading">Mostrar pacientes
+    {{showDesabilitados?  'habilitados' : 'desabilitados'}}</art-button>
   <div class="centralizer" *ngIf="loading">
     <mat-spinner color="primary"></mat-spinner>
   </div>
 
-  <div *ngFor="let paciente of pacientes | async">
-    <app-person-card [grayIt]="showDesabilitados" *ngIf="shouldShow(paciente)"  [person]="paciente">
-      <art-button [routerLink]="['/paciente',paciente.uid, 'relatos']" routerLinkActive="router-link-active">Ver Relatos
-      </art-button>
-      <art-button [loading]="loadingDisabling" (click)="enableOrDisableUser(paciente)" [color]="paciente.disabled? 'green' : 'red'">{{paciente.disabled? 'Habilitar' : 'Desabilitar'}}
-        paciente</art-button>
-    </app-person-card>
+  <div fxLayout="row wrap" fxLayoutAlign="start">
+    <div fxFlex="85" class="mt-2" *ngFor="let paciente of pacientes | async">
+      <app-person-card [grayIt]="showDesabilitados" *ngIf="shouldShow(paciente)" [person]="paciente">
+        <art-button [routerLink]="['/paciente',paciente.uid, 'relatos']" routerLinkActive="router-link-active">
+          Ver Relatos
+        </art-button>
+        <art-button [loading]="loadingDisabling" (click)="enableOrDisableUser(paciente)"
+                    [color]="paciente.disabled? 'green' : 'red'">
+          {{paciente.disabled? 'Habilitar' : 'Desabilitar'}} paciente
+        </art-button>
+      </app-person-card>
+    </div>
   </div>
 
 </app-card>

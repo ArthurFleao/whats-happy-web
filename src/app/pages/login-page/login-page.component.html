@@ -14,14 +14,14 @@
     <mat-card-content [ngSwitch]="estado" class="content">
       <div *ngSwitchCase="'login'" fxLayout="column" fxLayoutAlign="center center">
         <h1 class="text-muted animate__animated animate__fadeInDown">Entrar</h1>
-        <app-form-login class="w-100 text-muted animate__animated animate__fadeIn" (submited)="onSubmit($event)">
+        <app-form-login class="w-100 animate__animated animate__fadeIn" (submited)="onSubmit($event)">
           <art-button [type]="'submit'" [loading]="loading">Entrar</art-button>
           <art-button (click)="estado = 'cadastro'" [color]="'secondary'">Cadastrar</art-button>
         </app-form-login>
       </div>
       <div *ngSwitchCase="'cadastro'" fxLayout="column" fxLayoutAlign="center center">
-        <h1 class="text-muted text-muted animate__animated animate__fadeInDown">Cadastre-se</h1>
-        <app-form-cadastro class="w-100 animate__animated animate__fadeIn" (submited)="onRegister($event)">
+        <h1 class="text-muted text-muted animate__animated animate__fadeInDown">Cadastre-se como Psicólogo</h1>
+        <app-form-cadastro [includeCrp]="true" class="w-100 animate__animated animate__fadeIn" (submited)="onRegister($event)">
           <art-button [type]="'submit'" [loading]="loading">Cadastrar</art-button>
           <art-button (click)="estado = 'login'">Voltar</art-button>
         </app-form-cadastro>

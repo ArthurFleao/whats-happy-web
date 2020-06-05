@@ -1,7 +1,6 @@
-
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
-@import '~@angular/material/theming';
+@import "~@angular/material/theming";
 // @import '~@animate.css/animate.min';
 // Plus imports for other components in your app.
 
@@ -20,7 +19,11 @@ $whats-happy-web-accent: mat-palette($mat-pink, A200, A100, A400);
 $whats-happy-web-warn: mat-palette($mat-red);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$whats-happy-web-theme: mat-light-theme($whats-happy-web-primary, $whats-happy-web-accent, $whats-happy-web-warn);
+$whats-happy-web-theme: mat-light-theme(
+  $whats-happy-web-primary,
+  $whats-happy-web-accent,
+  $whats-happy-web-warn
+);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
@@ -29,9 +32,14 @@ $whats-happy-web-theme: mat-light-theme($whats-happy-web-primary, $whats-happy-w
 
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 .ml-1 {
   margin-left: 10px !important;
@@ -102,7 +110,7 @@ mat-form-field {
 }
 
 .success-snack {
-background-color: rgb(0, 185, 9);
+  background-color: rgb(0, 185, 9);
 }
 
 mat-sidenav-container {
@@ -121,9 +129,37 @@ textarea:focus {
 .content-container {
   margin: 50px;
 }
+@media only screen and (max-width: 768px) {
+  .content-container {
+    margin: 0 !important;
+  }
+}
 
 app-relato-card {
   .mat-badge-content {
     color: transparent !important;
   }
+}
+
+mat-flat-button.mat-primary,
+.mat-raised-button.mat-primary,
+.mat-fab.mat-primary,
+.mat-mini-fab.mat-primary {
+  background: #00b7d3;
+  color: white;
+}
+
+mat-flat-button.mat-red,
+.mat-raised-button.mat-red,
+.mat-fab.mat-red,
+.mat-mini-fab.mat-red {
+  background: red;
+  color: white;
+}
+mat-flat-button.mat-green,
+.mat-raised-button.mat-green,
+.mat-fab.mat-green,
+.mat-mini-fab.mat-green {
+  background: green;
+  color: white;
 }
