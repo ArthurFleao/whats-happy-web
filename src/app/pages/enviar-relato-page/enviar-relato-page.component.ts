@@ -44,7 +44,8 @@ export class EnviarRelatoPageComponent implements OnInit {
       grauDisposicao: values.grauDisposicao,
       grauIrritabilidade: values.grauIrritabilidade,
       relato: values.relato,
-      dataHora: firebase.firestore.FieldValue.serverTimestamp()
+      dataHora: new Date().toISOString(),
+      new: true
 
     }).then((finli) => {
       this.loading = false; // indica que terminou de carregar

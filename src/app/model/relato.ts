@@ -5,4 +5,5 @@ export class Relato {
   grauIrritabilidade: string;
   relato: string;
   uid?: string;
+  new?: string;
 }

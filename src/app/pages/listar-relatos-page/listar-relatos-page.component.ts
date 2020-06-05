@@ -57,6 +57,10 @@ export class ListarRelatosPageComponent implements OnInit {
     });
   }
 
+  opened(relato) {
+    this.db.markRelatoAsSeen(this.paciente.uid, relato.uid);
+  }
+
   ngOnInit(): void {
   }
 

@@ -6,6 +6,7 @@ import { Psicologo } from '../model/psicologo';
 import { Paciente } from '../model/paciente';
 import { map } from 'rxjs/operators';
 
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -48,8 +49,34 @@ export class DadosService {
   }
 
   listRelatos(idPaciente) {
-    return this.afs.collection(`pacientes/${idPaciente}/relatos/`).valueChanges({ idField: 'uid' });
+    return this.afs.collection(`pacientes/${idPaciente}/relatos/`).valueChanges({ idField: 'uid' }).pipe(map(res => {
+      console.log('list relatos', res);
+
+      res.sort((a: any, b: any) => {
+        if (moment(a.dataHora).isAfter(moment(b.dataHora))) {
+          return -1;
+        } else {
+          return 1;
+        }
+      });
+
+      res.forEach((relato: any) => {
+        relato.dataHora = moment(relato.dataHora);
+      });
+      return res;
+    }));
   }
+
+  markRelatoAsSeen(pacienteUid, relatoUid) {
+    this.afs.collection('pacientes/' + pacienteUid + '/relatos').doc(relatoUid).update({
+      new: false
+    }).then((result) => {
+      console.log('relato visto', relatoUid);
+    }).catch((err) => {
+      console.error(err);
+    });
+  }
+
 
   registerPaciente(dados: { uid: string, responsavelUid: string, dadosUsuario: any }) {
     const pac = this.afs.collection('pacientes').doc(dados.uid).set({
