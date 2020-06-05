@@ -146,14 +146,14 @@ export class FormCadastroComponent implements OnInit {
         senha: '123456',
         confirmaSenha: '123456',
       },
-      endereco: {
-        cep: '37500292',
-        uf: 'MG Teste',
-        bairro: 'BPS Teste',
-        cidade: 'Itajubá',
-        logradouro: 'BPS Teste',
-        numero: '11',
-      }
+      // endereco: {
+      //   cep: '37500292',
+      //   uf: 'MG Teste',
+      //   bairro: 'BPS Teste',
+      //   cidade: 'Itajubá',
+      //   logradouro: 'BPS Teste',
+      //   numero: '11',
+      // }
     });
   }
 

@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  enableTests: false,
+  enableTests: true,
   firebase : {
     apiKey: 'AIzaSyA1bwjSkdQ1GTle-SNNKAQqoifLFIAZwn4',
     authDomain: 'whats-happy.firebaseapp.com',
