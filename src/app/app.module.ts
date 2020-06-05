@@ -71,6 +71,7 @@ import { ListarRelatosPageComponent } from './pages/listar-relatos-page/listar-r
 import { RelatoCardComponent } from './shared/relato-card/relato-card.component';
 import { GrauPipe } from './pipes/grau.pipe';
 import {ClipboardModule} from '@angular/cdk/clipboard';
+import { NgxViacepModule } from '@brunoc/ngx-viacep'; // Importando o módulo
 
 const material = [
   ClipboardModule,
@@ -141,6 +142,7 @@ const material = [
     material,
     BrowserModule,
     FlexLayoutModule,
+    NgxViacepModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,

@@ -1,9 +1,12 @@
+import { ErrorHandlerService } from './../../services/error-handler.service';
 import { environment } from './../../../environments/environment';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { matchingPasswords } from 'src/assets/utils/app-validators';
 // model para usuario
 import { DadosUsuario } from './../../model/dadosUsuario';
+import { NgxViacepService, ErroCep, Endereco } from '@brunoc/ngx-viacep'; // Importando o serviço
+import { debounce, debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-form-cadastro',
@@ -29,6 +32,8 @@ export class FormCadastroComponent implements OnInit {
   @Output()
   formChange = new EventEmitter(); // evento de mudança no form
 
+  cepAnterior;
+
   @Input()
   formEndereco: FormGroup; // É um grupo de Form Controls, permite controle de estado de validade de tudo que tem dentro, e
   // comandos utilitários tambem, permite que se nescessário, o componente de cima possa interferir no form
@@ -40,10 +45,15 @@ export class FormCadastroComponent implements OnInit {
 
   @Output()
   submited = new EventEmitter(); // evento de envio no form
+  cepHasErrors: boolean;
+  loadingCep: boolean;
   constructor(
-    private fb: FormBuilder// importa o formbuilder para poder usar
+    private fb: FormBuilder, // importa o formbuilder para poder usar
+    private viacep: NgxViacepService,
+    private eh: ErrorHandlerService,
   ) {
   }
+
 
   ngOnInit(): void {
 
@@ -78,9 +88,39 @@ export class FormCadastroComponent implements OnInit {
 
     this.formChange.emit(this.form); // emite o form construido para cima
     this.form.valueChanges.subscribe(c => { // sempre que houver uma mudança no form
+      // console.log('value change', c);
       this.formChange.emit(this.form); // emite o form para cima
     });
+
+    this.form.get('endereco').get('cep').valueChanges.pipe(debounceTime(500)).subscribe(cep => {
+      if (cep !== this.cepAnterior) {
+        this.cepAnterior = cep;
+        this.loadingCep = true;
+        this.viacep.buscarPorCep(this.cepAnterior).then((endereco: Endereco) => {
+          this.form.patchValue({
+            endereco: {
+              cep: endereco.cep,
+              uf: endereco.uf,
+              bairro: endereco.bairro,
+              cidade: endereco.localidade,
+              logradouro: endereco.logradouro,
+            }
+          });
+          this.loadingCep = false;
+          this.form.get('endereco').get('cep').setErrors(null);
+        }).catch((error: ErroCep) => {
+          this.form.get('endereco').get('cep').setErrors({
+            invalidCep: true
+          });
+          this.loadingCep = false;
+          console.error(error.message);
+          // this.eh.handle(error.message);
+        });
+      }
+    });
   }
+
+
 
   onSubmit() {
 
@@ -96,7 +136,7 @@ export class FormCadastroComponent implements OnInit {
     const id = this.rand();
     this.form.patchValue({
       dadosUsuario: {
-        email: 'email' +   id + '@teste.com',
+        email: 'email' + id + '@teste.com',
         nomeCompleto: 'Nome de Teste ' + id,
         cpf: '11111111111',
         sexo: 'm',
