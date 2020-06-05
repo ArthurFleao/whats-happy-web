@@ -1,5 +1,5 @@
 import { Relato } from './../../model/relato';
-import { Component, OnInit, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import * as moment from 'moment';
 @Component({
   selector: 'app-relato-card',
@@ -8,6 +8,8 @@ import * as moment from 'moment';
 })
 export class RelatoCardComponent implements OnInit {
   @Input() relato: Relato;
+
+  @Output()
   relatoOpened = new EventEmitter<any>();
 
   constructor() { }
@@ -24,7 +26,7 @@ export class RelatoCardComponent implements OnInit {
   }
 
   opened() {
-    this.relatoOpened.emit(this.relato);
+    if (this.relato.new) { this.relatoOpened.emit(this.relato); }
   }
 
 }

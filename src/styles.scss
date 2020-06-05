@@ -121,3 +121,9 @@ textarea:focus {
 .content-container {
   margin: 50px;
 }
+
+app-relato-card {
+  .mat-badge-content {
+    color: transparent !important;
+  }
+}

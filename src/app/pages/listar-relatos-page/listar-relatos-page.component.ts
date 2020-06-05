@@ -20,6 +20,7 @@ export class ListarRelatosPageComponent implements OnInit {
   loadingRelatos;
   paciente;
   relatos;
+  pacienteUid;
 
 
   constructor(
@@ -32,6 +33,7 @@ export class ListarRelatosPageComponent implements OnInit {
     private db: DadosService,
     private route: ActivatedRoute) {
     this.route.paramMap.subscribe(params => {
+      this.pacienteUid = (params.get('id'));
       this.db.getPacienteData(params.get('id')).subscribe(res => {
         this.paciente$.next(res);
         this.paciente = res;
@@ -58,7 +60,7 @@ export class ListarRelatosPageComponent implements OnInit {
   }
 
   opened(relato) {
-    this.db.markRelatoAsSeen(this.paciente.uid, relato.uid);
+    this.db.markRelatoAsSeen(this.pacienteUid, relato.uid);
   }
 
   ngOnInit(): void {

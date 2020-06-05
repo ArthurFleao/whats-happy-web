@@ -1,4 +1,4 @@
-<div matBadge="." matBadgeColor="warn" [matBadgeHidden]="!relato.new">
+<div matBadge="." matBadgeColor="warn" matBadgeSize="small" [matBadgeHidden]="!relato.new">
   <mat-expansion-panel  (opened)="opened()" [hideToggle]="false">
     <mat-expansion-panel-header >
       <mat-panel-title [matTooltip]="getComplete(relato.dataHora)" >{{getFromNow(relato.dataHora)}}</mat-panel-title>
