@@ -59,9 +59,12 @@ export class PerfilPageComponent implements OnInit {
   }
 
   updateData(values){
+    const data = values.dadosUsuario;
+    data.endereco = values.endereco;
+
 
     this.loading = true; // indica que está carregando algo // indica que está carregando algo
-    this.afs.collection('dadosUsuario').doc(this.myUid).update(values).then((finli) => {
+    this.afs.collection('dadosUsuario').doc(this.myUid).update(data).then((finli) => {
       this.loading = false; // indica que terminou de carregar
       this.snack.success('Perfil editado com sucesso!');
       // FIX
