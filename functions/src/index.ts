@@ -39,6 +39,30 @@ export const maintainUserData = functions.firestore.document('dadosUsuario/{user
   });
 })
 
+export const checkDeactivation = functions.firestore.document('pacientes/{userId}').onWrite((change, context) => {
+  if (change) {
+    const data = change.after.data();
+    const uid = (change.after.id);
+    if (data) {
+      if (data.disabled === true) {
+        admin.auth().updateUser(uid, { disabled: true }).then(res => {
+          console.log('user disabled: ', uid);
+
+        }).catch(err => {
+          console.log('error disabling user', err);
+        });
+      } else {
+        admin.auth().updateUser(uid, { disabled: false }).then(res => {
+          console.log('user enabled: ', uid);
+
+        }).catch(err => {
+          console.log('error enabling user', err);
+        });
+      }
+    }
+  }
+
+})
 export const registerPaciente = functions.https.onRequest((req, res) => {
   res.set('Access-Control-Allow-Origin', '*'); // permtie CORS
   if (req.method === 'OPTIONS') {

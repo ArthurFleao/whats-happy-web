@@ -20,8 +20,8 @@ export class DadosService {
     return this.afs.collection('dadosUsuario').doc(uid).valueChanges();
   }
 
-  //retorna a lista de pacientes do psicólogo logado
-  getListaPacientes(uid){
+  // retorna a lista de pacientes do psicólogo logado
+  getListaPacientes(uid) {
     return this.afs.collection('psicologos').doc(uid).collection('pacientes').valueChanges();
   }
 
@@ -48,10 +48,10 @@ export class DadosService {
   }
 
   listRelatos(idPaciente) {
-    return this.afs.collection(`pacientes/${idPaciente}/relatos/`).valueChanges({idField: 'uid'});
+    return this.afs.collection(`pacientes/${idPaciente}/relatos/`).valueChanges({ idField: 'uid' });
   }
 
-  registerPaciente(dados: {uid: string, responsavelUid: string, dadosUsuario: any}) {
+  registerPaciente(dados: { uid: string, responsavelUid: string, dadosUsuario: any }) {
     const pac = this.afs.collection('pacientes').doc(dados.uid).set({
       responsavel: this.afs.collection('psicologos').doc(dados.responsavelUid).ref,
       dadosUsuario: dados.dadosUsuario
@@ -65,6 +65,31 @@ export class DadosService {
 
     return Promise.all([pac, data, psi]);
 
+  }
+
+
+  disablePaciente(uid) {
+    return this.afs.collection('pacientes').doc(uid).update({
+      disabled: true
+    });
+  }
+
+  disablePsicologo(uid) {
+    return this.afs.collection('psicologos').doc(uid).update({
+      disabled: true
+    });
+  }
+
+  enablePsicologo(uid) {
+    return this.afs.collection('psicologos').doc(uid).update({
+      disabled: false
+    });
+  }
+
+  enablePaciente(uid) {
+    return this.afs.collection('pacientes').doc(uid).update({
+      disabled: false
+    });
   }
 
   // superGet(doc) {

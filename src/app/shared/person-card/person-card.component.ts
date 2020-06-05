@@ -9,6 +9,9 @@ import { User } from 'src/app/model/user';
 export class PersonCardComponent implements OnInit {
   @Input()
   person: User;
+
+  @Input()
+  grayIt: boolean;
   constructor() { }
 
   ngOnInit(): void {

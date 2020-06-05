@@ -34,6 +34,9 @@ export class ErrorHandlerService {
       case 'auth/email-already-in-use':
         this.snack.warning('Esse e-mail já foi cadastrado');
         break;
+      case 'auth/user-disabled':
+        this.snack.warning('Essa conta foi desabilitada! Se não esperava por isso, entre em contato com seu responsável.');
+        break;
 
       default:
         this.snack.danger('Ocorreu um erro inesperado! Tente novamente.');

@@ -15,6 +15,7 @@ import { AngularFireFunctions } from '@angular/fire/functions';
 // redirecionamento de rotas
 import { Router } from '@angular/router';
 import { User } from '../model/user';
+import { SnackService } from './snack.service';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,7 @@ export class AuthService {
     private fns: AngularFireFunctions,
     private db: DadosService,
     private eh: ErrorHandlerService,
+    private snack: SnackService,
     private router: Router
   ) {
     this.user$ = new Observable((observer) => {
@@ -67,6 +69,11 @@ export class AuthService {
             this.user.isPaciente = !!res;
             // console.log('dadosPaciente changed', this.user);
             observer.next(this.user);
+            if (res?.disabled) {
+              this.logout();
+              this.snack.warning('Essa conta foi desabilitada! Se não esperava por isso, contate seu responsável.');
+              this.router.navigate(['/login']);
+            }
           }, error => {
             observer.error();
             this.eh.handle(error);
@@ -88,6 +95,7 @@ export class AuthService {
   register(email, senha, dados?: DadosUsuario): Promise<firebase.auth.UserCredential> {
     return this.auth.createUserWithEmailAndPassword(email, senha);
   }
+
 
 
   // usuario logado

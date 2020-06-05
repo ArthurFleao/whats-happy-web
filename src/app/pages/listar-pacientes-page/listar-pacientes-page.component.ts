@@ -6,6 +6,7 @@ import { DadosUsuario } from 'src/app/model/dadosUsuario';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { forkJoin, Observable, Subject } from 'rxjs';
 import { first, map } from 'rxjs/operators';
+import { SnackService } from 'src/app/services/snack.service';
 
 @Component({
   selector: 'app-listar-pacientes-page',
@@ -19,9 +20,12 @@ export class ListarPacientesPageComponent implements OnInit {
   dadosUsuario: any;
   loading = true;
   pacientes = new Subject<Array<any>>();
+  loadingDisabling: any;
+  showDesabilitados = false;
 
   constructor(
     private authService: AuthService,
+    private snack: SnackService,
     private db: DadosService,
     private afs: AngularFirestore,
     private eh: ErrorHandlerService,
@@ -43,7 +47,7 @@ export class ListarPacientesPageComponent implements OnInit {
           // coloca todos os pacientes do psicologo no array
 
           arrayTodosPacientes.push(this.afs.doc(paciente.paciente).valueChanges().pipe(first(), map(pres => {
-            let newRes: any = pres;
+            const newRes: any = pres;
             newRes.uid = this.afs.doc(paciente.paciente).ref.id;
             return pres;
           })));
@@ -63,6 +67,41 @@ export class ListarPacientesPageComponent implements OnInit {
       });
     });
 
+  }
+
+  enableOrDisableUser(paciente) {
+    this.loadingDisabling = true;
+    if (paciente.disabled) {
+      this.db.enablePaciente(paciente.uid).then((result) => {
+        console.log('result', result);
+        this.snack.success('Paciente foi habilitado!');
+        this.loadingDisabling = false;
+        paciente.disabled = false;
+      }).catch((err) => {
+        this.loadingDisabling = false;
+        this.eh.handle(err);
+      });
+    }
+    else {
+      this.db.disablePaciente(paciente.uid).then((result) => {
+        console.log('result', result);
+        this.loadingDisabling = false;
+        this.snack.success('Paciente foi desabilitado!');
+        paciente.disabled = true;
+      }).catch((err) => {
+        this.loadingDisabling = false;
+        this.eh.handle(err);
+      });
+    }
+  }
+
+  changeShouldShow() {
+    this.showDesabilitados = !this.showDesabilitados;
+  }
+
+  shouldShow(paciente) {
+    return this.showDesabilitados ? paciente.disabled ? true : false : paciente.disabled ? false : true;
+    // return true;
   }
 
   ngOnInit(): void {
