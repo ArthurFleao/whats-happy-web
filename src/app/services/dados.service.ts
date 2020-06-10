@@ -119,6 +119,12 @@ export class DadosService {
     });
   }
 
+  getProntuario(uid){
+
+    return this.afs.collection('pacientes').doc(uid).collection('fichasConsultas').get()
+
+  }
+
   // superGet(doc) {
   //   const subs = [];
   //   this.findRefs(doc, subs);
