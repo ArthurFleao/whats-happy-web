@@ -72,7 +72,8 @@ import { RelatoCardComponent } from './shared/relato-card/relato-card.component'
 import { GrauPipe } from './pipes/grau.pipe';
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import { NgxViacepModule } from '@brunoc/ngx-viacep';
-import { RegistrarConsultaPageComponent } from './pages/registrar-consulta-page/registrar-consulta-page.component'; // Importando o módulo
+import { RegistrarConsultaPageComponent } from './pages/registrar-consulta-page/registrar-consulta-page.component';
+import { FormRegistrarConsultaComponent } from './shared/form-registrar-consulta/form-registrar-consulta.component'; // Importando o módulo
 
 const material = [
   ClipboardModule,
@@ -139,6 +140,7 @@ const material = [
     RelatoCardComponent,
     GrauPipe,
     RegistrarConsultaPageComponent,
+    FormRegistrarConsultaComponent,
   ],
   imports: [
     material,
