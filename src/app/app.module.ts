@@ -71,7 +71,9 @@ import { ListarRelatosPageComponent } from './pages/listar-relatos-page/listar-r
 import { RelatoCardComponent } from './shared/relato-card/relato-card.component';
 import { GrauPipe } from './pipes/grau.pipe';
 import {ClipboardModule} from '@angular/cdk/clipboard';
-import { NgxViacepModule } from '@brunoc/ngx-viacep'; // Importando o módulo
+import { NgxViacepModule } from '@brunoc/ngx-viacep';
+import { RecorderComponent } from './shared/recorder/recorder.component'; // Importando o módulo
+import { NgxAudioPlayerModule } from 'ngx-audio-player';
 
 const material = [
   ClipboardModule,
@@ -137,11 +139,13 @@ const material = [
     ListarRelatosPageComponent,
     RelatoCardComponent,
     GrauPipe,
+    RecorderComponent,
   ],
   imports: [
     material,
     BrowserModule,
     FlexLayoutModule,
+    NgxAudioPlayerModule.forRoot(),
     NgxViacepModule,
     AppRoutingModule,
     HttpClientModule,

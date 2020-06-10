@@ -1,0 +1,6 @@
+{{status}}
+<br>
+{{recordingTime | async}}
+<br>
+<art-button *ngIf="!recorder" (click)="startRecording()">GRAVAR</art-button>
+<art-button *ngIf="recorder"  (click)="stopRecording()">PARAR</art-button>

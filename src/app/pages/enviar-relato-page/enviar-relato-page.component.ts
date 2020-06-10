@@ -1,10 +1,11 @@
 import { ErrorHandlerService } from './../../services/error-handler.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Sanitizer } from '@angular/core';
 import { SnackService } from 'src/app/services/snack.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthService } from './../../services/auth.service';
 import * as firebase from 'firebase';
 import { Router } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-enviar-relato-page',
@@ -15,11 +16,13 @@ export class EnviarRelatoPageComponent implements OnInit {
 
   myUid: string; // uid do usuário
   loading = false; // carregando?
+  audioUrl: string;
 
   constructor(
     private auth: AuthService,
     private afs: AngularFirestore,
     private snack: SnackService,
+    private sanitizer: DomSanitizer,
     private router: Router,
     private eh: ErrorHandlerService,
   ) {
@@ -54,6 +57,13 @@ export class EnviarRelatoPageComponent implements OnInit {
     }).catch((err) => {
       this.eh.handle(err);
     });
+  }
+
+  onAudioRecorded(audio) {
+    console.log(audio);
+    let link: any = URL.createObjectURL(audio.blob);
+    link = this.sanitizer.bypassSecurityTrustUrl(link);
+    this.audioUrl = link;
   }
 
 }
