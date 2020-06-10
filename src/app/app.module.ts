@@ -74,6 +74,8 @@ import {ClipboardModule} from '@angular/cdk/clipboard';
 import { NgxViacepModule } from '@brunoc/ngx-viacep';
 import { RecorderComponent } from './shared/recorder/recorder.component'; // Importando o módulo
 import { NgxAudioPlayerModule } from 'ngx-audio-player';
+import { RegistrarConsultaPageComponent } from './pages/registrar-consulta-page/registrar-consulta-page.component';
+import { FormRegistrarConsultaComponent } from './shared/form-registrar-consulta/form-registrar-consulta.component'; // Importando o módulo
 
 const material = [
   ClipboardModule,
@@ -140,6 +142,8 @@ const material = [
     RelatoCardComponent,
     GrauPipe,
     RecorderComponent,
+    RegistrarConsultaPageComponent,
+    FormRegistrarConsultaComponent,
   ],
   imports: [
     material,

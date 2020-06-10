@@ -1,9 +1,3 @@
-<app-card [title]="'Prontuario'">
-  <div *ngIf="loading" class="centralizer">
-    <mat-spinner color="primary"></mat-spinner>
-  </div>
-  <app-form-prontuario class="w-100" [bootstrap]="dadosUsuario" *ngIf="!loading"  (submited)="salvarProntuario($event)">
-    <!-- Botão será inserido no <ng-content> do app-form-cadastro  -->
-    <art-button [type]="'submit'" [loading]="loading">Salvar Prontuário</art-button>
-  </app-form-prontuario>
-</app-card>
+<p>Implementando</p>
+
+<p *ngFor="let ficha of arrayFichasCadastro">{{ficha.condutaPsicologica}}</p>
