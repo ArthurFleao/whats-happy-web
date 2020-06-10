@@ -65,6 +65,14 @@ export class MenuLateralComponent implements OnInit {
 
     {
       perfilUsuario: 'psicologo',
+      tituloItemMenu: 'Registrar Consulta',
+      link: '/registrarConsulta',
+      icone: 'description'
+    },
+
+
+    {
+      perfilUsuario: 'psicologo',
       tituloItemMenu: 'Prontuário',
       link: '/prontuario',
       icone: 'assignment'

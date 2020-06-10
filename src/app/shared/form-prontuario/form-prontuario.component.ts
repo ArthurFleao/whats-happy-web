@@ -22,6 +22,9 @@ export class FormProntuarioComponent implements OnInit {
   @Output()
   submited = new EventEmitter(); // evento de envio no form
 
+  @Input()
+  pacientesArray; // se quizer inicialisar o form
+
   constructor(
     private fb: FormBuilder// importa o formbuilder para poder usar
   ) { }
@@ -33,14 +36,14 @@ export class FormProntuarioComponent implements OnInit {
       // ------------------------ dados do usuario -------------
       dadosUsuario: this.fb.group({
         // formName: ['valorInicial', Validator]
-        nomePaciente: [this.bootstrap?.paciente || '', Validators.nullValidator],
+        idPaciente: [this.bootstrap?.paciente || '', Validators.nullValidator],
         sexo: [this.bootstrap?.sexo || '', Validators.nullValidator],
         dataNascimento: [this.bootstrap?.dataNascimento || '', Validators.nullValidator],
         psicologo: [this.bootstrap?.nomeCompleto || '', Validators.nullValidator],
       }),
 
       // ------------------------ protuário -------------
-      prontuario: this.fb.group({
+      registroConsulta: this.fb.group({
         // formName: ['valorInicial', Validator]
         dcHda: [this.bootstrap?.dcHda || '', Validators.required],
         reacoesFrenteDiagnostico: [this.bootstrap?.reacoesFrenteDiagnostico || '', Validators.required],

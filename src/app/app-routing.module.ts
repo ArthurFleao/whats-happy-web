@@ -14,6 +14,7 @@ import { EnviarRelatoPageComponent } from './pages/enviar-relato-page/enviar-rel
 import { PerfilPageComponent } from './pages/perfil-page/perfil-page.component';
 import { ProntuarioPageComponent } from './pages/prontuario-page/prontuario-page.component';
 import { ListarPacientesPageComponent } from './pages/listar-pacientes-page/listar-pacientes-page.component';
+import { RegistrarConsultaPageComponent } from './pages/registrar-consulta-page/registrar-consulta-page.component';
 
 
 const redirectUnauthorizedToHome = () => redirectUnauthorizedTo(['login']);
@@ -28,6 +29,7 @@ const routes: Routes = [
   { path: 'enviarRelato', component: EnviarRelatoPageComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToHome } },
   { path: 'perfil', component: PerfilPageComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToHome } },
   { path: 'prontuario', component: ProntuarioPageComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToHome } },
+  { path: 'registrarConsulta', component: RegistrarConsultaPageComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToHome } },
   { path: 'listarPacientes', component: ListarPacientesPageComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToHome } },
   {
     path: 'paciente/:id', canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToHome },
