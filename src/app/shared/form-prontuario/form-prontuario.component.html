@@ -1,1 +1,98 @@
-<p>Implementando</p>
+<form focusInvalidInput class="w-100" [formGroup]="form">
+
+  <div fxLayout="column" class="w-100" fxLayoutAlign="center">
+    <fieldset formArrayName="cabecalhoProtuario">
+
+      <div fxFlex="100">
+          <mat-form-field appearance="outline">
+            <mat-label>Paciente:</mat-label>
+            <select matNativeControl required formControlName="idPaciente" (change)="onChange($event.target.value)" >
+              <option  *ngFor="let paciente of pacientesArray | async" [value]="paciente.uid">{{paciente.dadosUsuario.nomeCompleto}}</option>
+            </select>
+          </mat-form-field>
+      </div>
+
+      <div fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label>Sexo</mat-label>
+          <input matInput required formControlName="sexo" placeholder="sexo" readonly>
+
+        </mat-form-field>
+      </div>
+      <div fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label>Data Nascimento</mat-label>
+          <input matInput required formControlName="dataNascimento" placeholder="data nascimento" readonly>
+
+        </mat-form-field>
+      </div>
+    </fieldset>
+
+    <!-- protuario -->
+    <fieldset formArrayName="registroConsulta">
+
+      <div *ngFor="let ficha of arrayDadosFichasCadastro">
+        <div fxFlex>
+          <mat-form-field appearance="outline">
+            <mat-label>DC/HDA - Diagnoóstigo clinico e história da doença atual</mat-label>
+            <textarea matInput  [value] = "ficha.dcHda" placeholder="DC/HDA - Diagnoóstigo clinico e história da doença atual" readonly></textarea>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex>
+          <mat-form-field appearance="outline">
+            <mat-label>Reações frente ao diagnóstico</mat-label>
+            <textarea matInput [value] = "ficha.reacoesFrenteDiagnostico" placeholder="Reações frente ao diagnóstico" readonly></textarea>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex>
+          <mat-form-field appearance="outline">
+            <mat-label>Estado emocional atual e mecanismo de enfrentamento</mat-label>
+            <textarea matInput [value] = "ficha.estadoEmocionalAtual" placeholder="Estado emocional atual e mecanismo de enfrentamento" readonly></textarea>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex>
+          <mat-form-field appearance="outline">
+            <mat-label>Histórico pessoal e familiar (avaliação psicossocial)</mat-label>
+            <textarea matInput [value] = "ficha.historicoPessoal" placeholder="Histórico pessoal e familiar (avaliação psicossocial)" readonly></textarea>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex>
+          <mat-form-field appearance="outline">
+            <mat-label>Exame psiquico / sinais e sintomas piscopatológicos</mat-label>
+            <textarea matInput [value] = "ficha.examePsiquico" placeholder="Exame psiquico / sinais e sintomas piscopatológicos" readonly></textarea>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex>
+          <mat-form-field appearance="outline">
+            <mat-label>Conduta psicológica</mat-label>
+            <textarea matInput [value] = "ficha.condutaPsicologica" placeholder="Conduta psicológica" readonly></textarea>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex>
+          <mat-form-field appearance="outline">
+            <mat-label>Orientação à equipe e/ou familiares - acompanhantes</mat-label>
+            <textarea matInput [value] = "ficha.orientacao" placeholder="Orientação à equipe e/ou familiares - acompanhantes" readonly></textarea>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex>
+          <mat-form-field appearance="outline">
+            <mat-label>Outros</mat-label>
+            <textarea matInput [value] = "ficha.Outros" placeholder="Orientação à equipe e/ou familiares - acompanhantes" readonly></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+    </fieldset>
+
+  </div>
+
+  <!-- O NG CONTENT, É ONDE VAI SAIR O QUE VOCÊ ENFIAR PELO COMPONENTE DE CIMA, geralmente vai ser um botão -->
+  <ng-content>
+  </ng-content>
+</form>

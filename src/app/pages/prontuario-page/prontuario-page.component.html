@@ -1,3 +1,5 @@
-<p>Implementando</p>
+<app-card [title]="'Protuário'">
+  <app-form-prontuario class="w-100" [arrayDadosFichasCadastro]="arrayFichasCadastro" [pacientesArray] = "pacientes" (formChange) = "getFichasConsultas($event)">
+  </app-form-prontuario>
+</app-card>
 
-<p *ngFor="let ficha of arrayFichasCadastro">{{ficha.condutaPsicologica}}</p>
