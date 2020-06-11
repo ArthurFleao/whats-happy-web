@@ -1,5 +1,12 @@
 <app-card [title]="'Enviar relato'">
+
+
   <app-form-enviar-relato class="w-100" (submited)="enviarRelato($event)">
+    <div *ngIf="audio && loading">
+      <mat-progress-bar [mode]="uploadPercentage? 'determinate' : 'query'" [value]="uploadPercentage | async"
+                        color="primary">
+      </mat-progress-bar>
+    </div>
     <art-button [type]="'submit'" [loading]="loading">Enviar Relato</art-button>
   </app-form-enviar-relato>
 
@@ -8,5 +15,5 @@
                             [displayVolumeControls]="true"></mat-basic-audio-player>
   </div>
 
-  <app-recorder (recorded)="onAudioRecorded($event)"></app-recorder>
+  <app-recorder [disableButtons]="loading" (recorded)="onAudioRecorded($event)"></app-recorder>
 </app-card>

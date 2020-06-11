@@ -6,4 +6,5 @@ export class Relato {
   relato: string;
   uid?: string;
   new?: string;
+  hasAudio?: boolean;
 }

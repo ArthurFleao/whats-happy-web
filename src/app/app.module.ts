@@ -76,7 +76,7 @@ import { RecorderComponent } from './shared/recorder/recorder.component'; // Imp
 import { NgxAudioPlayerModule } from 'ngx-audio-player';
 import { RegistrarConsultaPageComponent } from './pages/registrar-consulta-page/registrar-consulta-page.component';
 import { FormRegistrarConsultaComponent } from './shared/form-registrar-consulta/form-registrar-consulta.component'; // Importando o módulo
-
+import { AngularFireStorageModule } from '@angular/fire/storage';
 const material = [
   ClipboardModule,
   MatAutocompleteModule,
@@ -149,6 +149,7 @@ const material = [
     material,
     BrowserModule,
     FlexLayoutModule,
+    AngularFireStorageModule,
     NgxAudioPlayerModule.forRoot(),
     NgxViacepModule,
     AppRoutingModule,

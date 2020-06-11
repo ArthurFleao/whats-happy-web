@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import * as RecordRTC from 'recordrtc';
 import * as moment from 'moment';
 import { Subject, Observable } from 'rxjs';
@@ -9,7 +9,8 @@ import { Subject, Observable } from 'rxjs';
   styleUrls: ['./recorder.component.scss']
 })
 export class RecorderComponent implements OnInit {
-
+  @Input()
+  disableButtons;
   private stream;
   recorder;
   private interval;
