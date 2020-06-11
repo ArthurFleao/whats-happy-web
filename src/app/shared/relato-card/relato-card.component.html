@@ -1,13 +1,22 @@
 <div matBadge="." matBadgeColor="warn" matBadgeSize="small" [matBadgeHidden]="!relato.new">
-  <mat-expansion-panel  (opened)="opened()" [hideToggle]="false">
+  <mat-expansion-panel  (afterExpand)="opened()" [hideToggle]="false">
     <mat-expansion-panel-header >
       <mat-panel-title [matTooltip]="getComplete(relato.dataHora)" >{{getFromNow(relato.dataHora)}}</mat-panel-title>
       <mat-panel-description>
         {{relato.grauFelicidade | grau : 'f'}} -
         {{relato.grauDisposicao | grau: 'd'}} -
         {{relato.grauIrritabilidade | grau : 'i'}}
+        <mat-icon style="margin-right: 5px;" *ngIf="relato.hasAudio"  >volume_up</mat-icon>
       </mat-panel-description>
     </mat-expansion-panel-header>
+    <div *ngIf="relato.hasAudio" >
+      <mat-basic-audio-player *ngIf="!audioIsFucked"  [audioUrl]="audioUrl" [autoPlay]="false" muted="muted" [displayTitle]="false"
+      [displayVolumeControls]="true"></mat-basic-audio-player>
+
+      <div *ngIf="audioIsFucked"  class="centralizer">
+        <p style="color:red">Houve um problema ao encontrar o áudio deste relato.</p>
+      </div>
+    </div>
     {{relato.relato || 'Sem relato'}}
   </mat-expansion-panel>
 </div>

@@ -50,7 +50,7 @@ export class DadosService {
 
   listRelatos(idPaciente) {
     return this.afs.collection(`pacientes/${idPaciente}/relatos/`).valueChanges({ idField: 'uid' }).pipe(map(res => {
-      console.log('list relatos', res);
+
 
       res.sort((a: any, b: any) => {
         if (moment(a.dataHora).isAfter(moment(b.dataHora))) {
@@ -62,7 +62,9 @@ export class DadosService {
 
       res.forEach((relato: any) => {
         relato.dataHora = moment(relato.dataHora);
+        relato.pacienteUid = idPaciente;
       });
+
       return res;
     }));
   }
@@ -121,7 +123,7 @@ export class DadosService {
 
   getProntuario(uid){
 
-    return this.afs.collection('pacientes').doc(uid).collection('fichasConsultas').get()
+    return this.afs.collection('pacientes').doc(uid).collection('fichasConsultas').get();
 
   }
 

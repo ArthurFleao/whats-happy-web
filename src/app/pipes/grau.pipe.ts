@@ -20,7 +20,7 @@ export class GrauPipe implements PipeTransform {
         r = null;
         break;
     }
-    console.log('r', r);
+    // console.log('r', r);
 
     return r;
   }

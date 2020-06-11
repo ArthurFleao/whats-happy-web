@@ -39,7 +39,17 @@ export class ListarRelatosPageComponent implements OnInit {
         this.paciente = res;
         this.loadingRelatos = true;
         this.db.listRelatos(params.get('id')).subscribe(relatos => {
+          if (this.relatos) {
+            if (this.relatos.length !== relatos.length) {
+              this.relatos = relatos;
+              this.snack.warning('O paciente acabou de fazer um novo relato!');
+            } else {
+              console.log('relatos not updated because just the new changed');
+
+            }
+          } else {
           this.relatos = relatos;
+          }
           console.log('relatos', relatos);
 
           this.loadingRelatos = false;
