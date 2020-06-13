@@ -1,5 +1,6 @@
 import * as functions from 'firebase-functions'; // importa funcoes
 import * as admin from 'firebase-admin'; // importa ações de admin
+import * as speech from '@google-cloud/speech';
 // admin.initializeApp(functions.config().firebase);
 admin.initializeApp();
 const db = admin.firestore();
@@ -38,6 +39,52 @@ export const maintainUserData = functions.firestore.document('dadosUsuario/{user
     console.log("Error getting document:", error);
   });
 })
+
+export const onFileStored = functions.storage.object().onFinalize(async (object) => {
+  console.info('FILE STORED', object);
+
+  // Creates a client
+  const client = new speech.SpeechClient();
+
+  const gcsUri = 'gs://' + object.bucket + '/' + object.name;
+  // const encoding = 'LINEAR16';
+  // const sampleRateHertz = 16000;
+  const languageCode = 'pt-BR';
+
+  const config = {
+    // encoding: encoding,
+    // sampleRateHertz: sampleRateHertz,
+    languageCode: languageCode,
+  };
+  const audio = {
+    uri: gcsUri,
+  };
+
+  const request: any = {
+    config: config,
+    audio: audio,
+  };
+
+  const path: any = object.name?.split('/');
+  const pacienteId = path[0];
+  const relatoId = path[1];
+
+  // Detects speech in the audio file
+  console.info('URI', gcsUri);
+  console.info('PATH', gcsUri);
+  client.recognize(request).then((result) => {
+    console.info('Transcription: ', result);
+    db.collection(`pacientes/${pacienteId}/relatos`).doc(relatoId).update({ transcription: result }).then((saved) => {
+      console.log('SAVED TO DB!', saved);
+
+    }).catch((err) => {
+      console.error(err);
+    });
+
+  }).catch((err) => {
+    console.error('Transcription failed: ', err);
+  });
+});
 
 export const checkDeactivation = functions.firestore.document('pacientes/{userId}').onWrite((change, context) => {
   if (change) {

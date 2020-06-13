@@ -50,7 +50,8 @@ export class RecorderComponent implements OnInit {
 
     this.recorder = new RecordRTC.StereoAudioRecorder(this.stream, {
       type: 'audio',
-      mimeType: 'audio/wav'
+      mimeType: 'audio/wav',
+      numberOfAudioChannels: 1,
     });
 
     this.status = 'gravando';
