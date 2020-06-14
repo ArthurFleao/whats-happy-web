@@ -36,12 +36,12 @@
         <h4>Gênero</h4>
         <mat-form-field appearance="outline">
           <mat-label>Gênero:</mat-label>
-          <select matNativeControl required formControlName="sexo">
-            <option value="m">Masculino</option>
-            <option value="f">Feminino</option>
-            <option value="outro">Outro</option>
-            <option value="no">Não especificar</option>
-          </select>
+          <mat-select   required formControlName="sexo">
+            <mat-option value="m">Masculino</mat-option>
+            <mat-option value="f">Feminino</mat-option>
+            <mat-option value="outro">Outro</mat-option>
+            <mat-option value="no">Não especificar</mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
       <div fxFlex="100">

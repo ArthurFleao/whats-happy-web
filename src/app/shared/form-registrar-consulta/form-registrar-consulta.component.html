@@ -7,9 +7,9 @@
       <div fxFlex="100">
           <mat-form-field appearance="outline">
             <mat-label>Paciente:</mat-label>
-            <select matNativeControl required formControlName="idPaciente">
-              <option  *ngFor="let paciente of pacientesArray | async" [value]="paciente.uid">{{paciente.dadosUsuario.nomeCompleto}}</option>
-            </select>
+            <mat-select   required formControlName="idPaciente">
+              <mat-option  *ngFor="let paciente of pacientesArray | async" [value]="paciente.uid">{{paciente.dadosUsuario.nomeCompleto}}</mat-option>
+            </mat-select>
           </mat-form-field>
       </div>
 
