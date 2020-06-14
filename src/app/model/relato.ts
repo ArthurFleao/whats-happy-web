@@ -7,5 +7,9 @@ export class Relato {
   uid?: string;
   new?: boolean;
   hasAudio?: boolean;
+  audioTranscrito?: string;
+  transcript?: [];
   pacienteUid: string;
+  transcriptionFailed?: any;
+  noResults: boolean;
 }

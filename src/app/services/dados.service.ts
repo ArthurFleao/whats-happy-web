@@ -49,7 +49,7 @@ export class DadosService {
   }
 
   listRelatos(idPaciente) {
-    return this.afs.collection(`pacientes/${idPaciente}/relatos/`).valueChanges({ idField: 'uid' }).pipe(map(res => {
+    return this.afs.collection(`pacientes/${idPaciente}/relatos/`).valueChanges({ idField: 'uid' }).pipe(map((res: any) => {
 
 
       res.sort((a: any, b: any) => {
@@ -60,10 +60,34 @@ export class DadosService {
         }
       });
 
+      let audioTranscrito;
+      let noResults = true;
       res.forEach((relato: any) => {
         relato.dataHora = moment(relato.dataHora);
         relato.pacienteUid = idPaciente;
+
+        if (relato.transcription && relato.transcription != null) {
+          relato.transcription.forEach(transcript => {
+            if (transcript && transcript != null) {
+              if (transcript.results?.length > 0) {
+                transcript.results?.forEach(result => {
+                  result?.alternatives?.forEach(alternative => {
+                    if (alternative != null) {
+                      console.log('transcript', alternative.transcript);
+                      audioTranscrito = alternative.transcript;
+                      noResults = false;
+
+                    }
+                  });
+                });
+              }
+            }
+          });
+        }
+        relato.audioTranscrito = audioTranscrito;
+        relato.noResults = noResults;
       });
+
 
       return res;
     }));
@@ -121,7 +145,7 @@ export class DadosService {
     });
   }
 
-  getProntuario(uid){
+  getProntuario(uid) {
 
     return this.afs.collection('pacientes').doc(uid).collection('fichasConsultas').get();
 

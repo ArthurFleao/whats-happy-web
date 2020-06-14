@@ -1,22 +1,43 @@
 <div matBadge="." matBadgeColor="warn" matBadgeSize="small" [matBadgeHidden]="!relato.new">
-  <mat-expansion-panel  (afterExpand)="opened()" [hideToggle]="false">
-    <mat-expansion-panel-header >
-      <mat-panel-title [matTooltip]="getComplete(relato.dataHora)" >{{getFromNow(relato.dataHora)}}</mat-panel-title>
+  <mat-expansion-panel (afterExpand)="opened()" [hideToggle]="false">
+    <mat-expansion-panel-header>
+      <mat-panel-title [matTooltip]="getComplete(relato.dataHora)">{{getFromNow(relato.dataHora)}}</mat-panel-title>
       <mat-panel-description>
         {{relato.grauFelicidade | grau : 'f'}} -
         {{relato.grauDisposicao | grau: 'd'}} -
         {{relato.grauIrritabilidade | grau : 'i'}}
-        <mat-icon style="margin-right: 5px;" *ngIf="relato.hasAudio"  >volume_up</mat-icon>
+        <mat-icon style="margin-right: 5px;" *ngIf="relato.hasAudio">volume_up</mat-icon>
       </mat-panel-description>
     </mat-expansion-panel-header>
-    <div *ngIf="relato.hasAudio" >
-      <mat-basic-audio-player *ngIf="!audioIsFucked"  [audioUrl]="audioUrl" [autoPlay]="false" muted="muted" [displayTitle]="false"
-      [displayVolumeControls]="true"></mat-basic-audio-player>
+    <div *ngIf="relato.hasAudio">
+      <mat-basic-audio-player *ngIf="!audioIsFucked" [audioUrl]="audioUrl" [autoPlay]="false" muted="muted"
+                              [displayTitle]="false" [displayVolumeControls]="true"></mat-basic-audio-player>
 
-      <div *ngIf="audioIsFucked"  class="centralizer">
+      <div *ngIf="audioIsFucked" class="centralizer">
         <p style="color:red">Houve um problema ao encontrar o áudio deste relato.</p>
       </div>
     </div>
-    {{relato.relato || 'Sem relato'}}
+
+    <div *ngIf="relato.hasAudio" >
+      <mat-form-field *ngIf="relato.audioTranscrito || relato.transcriptionFailed"  appearance="fill">
+        <mat-label>Àudio transcrito</mat-label>
+        <textarea [ngClass]="{'color-red': relato.transcriptionFailed}"  readonly [value]="relato.transcriptionFailed? 'Ocorreu um erro na transcrição deste áudio' : relato.audioTranscrito" matInput></textarea>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="relato.noResults"  appearance="fill">
+        <mat-label>Àudio transcrito</mat-label>
+        <textarea class="color-red"  readonly [value]="'Nenhuma palavra do áudio foi compreendida.'" matInput></textarea>
+      </mat-form-field>
+
+      <div *ngIf="!relato.audioTranscrito && !relato.transcriptionFailed && !relato.noResults" >
+        <mat-hint>Transcrição do áudio em andamento...</mat-hint>
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </div>
+    </div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Relato escrito</mat-label>
+      <textarea readonly [value]="relato.relato || 'Sem relato'" matInput></textarea>
+    </mat-form-field>
   </mat-expansion-panel>
 </div>

@@ -79,10 +79,18 @@ export const onFileStored = functions.storage.object().onFinalize(async (object)
 
     }).catch((err) => {
       console.error(err);
+
     });
 
   }).catch((err) => {
     console.error('Transcription failed: ', err);
+    db.collection(`pacientes/${pacienteId}/relatos`).doc(relatoId).update({ transcriptionFailed: err }).then((saved) => {
+      console.log('ERROR SAVED TO DB!', saved);
+
+    }).catch((error) => {
+      console.error(error);
+    });
+
   });
 });
 
