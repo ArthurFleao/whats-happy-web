@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import * as RecordRTC from 'recordrtc';
 import * as moment from 'moment';
 import { Subject, Observable } from 'rxjs';
+import { SnackService } from 'src/app/services/snack.service';
 
 @Component({
   selector: 'app-recorder',
@@ -22,7 +23,9 @@ export class RecorderComponent implements OnInit {
 
   @Output()
   recorded = new EventEmitter<any>();
-  constructor() { }
+  constructor(
+    private snack: SnackService,
+  ) { }
 
   ngOnInit(): void {
   }
@@ -62,7 +65,12 @@ export class RecorderComponent implements OnInit {
         const currentTime = moment();
         const diffTime = moment.duration(currentTime.diff(this.startTime));
         const time = this.toString(diffTime.minutes()) + ':' + this.toString(diffTime.seconds());
+
         this.recordingTime.next(time);
+        if (diffTime.asSeconds() > 60) {
+          this.snack.warning('Estamos limitando o audio à 1 minuto neste protótipo devido aos custos da conversão para texto.');
+          this.stopRecording();
+        }
       },
       1000
     );
