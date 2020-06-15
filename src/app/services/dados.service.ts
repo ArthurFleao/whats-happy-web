@@ -60,9 +60,9 @@ export class DadosService {
         }
       });
 
-      let audioTranscrito = '';
-      let noResults = true;
       res.forEach((relato: any) => {
+        let audioTranscrito = '';
+        let noResults = true;
         relato.dataHora = moment(relato.dataHora);
         relato.pacienteUid = idPaciente;
 
