@@ -10,23 +10,31 @@ console.log(db);
 // // https://firebase.google.com/docs/functions/typescript
 
 export const generateReport = functions.firestore.document('pacientes/{userId}/relatos/{relatoId}').onWrite((change, context) => {
+
   const userId = context.params.userId; // id do dono do relato
+
   const dp = db.collection('pacientes').doc(userId).get(); // prepara o get dos dados de paciente do dono do relato (para conseguir o id do responsavel)
   const du = db.collection('dadosUsuario').doc(userId).get();  // prepara o get dos dados do usuario (para pegar o nome)
-  Promise.all([dp, du]).then((result) => { // faz os dois gets acima em paralelo (para poupar tempo) e quando eles acabam segue o código
+  return Promise.all([dp, du]).then((result) => { // faz os dois gets acima em paralelo (para poupar tempo) e quando eles acabam segue o código
+
     const dataPaciente = result[0].data(); // pega os dados de paciente
     const dataUser = result[1].data(); // pega os dados de usuário
+    // console.log('dataPAciente', dataPaciente);
+    // console.log('dataUser', dataUser);
 
     if (dataPaciente && dataUser) { // se tudo tiver ok
-      const idResponsavel = db.doc(dataPaciente.responsavel).id; // recupera o id do responsável
+      console.log('idResponsavel', dataPaciente.responsavel);
+      const idResponsavel = dataPaciente.responsavel.id; // recupera o id do responsável
+
       db.collection('dadosUsuario').doc(idResponsavel).get().then((responsavel) => { // pega os dados do responsavel
         const data: any = change.after.data(); // pega todos os dados do relato que triggou a função
         if (data) { // proteção contra undefined
           data.idPaciente = userId; // além dos dados de relato salva o id do dono do relato
-          data.nomePaciente = dataUser.nome; // alem de tudo salva o nome do id do relato
+          data.nomePaciente = dataUser.nomeCompleto; // alem de tudo salva o nome do id do relato
           data.idResponsavel = idResponsavel; // alem de tudo salva o id do responsavel
-          data.nomeResponsavel = responsavel.data()?.nome; // alem de tudo salva o nome do responsavel
+          data.nomeResponsavel = responsavel.data()?.nomeCompleto; // alem de tudo salva o nome do responsavel
         }
+        console.log('relato id', context.params.relatoId);
 
         db.collection('dadosRelatorio').doc(context.params.relatoId).set(data).then((final: any) => { // cria ou modifica o documento na collection dados relatorio. Agora está pronto para ir pro BigQuery
           console.log('relato saved to db', final);

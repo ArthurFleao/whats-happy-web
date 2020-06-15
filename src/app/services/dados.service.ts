@@ -60,7 +60,7 @@ export class DadosService {
         }
       });
 
-      let audioTranscrito;
+      let audioTranscrito = '';
       let noResults = true;
       res.forEach((relato: any) => {
         relato.dataHora = moment(relato.dataHora);
@@ -73,8 +73,7 @@ export class DadosService {
                 transcript.results?.forEach(result => {
                   result?.alternatives?.forEach(alternative => {
                     if (alternative != null) {
-                      console.log('transcript', alternative.transcript);
-                      audioTranscrito = alternative.transcript;
+                      audioTranscrito += '\n' + alternative.transcript;
                       noResults = false;
 
                     }
