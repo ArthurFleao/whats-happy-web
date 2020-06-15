@@ -87,7 +87,6 @@ export class DadosService {
         relato.noResults = noResults;
       });
 
-
       return res;
     }));
   }
