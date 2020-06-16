@@ -1,3 +1,4 @@
+import { RelatorioPageComponent } from './pages/relatorio-page/relatorio-page.component';
 import { HttpErrorInterceptor } from './services/http-error.interceptor';
 import { HeaderMenuComponent } from './shared/header-menu/header-menu.component';
 import { BrowserModule } from '@angular/platform-browser';
@@ -116,6 +117,7 @@ const material = [
 @NgModule({
   declarations: [
     AppComponent,
+    RelatorioPageComponent,
     TestComponent,
     LoginPageComponent,
     FormLoginComponent,

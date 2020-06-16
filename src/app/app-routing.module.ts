@@ -1,3 +1,4 @@
+import { RelatorioPageComponent } from './pages/relatorio-page/relatorio-page.component';
 import { ListarRelatosPageComponent } from './pages/listar-relatos-page/listar-relatos-page.component';
 import { ConvidarPacientePageComponent } from './pages/convidar-paciente-page/convidar-paciente-page.component';
 import { CadastroPacienteComponent } from './pages/cadastrar-paciente/cadastrar-paciente.component';
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'teste', component: TestComponent, canActivate: [AngularFireAuthGuard] },
   { path: 'login', component: LoginPageComponent },
   { path: 'convite/:id', component: CadastroPacienteComponent },
+  { path: 'relatorios', component: RelatorioPageComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToHome } },
   { path: 'convidar', component: ConvidarPacientePageComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToHome } },
   { path: 'home', component: HomePageComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToHome } },
   { path: 'enviarRelato', component: EnviarRelatoPageComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToHome } },
