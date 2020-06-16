@@ -25,6 +25,8 @@ export class FormRegistrarConsultaComponent implements OnInit {
   @Input()
   pacientesArray; // se quizer inicialisar o form
 
+  pacienteSelected
+
   constructor(
     private fb: FormBuilder// importa o formbuilder para poder usar
   ) { }
@@ -35,9 +37,9 @@ export class FormRegistrarConsultaComponent implements OnInit {
       // ------------------------ dados do usuario -------------
       dadosUsuario: this.fb.group({
         // formName: ['valorInicial', Validator]
-        idPaciente: [this.bootstrap?.paciente || '', Validators.nullValidator],
-        sexo: [this.bootstrap?.sexo || '', Validators.nullValidator],
-        dataNascimento: [this.bootstrap?.dataNascimento || '', Validators.nullValidator],
+        idPaciente: ['', Validators.nullValidator],
+        sexo: ['', Validators.nullValidator],
+        dataNascimento: ['', Validators.nullValidator],
         psicologo: [this.bootstrap?.nomeCompleto || '', Validators.nullValidator],
       }),
 
@@ -64,12 +66,20 @@ export class FormRegistrarConsultaComponent implements OnInit {
   }
 
   onSubmit(){
+
+
     this.form.markAllAsTouched(); // Marcar que o usuário tentou interagir com todos os campos, para mostrar erros caso existam
     if (this.form.valid) { // se o formulário estiver válido
       this.submited.emit(this.form.value); // avisar o componente de cima que o form foi enviado e mandar os valores
     } else {
       console.log('form invalido!', this.form.value);
     }
+  }
+
+  onChange(value) {
+    this.pacienteSelected = value.value
+
+    this.formChange.emit(this.pacienteSelected.uid); // mada o valor pra cima
   }
 
 }

@@ -31,14 +31,12 @@ export class ProntuarioPageComponent implements OnInit {
     // recupera id do usuário logado
     this.authService.me().then(res => {
       this.myUid = res.uid;
-      console.log('my uid', this.myUid);
 
       // chama funcao do auth.service para recuperar dados do usuario logado
       this.db.getUserData(this.myUid).subscribe((resDadosUsuario: DadosUsuario) => {
         this.dadosUsuario = resDadosUsuario;
         this.dadosUsuario.email = res.email;
         this.loading = false; // indica que terminou de carregar
-        console.log('tudo: ', this.dadosUsuario);
       }, error => {
         this.eh.handle(error);
         this.loading = false; // indica que terminou de carregar
@@ -47,10 +45,8 @@ export class ProntuarioPageComponent implements OnInit {
       // chama funcao do auth.service para recuperar dados do usuario logado
       this.db.getListaPacientes(this.myUid).subscribe(res => {
         const arrayTodosPacientes = [];
-        console.log('res: ', res);
         res.forEach((paciente: any) => {
           // coloca todos os pacientes do psicologo no array
-
           arrayTodosPacientes.push(this.afs.doc(paciente.paciente).valueChanges().pipe(first(), map(pres => {
             const newRes: any = pres;
             newRes.uid = this.afs.doc(paciente.paciente).ref.id;
@@ -60,11 +56,7 @@ export class ProntuarioPageComponent implements OnInit {
         forkJoin(arrayTodosPacientes).subscribe(
           arrayPacientes => {
             this.pacientes.next(arrayPacientes);
-            console.log('pacientes array:', arrayPacientes);
             this.loading = false;
-
-            console.log('pacientes:', this.pacientes);
-
           }, err => {
             this.loading = false;
             this.eh.handle(err);
@@ -83,9 +75,6 @@ export class ProntuarioPageComponent implements OnInit {
   }
 
   getFichasConsultas(uid){
-
-    console.log("udi", uid)
-
     this.dadosService.getProntuario(uid).subscribe(querySnapshot => {
 
       let arrayAux = new Array<any>()
@@ -93,7 +82,6 @@ export class ProntuarioPageComponent implements OnInit {
       querySnapshot.forEach(doc => {
           // doc.data() is never undefined for query doc snapshots
           arrayAux.push(doc.data())
-          console.log(doc.id, " => ", doc.data());
       })
 
       this.arrayFichasCadastro = arrayAux
