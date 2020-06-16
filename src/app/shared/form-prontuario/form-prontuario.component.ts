@@ -25,6 +25,7 @@ export class FormProntuarioComponent implements OnInit {
   @Output()
   formChange = new EventEmitter(); // evento de mudança no form
 
+  pacienteSelected
 
   constructor(
     private fb: FormBuilder// importa o formbuilder para poder usar
@@ -34,7 +35,7 @@ export class FormProntuarioComponent implements OnInit {
 
     this.form = this.fb.group({
       // ------------------------ dados do usuario -------------
-      dadosUsuario: this.fb.group({
+      cabecalhoProtuario: this.fb.group({
         // formName: ['valorInicial', Validator]
         idPaciente: [this.bootstrap?.paciente || '', Validators.nullValidator],
         sexo: [this.bootstrap?.sexo || '', Validators.nullValidator],
@@ -57,20 +58,11 @@ export class FormProntuarioComponent implements OnInit {
 
     });
 
-
-    //this.formChange.emit(this.form); // emite o form construido para cima
-    //this.form.valueChanges.subscribe(c => { // sempre que houver uma mudança no form
-    //this.formChange.emit(this.form); // emite o form para cima
-    //});
-
-
   }
 
   onChange(value) {
-
-    this.formChange.emit(value); // mada o valor pra cima
-
-    console.log(value);
+    this.pacienteSelected = value.value
+    this.formChange.emit(value.value.uid); // mada o valor pra cima
   }
 
 }

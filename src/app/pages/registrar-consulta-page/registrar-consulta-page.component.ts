@@ -34,14 +34,12 @@ export class RegistrarConsultaPageComponent implements OnInit {
     // recupera id do usuário logado
     this.authService.me().then(res => {
       this.myUid = res.uid;
-      console.log('my uid', this.myUid);
 
       // chama funcao do auth.service para recuperar dados do usuario logado
       this.db.getUserData(this.myUid).subscribe((resDadosUsuario: DadosUsuario) => {
         this.dadosUsuario = resDadosUsuario;
         this.dadosUsuario.email = res.email;
         this.loading = false; // indica que terminou de carregar
-        console.log('tudo: ', this.dadosUsuario);
       }, error => {
         this.eh.handle(error);
         this.loading = false; // indica que terminou de carregar
@@ -50,7 +48,6 @@ export class RegistrarConsultaPageComponent implements OnInit {
       // chama funcao do auth.service para recuperar dados do usuario logado
       this.db.getListaPacientes(this.myUid).subscribe(res => {
         const arrayTodosPacientes = [];
-        console.log('res: ', res);
         res.forEach((paciente: any) => {
           // coloca todos os pacientes do psicologo no array
 
@@ -63,11 +60,7 @@ export class RegistrarConsultaPageComponent implements OnInit {
         forkJoin(arrayTodosPacientes).subscribe(
           arrayPacientes => {
             this.pacientes.next(arrayPacientes);
-            console.log('pacientes array:', arrayPacientes);
             this.loading = false;
-
-            console.log('pacientes:', this.pacientes);
-
           }, err => {
             this.loading = false;
             this.eh.handle(err);
@@ -88,10 +81,9 @@ export class RegistrarConsultaPageComponent implements OnInit {
   registrarConsulta(values){
     this.loading = false; // indica que está carregando algo // indica que está carregando algo
 
-    console.log("Prontuario", values)
+    console.log("values", values)
 
-
-    this.afs.collection('pacientes').doc(values.dadosUsuario.idPaciente).collection('fichasConsultas').add({
+    this.afs.collection('pacientes').doc(values.dadosUsuario.idPaciente.uid).collection('fichasConsultas').add({
 
       dcHda: values.registroConsulta.dcHda,
       reacoesFrenteDiagnostico: values.registroConsulta.reacoesFrenteDiagnostico,
@@ -111,7 +103,6 @@ export class RegistrarConsultaPageComponent implements OnInit {
     }).catch((err) => {
      this.eh.handle(err);
     });
-
 
   }
 
