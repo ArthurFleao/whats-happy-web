@@ -78,6 +78,8 @@ import { NgxAudioPlayerModule } from 'ngx-audio-player';
 import { RegistrarConsultaPageComponent } from './pages/registrar-consulta-page/registrar-consulta-page.component';
 import { FormRegistrarConsultaComponent } from './shared/form-registrar-consulta/form-registrar-consulta.component'; // Importando o módulo
 import { AngularFireStorageModule } from '@angular/fire/storage';
+import {NgxMaskModule} from 'ngx-mask'
+
 const material = [
   ClipboardModule,
   MatAutocompleteModule,
@@ -162,6 +164,10 @@ const material = [
     AngularFireModule.initializeApp(environment.firebase),
     BrowserAnimationsModule,
     AngularFirestoreModule,
+    NgxMaskModule.forRoot({
+      showMaskTyped : true,
+    }),
+
   ],
   providers: [
     AngularFireAuthGuard,
