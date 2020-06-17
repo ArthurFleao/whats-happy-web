@@ -57,7 +57,6 @@ export class LoginPageComponent implements OnInit {
     this.authService.logout();
     console.log('afdad');
   }
-
   onRegister(values) { // quando clicar no botão registrar
     console.log('values', values);
     this.loading = true; // indica que está carregando algo

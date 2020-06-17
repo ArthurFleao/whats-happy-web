@@ -4,13 +4,11 @@
         <img src="assets/img/logo.png" alt="LOGO">
       </div>
     </mat-card-header>
-
   <app-test-box>
     <button (click)="test()" >
       test register function
     </button>
   </app-test-box>
-
     <mat-card-content [ngSwitch]="estado" class="content">
       <div *ngSwitchCase="'login'" fxLayout="column" fxLayoutAlign="center center">
         <h1 class="text-muted animate__animated animate__fadeInDown">Entrar</h1>
