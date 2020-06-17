@@ -21,7 +21,7 @@
       <div fxFlex="100">
         <mat-form-field appearance="outline">
           <mat-label>CPF</mat-label>
-          <input matInput required formControlName="cpf" placeholder="Ex: 111.111.111-00">
+          <input matInput required formControlName="cpf" mask="000.000.000-00" placeholder="Ex: 111.111.111-00">
 
         </mat-form-field>
       </div>
@@ -47,14 +47,14 @@
       <div fxFlex="100">
         <mat-form-field appearance="outline">
           <mat-label>Data de Nascimento</mat-label>
-          <input matInput required formControlName="data" placeholder="Ex: 01/01/1990">
+          <input matInput required formControlName="dataNascimento" mask="00/00/0000" placeholder="Ex: 01/01/1990">
 
         </mat-form-field>
       </div>
       <div fxFlex="100">
         <mat-form-field appearance="outline">
           <mat-label>Telefone</mat-label>
-          <input matInput required formControlName="telefone" placeholder="Ex: (00) 9 9999-9999">
+          <input matInput required formControlName="telefone" mask="{{ maskPhoneNumber }}" (keyup)="switchPhoneMask(form.get('dadosUsuario.telefone').value)" placeholder="Ex: (00) 9 9999-9999">
 
         </mat-form-field>
       </div>
@@ -78,7 +78,7 @@
       <div fxFlex>
         <mat-form-field appearance="outline">
           <mat-label>CEP</mat-label>
-          <input matInput required formControlName="cep" placeholder="Ex: 999999-999">
+          <input matInput required formControlName="cep" mask="00.000-000" placeholder="Ex: 999999-999">
           <mat-spinner style="position: absolute; right: 0; top: 0;" [diameter]="35" *ngIf="loadingCep"></mat-spinner>
         </mat-form-field>
         <mat-error *ngIf="form.get('endereco').get('cep').hasError('invalidCep')">Cep inválido!</mat-error>

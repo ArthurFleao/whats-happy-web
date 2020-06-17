@@ -54,6 +54,7 @@ export class FormCadastroComponent implements OnInit {
   ) {
   }
 
+  maskPhoneNumber
 
   ngOnInit(): void {
 
@@ -65,8 +66,8 @@ export class FormCadastroComponent implements OnInit {
         nomeCompleto: [this.bootstrap?.nomeCompleto || '', Validators.required],
         cpf: [this.bootstrap?.cpf || '', Validators.required],
         sexo: [this.bootstrap?.sexo || '', Validators.required],
-        crp: [this.bootstrap?.sexo || '', this.includeCrp ? Validators.required : undefined],
-        data: [this.bootstrap?.dataNascimento || '', Validators.required],
+        crp: [this.bootstrap?.crp || '', this.includeCrp ? Validators.required : undefined],
+        dataNascimento: [this.bootstrap?.dataNascimento || '', Validators.required],
         telefone: [this.bootstrap?.telefone || '', Validators.required],
         senha: [this.bootstrap?.senha || '', this.flagTravarCampo ? undefined : Validators.required],
         confirmaSenha: [this.bootstrap?.confirmaSenha || '', this.flagTravarCampo ? undefined : Validators.required],
@@ -141,7 +142,7 @@ export class FormCadastroComponent implements OnInit {
         cpf: '11111111111',
         sexo: 'm',
         crp: '11111111111',
-        data: '01/01/1990',
+        dataNascimento: '01/01/1990',
         telefone: '99999999999',
         senha: '123456',
         confirmaSenha: '123456',
@@ -159,6 +160,19 @@ export class FormCadastroComponent implements OnInit {
 
   rand() {
     return Math.floor((Math.random() * 9999) + 1);
+  }
+
+  public switchPhoneMask(phone: number) {
+
+    console.log("phone")
+    console.log("phone ", phone)
+
+    if (phone.toString().length > 10) {
+      this.maskPhoneNumber = '(00) 0 0000-0000';
+    }
+    else {
+      this.maskPhoneNumber = '(00) 0000-00009';
+    }
   }
 
 }

@@ -66,7 +66,7 @@ export class LoginPageComponent implements OnInit {
       const dadosUsuario: DadosUsuario = {
         cpf: values.dadosUsuario.cpf,
         nomeCompleto: values.dadosUsuario.nomeCompleto,
-        dataNascimento: values.dadosUsuario.data,
+        dataNascimento: values.dadosUsuario.dataNascimento,
         sexo: values.dadosUsuario.sexo,
         telefone: values.dadosUsuario.telefone,
         endereco: {

@@ -66,7 +66,7 @@ export class CadastroPacienteComponent implements OnInit {
       const dadosUsuario: DadosUsuario = {
         cpf: values.dadosUsuario.cpf,
         nomeCompleto: values.dadosUsuario.nomeCompleto,
-        dataNascimento: values.dadosUsuario.data,
+        dataNascimento: values.dadosUsuario.dataNascimento,
         email: values.dadosUsuario.email,
         sexo: values.dadosUsuario.sexo,
         telefone: values.dadosUsuario.telefone,
