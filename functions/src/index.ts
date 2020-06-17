@@ -133,17 +133,17 @@ export const onFileStored = functions.storage.object().onFinalize(async (object)
   // const sampleRateHertz = 16000;
   // const languageCode = 'pt-BR';
 
-  // const config = {
-  //   // encoding: encoding,
-  //   // sampleRateHertz: sampleRateHertz,
-  //   // languageCode: languageCode,
-  // };
+  const config = {
+    // encoding: encoding,
+    // sampleRateHertz: sampleRateHertz,
+    // languageCode: languageCode,
+  };
   const audio = {
     uri: gcsUri,
   };
 
   const request: any = {
-    // config: config,
+    config: config,
     audio: audio,
   };
 

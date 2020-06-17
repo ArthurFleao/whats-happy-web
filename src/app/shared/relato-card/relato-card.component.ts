@@ -49,6 +49,7 @@ export class RelatoCardComponent implements OnInit, OnDestroy {
         updateRelato.uid = this.relato.uid;
         updateRelato.dataHora = this.relato.dataHora;
         this.relato = updateRelato;
+        this.checkAudio();
         this.atualizaSentiments();
       }, error => {
         console.error(error);

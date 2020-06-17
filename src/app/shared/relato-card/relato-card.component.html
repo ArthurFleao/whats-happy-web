@@ -32,13 +32,13 @@
     </div>
 
     <div class="mb-2" *ngIf="relato.hasAudio">
-      <mat-form-field *ngIf="relato.audioTranscrito || relato.transcriptionFailed" appearance="fill">
+      <mat-form-field *ngIf="relato.audioTranscrito || relato.transcriptionError" appearance="fill">
         <mat-label>Àudio transcrito
           {{relato.confiabilidade? 'com confiabilidade de '+ (relato.confiabilidade*100 |number: '2.0-2') + '%' : ''}}
         </mat-label>
-        <textarea [ngClass]="{'color-red': relato.transcriptionFailed}" readonly cdkTextareaAutosize
+        <textarea [ngClass]="{'color-red': relato.transcriptionError}" readonly cdkTextareaAutosize
                   #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" cdkAutosizeMaxRows="50"
-                  [value]="relato.transcriptionFailed? 'Ocorreu um erro na transcrição deste áudio' : relato.audioTranscrito"
+                  [value]="relato.transcriptionError? 'Ocorreu um erro na transcrição deste áudio' : relato.audioTranscrito"
                   matInput></textarea>
       </mat-form-field>
       <div class="mb-2">
@@ -60,7 +60,7 @@
       </div>
 
       <div class="mb-2"
-           *ngIf="!relato.audioTranscrito && !relato.transcriptionFailed && !relato.noResults && !audioIsUploading">
+           *ngIf="!relato.audioTranscrito && !relato.transcriptionError && !relato.noResults && !audioIsUploading">
         <mat-hint>Transcrição do áudio em andamento...</mat-hint>
         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
       </div>
