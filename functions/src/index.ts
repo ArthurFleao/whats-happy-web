@@ -61,8 +61,10 @@ function sendToNaturalLanguageApi(texto: string) {
     },
     features: {
       extractSyntax: true,
-      extractEntities: true,
-      extractDocumentSentiment: true
+      // extractEntitySentiment: true, // não funciona em pt-br
+      extractEntity: true,
+      extractDocumentSentiment: true,
+      // classifyText: true // não funciona em pt-br
     },
     encodingType: "UTF8"
   }
@@ -70,13 +72,6 @@ function sendToNaturalLanguageApi(texto: string) {
 
   return client.annotateText(request);
 }
-export const onRelatoDeleted = functions.firestore.document('pacientes/{userId}/relatos/{relatoId}').onDelete((change, context) => {
-  return db.collection(DADOS_RELATORIO_COLLECTION).doc(change.id).delete().then((result) => {
-    console.log('deleted ', result);
-  }).catch((err) => {
-    console.error(err);
-  });
-});
 
 function generateReport(change: any, context: any) {
 
@@ -103,7 +98,7 @@ function generateReport(change: any, context: any) {
           data.idResponsavel = idResponsavel; // alem de tudo salva o id do responsavel
           data.nomeResponsavel = responsavel.data()?.nomeCompleto; // alem de tudo salva o nome do responsavel
         }
-        console.log('relato id', context.params.relatoId);
+        // console.log('relato id', context.params.relatoId);
 
         db.collection(DADOS_RELATORIO_COLLECTION).doc(context.params.relatoId).set(data).then((final: any) => { // cria ou modifica o documento na collection dados relatorio. Agora está pronto para ir pro BigQuery
           console.log('relato saved to db', final);
@@ -118,6 +113,96 @@ function generateReport(change: any, context: any) {
     console.error(err);
   });
 }
+
+export const onRelatoDeleted = functions.firestore.document('pacientes/{userId}/relatos/{relatoId}').onDelete((change, context) => {
+  return db.collection(DADOS_RELATORIO_COLLECTION).doc(change.id).delete().then((result) => {
+    console.log('deleted ', result);
+  }).catch((err) => {
+    console.error(err);
+  });
+});
+
+export const onFileStored = functions.storage.object().onFinalize(async (object) => {
+  console.info('FILE STORED', object);
+
+  // Creates a client
+  const client = new speech.SpeechClient();
+
+  const gcsUri = 'gs://' + object.bucket + '/' + object.name;
+  // const encoding = 'LINEAR16';
+  // const sampleRateHertz = 16000;
+  // const languageCode = 'pt-BR';
+
+  // const config = {
+  //   // encoding: encoding,
+  //   // sampleRateHertz: sampleRateHertz,
+  //   // languageCode: languageCode,
+  // };
+  const audio = {
+    uri: gcsUri,
+  };
+
+  const request: any = {
+    // config: config,
+    audio: audio,
+  };
+
+  const path: any = object.name?.split('/');
+  const pacienteId = path[0];
+  const relatoId = path[1];
+
+  // Detects speech in the audio file
+  // console.info('URI', gcsUri);
+  // console.info('PATH', gcsUri);
+  client.recognize(request).then((res: any) => {
+    console.info('Transcription: ', res);
+    let audioTranscrito = '';
+    let confiabilidadeTotal = 0;
+    let numAlternativas = 0;
+    let noResults = true;
+    res.forEach((transcript: any) => {
+      if (transcript && transcript !== null) {
+        if (transcript.results?.length > 0) {
+          transcript.results?.forEach((result: any) => {
+            result?.alternatives?.forEach((alternative: any) => {
+              if (alternative !== null) {
+                audioTranscrito += '.\n' + alternative.transcript;
+                noResults = false;
+                if (alternative.confidence) {
+                  numAlternativas++;
+                  confiabilidadeTotal += alternative.confidence;
+                }
+              }
+            });
+          });
+        }
+      }
+    });
+
+    let confiabilidade = 0;
+    if (confiabilidadeTotal > 0 && numAlternativas > 0) {
+      confiabilidade = confiabilidadeTotal / numAlternativas;
+    }
+
+    db.collection(`pacientes/${pacienteId}/relatos`).doc(relatoId).update({
+      transcription: res,
+      audioTranscrito,
+      noResults,
+      confiabilidade,
+    }).then((saved) => {
+      // console.log('SAVED TO DB!', saved);
+
+    }).catch((err) => {
+      console.error(err);
+      saveDataToRelato(pacienteId, relatoId, { transcriptionError: true });
+
+    });
+
+  }).catch((err) => {
+    console.error('Transcription failed: ', err);
+    saveDataToRelato(pacienteId, relatoId, { transcriptionError: true });
+  });
+});
 
 export const maintainUserData = functions.firestore.document('dadosUsuario/{userId}').onWrite((change, context) => {
   db.collection('psicologos').doc(change.after.ref.id).get().then(function (doc) {
@@ -150,75 +235,6 @@ export const maintainUserData = functions.firestore.document('dadosUsuario/{user
   });
 });
 
-export const onFileStored = functions.storage.object().onFinalize(async (object) => {
-  console.info('FILE STORED', object);
-
-  // Creates a client
-  const client = new speech.SpeechClient();
-
-  const gcsUri = 'gs://' + object.bucket + '/' + object.name;
-  // const encoding = 'LINEAR16';
-  // const sampleRateHertz = 16000;
-  const languageCode = 'pt-BR';
-
-  const config = {
-    // encoding: encoding,
-    // sampleRateHertz: sampleRateHertz,
-    languageCode: languageCode,
-  };
-  const audio = {
-    uri: gcsUri,
-  };
-
-  const request: any = {
-    config: config,
-    audio: audio,
-  };
-
-  const path: any = object.name?.split('/');
-  const pacienteId = path[0];
-  const relatoId = path[1];
-
-  // Detects speech in the audio file
-  console.info('URI', gcsUri);
-  console.info('PATH', gcsUri);
-  client.recognize(request).then((res: any) => {
-    console.info('Transcription: ', res);
-    let audioTranscrito = '';
-    let noResults = true;
-    res.forEach((transcript: any) => {
-      if (transcript && transcript !== null) {
-        if (transcript.results?.length > 0) {
-          transcript.results?.forEach((result: any) => {
-            result?.alternatives?.forEach((alternative: any) => {
-              if (alternative !== null) {
-                audioTranscrito += '\n' + alternative.transcript;
-                noResults = false;
-              }
-            });
-          });
-        }
-      }
-    });
-    db.collection(`pacientes/${pacienteId}/relatos`).doc(relatoId).update({
-      transcription: res,
-      audioTranscrito,
-      noResults,
-    }).then((saved) => {
-      console.log('SAVED TO DB!', saved);
-
-    }).catch((err) => {
-      console.error(err);
-      saveDataToRelato(pacienteId, relatoId, { transcriptionError: true });
-
-    });
-
-  }).catch((err) => {
-    console.error('Transcription failed: ', err);
-    saveDataToRelato(pacienteId, relatoId, { transcriptionError: true });
-  });
-});
-
 export const checkDeactivation = functions.firestore.document('pacientes/{userId}').onWrite((change, context) => {
   if (change) {
     const data = change.after.data();
@@ -226,17 +242,17 @@ export const checkDeactivation = functions.firestore.document('pacientes/{userId
     if (data) {
       if (data.disabled === true) {
         admin.auth().updateUser(uid, { disabled: true }).then(res => {
-          console.log('user disabled: ', uid);
+          // console.log('user disabled: ', uid);
 
         }).catch(err => {
-          console.log('error disabling user', err);
+          console.error('error disabling user', err);
         });
       } else {
         admin.auth().updateUser(uid, { disabled: false }).then(res => {
-          console.log('user enabled: ', uid);
+          // console.log('user enabled: ', uid);
 
         }).catch(err => {
-          console.log('error enabling user', err);
+          console.error('error enabling user', err);
         });
       }
     }
@@ -252,12 +268,12 @@ export const registerPaciente = functions.https.onRequest((req, res) => {
     const uid = req.body.data.uid;
     const responsavelUid = req.body.data.responsavelUid;
     const dadosUsuario = req.body.data.dadosUsuario;
-    console.log('request', req);
-    console.log('request body.data', req.body.data);
+    // console.log('request', req);
+    // console.log('request body.data', req.body.data);
 
 
     db.collection('dadosUsuario').doc(uid).set(dadosUsuario).then((result) => {
-      console.log('done');
+      // console.log('done');
     }).catch((err) => {
       console.error(err)
     });
@@ -266,17 +282,17 @@ export const registerPaciente = functions.https.onRequest((req, res) => {
       responsavel: db.collection('psicologos').doc(responsavelUid),
       dadosUsuario
     }).then((result) => {
-      console.log('done');
+      // console.log('done');
     }).catch((err) => {
-      console.log(err);
+      console.error(err);
     });
 
     db.collection('psicologos').doc(responsavelUid).update({
       pacientes: admin.firestore.FieldValue.arrayUnion(db.collection('pacientes').doc(uid))
     }).then((result) => {
-      console.log('done');
+      // console.log('done');
     }).catch((err) => {
-      console.log(err);
+      console.error(err);
     });
 
     res.status(200).send('Created!');

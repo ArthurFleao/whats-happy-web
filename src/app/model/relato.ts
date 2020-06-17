@@ -13,6 +13,7 @@ export class Relato {
   transcriptionFailed?: any;
   noResults: boolean;
   audioUploaded?: boolean;
+  confiabilidade?: number;
   analiseRelato?: any;
   analiseAudioTranscrito?: any;
 }

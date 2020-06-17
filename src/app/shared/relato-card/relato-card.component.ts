@@ -14,13 +14,17 @@ import * as moment from 'moment';
 export class RelatoCardComponent implements OnInit, OnDestroy {
   @Input() relato: Relato;
   audioUrl;
-
+  sentimentoRelato;
+  sentimentoAudio;
+  panelOpen;
   audioIsFucked;
 
   @Output()
   relatoOpened = new EventEmitter<any>();
   audioIsUploading: boolean;
   private onDestroy$ = new EventEmitter();
+  palavrasAudio: any[];
+  palavrasRelato: any[];
 
   constructor(
     private audioStore: AudioStorageService,
@@ -36,6 +40,7 @@ export class RelatoCardComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     this.checkAudio();
+    this.atualizaSentiments();
     this.afs.collection('pacientes/' + this.relato.pacienteUid + '/relatos').doc(this.relato.uid).valueChanges()
       .pipe(takeUntil(this.onDestroy$))
       .subscribe((res: Relato) => {
@@ -44,6 +49,7 @@ export class RelatoCardComponent implements OnInit, OnDestroy {
         updateRelato.uid = this.relato.uid;
         updateRelato.dataHora = this.relato.dataHora;
         this.relato = updateRelato;
+        this.atualizaSentiments();
       }, error => {
         console.error(error);
       });
@@ -52,6 +58,7 @@ export class RelatoCardComponent implements OnInit, OnDestroy {
   checkAudio() {
     if (this.relato.hasAudio) {
       if (this.relato.audioUploaded) {
+        this.audioIsUploading = false;
         this.audioStore.getRelatoAudio(this.relato.pacienteUid, this.relato.uid).subscribe(res => {
           this.audioUrl = res;
         }, error => {
@@ -72,6 +79,60 @@ export class RelatoCardComponent implements OnInit, OnDestroy {
       this.relato.new = false;
       this.relatoOpened.emit(this.relato);
     }
+  }
+
+  atualizaSentiments() {
+    if (this.relato.analiseAudioTranscrito) {
+      const analise = this.relato.analiseAudioTranscrito[0];
+      const score = analise.documentSentiment.score;
+      const magnitude = analise.documentSentiment.magnitude;
+      this.sentimentoAudio = this.classificaSentiment(score, magnitude);
+      this.palavrasAudio = this.getPalavrasImportantes(analise.entities);
+    }
+
+    if (this.relato.analiseRelato) {
+      const analise = this.relato.analiseRelato[0];
+      const score = analise.documentSentiment.score;
+      const magnitude = analise.documentSentiment.magnitude;
+      this.sentimentoRelato = this.classificaSentiment(score, magnitude);
+      this.palavrasRelato = this.getPalavrasImportantes(analise.entities);
+    }
+  }
+
+  classificaSentiment(score: number, magnitude: number) {
+    let str = '';
+    const magnitudeAbsoluta = Math.abs(magnitude);
+    if (magnitudeAbsoluta > 2) {
+      str += 'Claramente ';
+    } else {
+      str += 'Provavelmente ';
+    }
+
+    if (score > 0.25) {
+      str += 'Positivo';
+    } else if (score < 0.25) {
+      str += 'Negativo';
+    } else {
+      str += 'Neutro';
+    }
+
+    if (magnitude > 2.5 && Math.abs(score) < 0.25) {
+      str = 'Misto';
+    }
+    return str;
+  }
+
+  getPalavrasImportantes(entities) {
+    const palavrasList = [];
+    entities?.forEach(entity => {
+      if (palavrasList.length < 5) {
+        if (!palavrasList.includes(entity.name)) {
+          palavrasList.push(entity.name);
+        }
+      }
+    });
+
+    return palavrasList;
   }
 
 }
