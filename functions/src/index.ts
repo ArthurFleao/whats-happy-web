@@ -63,12 +63,12 @@ function sendToNaturalLanguageApi(texto: string) {
       extractSyntax: true,
       extractEntities: true,
       extractDocumentSentiment: true
-    }
+    },
+    encodingType: "UTF8"
   }
-
   const client = new language.LanguageServiceClient();
 
-  return client.analyzeSentiment(request);
+  return client.annotateText(request);
 }
 export const onRelatoDeleted = functions.firestore.document('pacientes/{userId}/relatos/{relatoId}').onDelete((change, context) => {
   return db.collection(DADOS_RELATORIO_COLLECTION).doc(change.id).delete().then((result) => {
@@ -208,19 +208,14 @@ export const onFileStored = functions.storage.object().onFinalize(async (object)
       console.log('SAVED TO DB!', saved);
 
     }).catch((err) => {
-      saveDataToRelato(pacienteId, relatoId, { transcriptionError: err });
+      console.error(err);
+      saveDataToRelato(pacienteId, relatoId, { transcriptionError: true });
 
     });
 
   }).catch((err) => {
     console.error('Transcription failed: ', err);
-    db.collection(`pacientes/${pacienteId}/relatos`).doc(relatoId).update({ transcriptionFailed: err }).then((saved) => {
-      console.log('ERROR SAVED TO DB!', saved);
-
-    }).catch((error) => {
-      console.error(error);
-    });
-
+    saveDataToRelato(pacienteId, relatoId, { transcriptionError: true });
   });
 });
 

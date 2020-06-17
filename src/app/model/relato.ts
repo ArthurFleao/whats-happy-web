@@ -12,7 +12,7 @@ export class Relato {
   pacienteUid: string;
   transcriptionFailed?: any;
   noResults: boolean;
-
+  audioUploaded?: boolean;
   analiseRelato?: any;
   analiseAudioTranscrito?: any;
 }

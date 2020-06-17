@@ -32,7 +32,12 @@
                   class="color-red" readonly [value]="'Nenhuma palavra do áudio foi compreendida.'" matInput></textarea>
       </mat-form-field>
 
-      <div *ngIf="!relato.audioTranscrito && !relato.transcriptionFailed && !relato.noResults">
+      <div *ngIf="audioIsUploading">
+        <mat-hint>Upload do áudio ainda em andamento...</mat-hint>
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </div>
+
+      <div *ngIf="!relato.audioTranscrito && !relato.transcriptionFailed && !relato.noResults && !audioIsUploading">
         <mat-hint>Transcrição do áudio em andamento...</mat-hint>
         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
       </div>
