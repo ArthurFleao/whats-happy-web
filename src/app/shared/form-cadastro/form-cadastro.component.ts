@@ -66,7 +66,7 @@ export class FormCadastroComponent implements OnInit {
         nomeCompleto: [this.bootstrap?.nomeCompleto || '', Validators.required],
         cpf: [this.bootstrap?.cpf || '', Validators.required],
         sexo: [this.bootstrap?.sexo || '', Validators.required],
-        crp: [this.bootstrap?.sexo || '', this.includeCrp ? Validators.required : undefined],
+        crp: [this.bootstrap?.crp || '', this.includeCrp ? Validators.required : undefined],
         dataNascimento: [this.bootstrap?.dataNascimento || '', Validators.required],
         telefone: [this.bootstrap?.telefone || '', Validators.required],
         senha: [this.bootstrap?.senha || '', this.flagTravarCampo ? undefined : Validators.required],
