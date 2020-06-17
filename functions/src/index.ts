@@ -131,12 +131,12 @@ export const onFileStored = functions.storage.object().onFinalize(async (object)
   const gcsUri = 'gs://' + object.bucket + '/' + object.name;
   // const encoding = 'LINEAR16';
   // const sampleRateHertz = 16000;
-  // const languageCode = 'pt-BR';
+  const languageCode = 'pt-BR';
 
   const config = {
     // encoding: encoding,
     // sampleRateHertz: sampleRateHertz,
-    // languageCode: languageCode,
+    languageCode: languageCode,
   };
   const audio = {
     uri: gcsUri,
