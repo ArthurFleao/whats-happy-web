@@ -61,30 +61,30 @@ export class DadosService {
       });
 
       res.forEach((relato: any) => {
-        let audioTranscrito = '';
-        let noResults = true;
+        // let audioTranscrito = '';
+        // let noResults = true;
         relato.dataHora = moment(relato.dataHora);
         relato.pacienteUid = idPaciente;
 
         if (relato.transcription && relato.transcription != null) {
-          relato.transcription.forEach(transcript => {
-            if (transcript && transcript != null) {
-              if (transcript.results?.length > 0) {
-                transcript.results?.forEach(result => {
-                  result?.alternatives?.forEach(alternative => {
-                    if (alternative != null) {
-                      audioTranscrito += '\n' + alternative.transcript;
-                      noResults = false;
+          // relato.transcription.forEach(transcript => {
+          //   if (transcript && transcript != null) {
+          //     if (transcript.results?.length > 0) {
+          //       transcript.results?.forEach(result => {
+          //         result?.alternatives?.forEach(alternative => {
+          //           if (alternative != null) {
+          //             audioTranscrito += '\n' + alternative.transcript;
+          //             noResults = false;
 
-                    }
-                  });
-                });
-              }
-            }
-          });
+          //           }
+          //         });
+          //       });
+          //     }
+          //   }
+          // });
         }
-        relato.audioTranscrito = audioTranscrito;
-        relato.noResults = noResults;
+        // relato.audioTranscrito = audioTranscrito;
+        // relato.noResults = noResults;
       });
 
       return res;
