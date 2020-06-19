@@ -1,5 +1,6 @@
+import { takeUntil } from 'rxjs/operators';
 import { Paciente } from './../../model/paciente';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, OnDestroy } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { SnackService } from 'src/app/services/snack.service';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -14,13 +15,15 @@ import { Subject } from 'rxjs';
   templateUrl: './listar-relatos-page.component.html',
   styleUrls: ['./listar-relatos-page.component.scss']
 })
-export class ListarRelatosPageComponent implements OnInit {
+export class ListarRelatosPageComponent implements OnInit, OnDestroy {
   paciente$ = new Subject<any>(); // TODO: TEMPO REAL
   loading = true;
   loadingRelatos;
   paciente;
   relatos;
   pacienteUid;
+  private onDestroy$ = new EventEmitter();
+
 
 
   constructor(
@@ -34,7 +37,7 @@ export class ListarRelatosPageComponent implements OnInit {
     private route: ActivatedRoute) {
     this.route.paramMap.subscribe(params => {
       this.pacienteUid = (params.get('id'));
-      this.db.getPacienteData(params.get('id')).subscribe(res => {
+      this.db.getPacienteData(params.get('id')).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
         this.paciente$.next(res);
         this.paciente = res;
         this.loadingRelatos = true;
@@ -48,7 +51,7 @@ export class ListarRelatosPageComponent implements OnInit {
 
             }
           } else {
-          this.relatos = relatos;
+            this.relatos = relatos;
           }
           console.log('relatos', relatos);
 
@@ -67,6 +70,9 @@ export class ListarRelatosPageComponent implements OnInit {
         this.eh.handle(error);
       });
     });
+  }
+  ngOnDestroy(): void {
+    this.onDestroy$.next();
   }
 
   opened(relato) {

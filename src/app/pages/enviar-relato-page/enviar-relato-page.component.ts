@@ -62,6 +62,13 @@ export class EnviarRelatoPageComponent implements OnInit {
         this.uploadPercentage = task.percentageChanges();
         task.then((result) => {
           this.loading = false; // indica que terminou de carregar
+          // console.log('after upload', finli);
+          this.afs.doc(finli.path).update({ audioUploaded: true }).then((result) => {
+
+            console.log('set audio state uploaded');
+          }).catch((err) => {
+            console.error(err);
+          });
           this.snack.success('Relato enviado com sucesso!');
           this.router.navigate(['/home']);
         }).catch((err) => {

@@ -1,15 +1,79 @@
 import * as functions from 'firebase-functions'; // importa funcoes
 import * as admin from 'firebase-admin'; // importa ações de admin
 import * as speech from '@google-cloud/speech';
+import * as language from '@google-cloud/language';
 // admin.initializeApp(functions.config().firebase);
 admin.initializeApp();
 const db = admin.firestore();
 console.log(db);
 
+const DADOS_RELATORIO_COLLECTION = 'dadosRelatorio';
+
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
 
-export const generateReport = functions.firestore.document('pacientes/{userId}/relatos/{relatoId}').onWrite((change, context) => {
+export const onRelatoChanged = functions.firestore.document('pacientes/{userId}/relatos/{relatoId}').onWrite((change, context) => {
+  const userId = context.params.userId;
+  const relatoId = context.params.relatoId;
+  const relatoAnterior = change.before.data();
+  const relatoAtual = change.after.data();
+
+  if (relatoAnterior?.relato !== relatoAtual?.relato) {
+    sendToNaturalLanguageApi(relatoAtual?.relato).then((result: any) => {
+      saveDataToRelato(userId, relatoId, { analiseRelato: result });
+    }).catch((err: any) => {
+      console.error('Erro natural language relato', err);
+      saveDataToRelato(userId, relatoId, { erroAnaliseRelato: err });
+    });
+  }
+
+  if (relatoAtual?.hasAudio && !relatoAtual?.analiseAudioTranscrito && relatoAtual?.audioTranscrito) {
+    sendToNaturalLanguageApi(relatoAtual?.audioTranscrito).then((result: any) => {
+      saveDataToRelato(userId, relatoId, { analiseAudioTranscrito: result });
+    }).catch((err: any) => {
+      console.error('Erro natural language auido', err);
+
+      saveDataToRelato(userId, relatoId, { erroAnaliseAudioTranscrito: err });
+    });
+  }
+
+
+  return generateReport(change, context).then((result) => {
+    console.log(result);
+  }).catch((err) => {
+    console.error(err);
+  });
+});
+
+function saveDataToRelato(idPaciente: any, idRelato: any, data: any) {
+  db.collection(`pacientes/${idPaciente}/relatos`).doc(idRelato).update(data).then((result) => {
+    console.log(result);
+  }).catch((err) => {
+    console.error(err);
+  });
+}
+
+function sendToNaturalLanguageApi(texto: string) {
+  const request: any = {
+    document: {
+      content: texto,
+      type: "PLAIN_TEXT",
+    },
+    features: {
+      extractSyntax: true,
+      // extractEntitySentiment: true, // não funciona em pt-br
+      extractEntity: true,
+      extractDocumentSentiment: true,
+      // classifyText: true // não funciona em pt-br
+    },
+    encodingType: "UTF8"
+  }
+  const client = new language.LanguageServiceClient();
+
+  return client.annotateText(request);
+}
+
+function generateReport(change: any, context: any) {
 
   const userId = context.params.userId; // id do dono do relato
 
@@ -34,9 +98,9 @@ export const generateReport = functions.firestore.document('pacientes/{userId}/r
           data.idResponsavel = idResponsavel; // alem de tudo salva o id do responsavel
           data.nomeResponsavel = responsavel.data()?.nomeCompleto; // alem de tudo salva o nome do responsavel
         }
-        console.log('relato id', context.params.relatoId);
+        // console.log('relato id', context.params.relatoId);
 
-        db.collection('dadosRelatorio').doc(context.params.relatoId).set(data).then((final: any) => { // cria ou modifica o documento na collection dados relatorio. Agora está pronto para ir pro BigQuery
+        db.collection(DADOS_RELATORIO_COLLECTION).doc(context.params.relatoId).set(data).then((final: any) => { // cria ou modifica o documento na collection dados relatorio. Agora está pronto para ir pro BigQuery
           console.log('relato saved to db', final);
         }).catch((error: any) => {
           console.error(error);
@@ -47,6 +111,96 @@ export const generateReport = functions.firestore.document('pacientes/{userId}/r
     }
   }).catch((err) => {
     console.error(err);
+  });
+}
+
+export const onRelatoDeleted = functions.firestore.document('pacientes/{userId}/relatos/{relatoId}').onDelete((change, context) => {
+  return db.collection(DADOS_RELATORIO_COLLECTION).doc(change.id).delete().then((result) => {
+    console.log('deleted ', result);
+  }).catch((err) => {
+    console.error(err);
+  });
+});
+
+export const onFileStored = functions.storage.object().onFinalize(async (object) => {
+  console.info('FILE STORED', object);
+
+  // Creates a client
+  const client = new speech.SpeechClient();
+
+  const gcsUri = 'gs://' + object.bucket + '/' + object.name;
+  // const encoding = 'LINEAR16';
+  // const sampleRateHertz = 16000;
+  const languageCode = 'pt-BR';
+
+  const config = {
+    // encoding: encoding,
+    // sampleRateHertz: sampleRateHertz,
+    languageCode: languageCode,
+  };
+  const audio = {
+    uri: gcsUri,
+  };
+
+  const request: any = {
+    config: config,
+    audio: audio,
+  };
+
+  const path: any = object.name?.split('/');
+  const pacienteId = path[0];
+  const relatoId = path[1];
+
+  // Detects speech in the audio file
+  // console.info('URI', gcsUri);
+  // console.info('PATH', gcsUri);
+  client.recognize(request).then((res: any) => {
+    console.info('Transcription: ', res);
+    let audioTranscrito = '';
+    let confiabilidadeTotal = 0;
+    let numAlternativas = 0;
+    let noResults = true;
+    res.forEach((transcript: any) => {
+      if (transcript && transcript !== null) {
+        if (transcript.results?.length > 0) {
+          transcript.results?.forEach((result: any) => {
+            result?.alternatives?.forEach((alternative: any) => {
+              if (alternative !== null) {
+                audioTranscrito += '.\n' + alternative.transcript;
+                noResults = false;
+                if (alternative.confidence) {
+                  numAlternativas++;
+                  confiabilidadeTotal += alternative.confidence;
+                }
+              }
+            });
+          });
+        }
+      }
+    });
+
+    let confiabilidade = 0;
+    if (confiabilidadeTotal > 0 && numAlternativas > 0) {
+      confiabilidade = confiabilidadeTotal / numAlternativas;
+    }
+
+    db.collection(`pacientes/${pacienteId}/relatos`).doc(relatoId).update({
+      transcription: res,
+      audioTranscrito,
+      noResults,
+      confiabilidade,
+    }).then((saved) => {
+      // console.log('SAVED TO DB!', saved);
+
+    }).catch((err) => {
+      console.error(err);
+      saveDataToRelato(pacienteId, relatoId, { transcriptionError: true });
+
+    });
+
+  }).catch((err) => {
+    console.error('Transcription failed: ', err);
+    saveDataToRelato(pacienteId, relatoId, { transcriptionError: true });
   });
 });
 
@@ -81,60 +235,6 @@ export const maintainUserData = functions.firestore.document('dadosUsuario/{user
   });
 });
 
-export const onFileStored = functions.storage.object().onFinalize(async (object) => {
-  console.info('FILE STORED', object);
-
-  // Creates a client
-  const client = new speech.SpeechClient();
-
-  const gcsUri = 'gs://' + object.bucket + '/' + object.name;
-  // const encoding = 'LINEAR16';
-  // const sampleRateHertz = 16000;
-  const languageCode = 'pt-BR';
-
-  const config = {
-    // encoding: encoding,
-    // sampleRateHertz: sampleRateHertz,
-    languageCode: languageCode,
-  };
-  const audio = {
-    uri: gcsUri,
-  };
-
-  const request: any = {
-    config: config,
-    audio: audio,
-  };
-
-  const path: any = object.name?.split('/');
-  const pacienteId = path[0];
-  const relatoId = path[1];
-
-  // Detects speech in the audio file
-  console.info('URI', gcsUri);
-  console.info('PATH', gcsUri);
-  client.recognize(request).then((result) => {
-    console.info('Transcription: ', result);
-    db.collection(`pacientes/${pacienteId}/relatos`).doc(relatoId).update({ transcription: result }).then((saved) => {
-      console.log('SAVED TO DB!', saved);
-
-    }).catch((err) => {
-      console.error(err);
-
-    });
-
-  }).catch((err) => {
-    console.error('Transcription failed: ', err);
-    db.collection(`pacientes/${pacienteId}/relatos`).doc(relatoId).update({ transcriptionFailed: err }).then((saved) => {
-      console.log('ERROR SAVED TO DB!', saved);
-
-    }).catch((error) => {
-      console.error(error);
-    });
-
-  });
-});
-
 export const checkDeactivation = functions.firestore.document('pacientes/{userId}').onWrite((change, context) => {
   if (change) {
     const data = change.after.data();
@@ -142,23 +242,24 @@ export const checkDeactivation = functions.firestore.document('pacientes/{userId
     if (data) {
       if (data.disabled === true) {
         admin.auth().updateUser(uid, { disabled: true }).then(res => {
-          console.log('user disabled: ', uid);
+          // console.log('user disabled: ', uid);
 
         }).catch(err => {
-          console.log('error disabling user', err);
+          console.error('error disabling user', err);
         });
       } else {
         admin.auth().updateUser(uid, { disabled: false }).then(res => {
-          console.log('user enabled: ', uid);
+          // console.log('user enabled: ', uid);
 
         }).catch(err => {
-          console.log('error enabling user', err);
+          console.error('error enabling user', err);
         });
       }
     }
   }
 
-})
+});
+
 export const registerPaciente = functions.https.onRequest((req, res) => {
   res.set('Access-Control-Allow-Origin', '*'); // permtie CORS
   if (req.method === 'OPTIONS') {
@@ -167,12 +268,12 @@ export const registerPaciente = functions.https.onRequest((req, res) => {
     const uid = req.body.data.uid;
     const responsavelUid = req.body.data.responsavelUid;
     const dadosUsuario = req.body.data.dadosUsuario;
-    console.log('request', req);
-    console.log('request body.data', req.body.data);
+    // console.log('request', req);
+    // console.log('request body.data', req.body.data);
 
 
     db.collection('dadosUsuario').doc(uid).set(dadosUsuario).then((result) => {
-      console.log('done');
+      // console.log('done');
     }).catch((err) => {
       console.error(err)
     });
@@ -181,17 +282,17 @@ export const registerPaciente = functions.https.onRequest((req, res) => {
       responsavel: db.collection('psicologos').doc(responsavelUid),
       dadosUsuario
     }).then((result) => {
-      console.log('done');
+      // console.log('done');
     }).catch((err) => {
-      console.log(err);
+      console.error(err);
     });
 
     db.collection('psicologos').doc(responsavelUid).update({
       pacientes: admin.firestore.FieldValue.arrayUnion(db.collection('pacientes').doc(uid))
     }).then((result) => {
-      console.log('done');
+      // console.log('done');
     }).catch((err) => {
-      console.log(err);
+      console.error(err);
     });
 
     res.status(200).send('Created!');

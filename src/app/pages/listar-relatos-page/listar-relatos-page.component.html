@@ -11,8 +11,10 @@
     <mat-spinner color="primary"></mat-spinner>
   </div>
   <div class="relatos" *ngIf="relatos">
-    <app-relato-card (relatoOpened)="opened($event)" *ngFor="let relato of relatos" [relato]="relato">
+    <mat-accordion single>
+      <app-relato-card (relatoOpened)="opened($event)" *ngFor="let relato of relatos" [relato]="relato">
 
-    </app-relato-card>
+      </app-relato-card>
+    </mat-accordion>
   </div>
 </app-card>

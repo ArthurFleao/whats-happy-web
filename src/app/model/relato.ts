@@ -10,6 +10,10 @@ export class Relato {
   audioTranscrito?: string;
   transcript?: [];
   pacienteUid: string;
-  transcriptionFailed?: any;
+  transcriptionError?: any;
   noResults: boolean;
+  audioUploaded?: boolean;
+  confiabilidade?: number;
+  analiseRelato?: any;
+  analiseAudioTranscrito?: any;
 }

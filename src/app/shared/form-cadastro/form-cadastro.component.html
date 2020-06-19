@@ -87,28 +87,28 @@
       <div fxFlex>
         <mat-form-field appearance="outline">
           <mat-label>UF</mat-label>
-          <input matInput required formControlName="uf" placeholder="Ex: MG">
+          <input [attr.disabled]="loadingCep? '' : null" matInput required formControlName="uf" placeholder="Ex: MG">
         </mat-form-field>
       </div>
 
       <div fxFlex>
         <mat-form-field appearance="outline">
           <mat-label>Cidade</mat-label>
-          <input matInput required formControlName="cidade" placeholder="Ex: Itajubá">
+          <input [attr.disabled]="loadingCep? '' : null" matInput required formControlName="cidade" placeholder="Ex: Itajubá">
         </mat-form-field>
       </div>
 
       <div fxFlex>
         <mat-form-field appearance="outline">
           <mat-label>Bairro</mat-label>
-          <input matInput required formControlName="bairro" placeholder="Ex: Laranjeiras">
+          <input [attr.disabled]="loadingCep? '' : null" matInput required formControlName="bairro" placeholder="Ex: Laranjeiras">
         </mat-form-field>
       </div>
 
       <div fxFlex>
         <mat-form-field appearance="outline">
           <mat-label>Logradouro</mat-label>
-          <input matInput required formControlName="logradouro" placeholder="Ex: Av. Brasil">
+          <input [attr.disabled]="loadingCep? '' : null" matInput required formControlName="logradouro" placeholder="Ex: Av. Brasil">
         </mat-form-field>
       </div>
 
