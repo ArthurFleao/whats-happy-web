@@ -78,7 +78,8 @@ import { NgxAudioPlayerModule } from 'ngx-audio-player';
 import { RegistrarConsultaPageComponent } from './pages/registrar-consulta-page/registrar-consulta-page.component';
 import { FormRegistrarConsultaComponent } from './shared/form-registrar-consulta/form-registrar-consulta.component'; // Importando o módulo
 import { AngularFireStorageModule } from '@angular/fire/storage';
-import {NgxMaskModule} from 'ngx-mask'
+import {NgxMaskModule} from 'ngx-mask';
+import { ListarConvitesComponent } from './pages/listar-convites/listar-convites.component'
 
 const material = [
   ClipboardModule,
@@ -148,6 +149,7 @@ const material = [
     RecorderComponent,
     RegistrarConsultaPageComponent,
     FormRegistrarConsultaComponent,
+    ListarConvitesComponent,
   ],
   imports: [
     material,

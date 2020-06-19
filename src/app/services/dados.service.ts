@@ -129,6 +129,17 @@ export class DadosService {
 
   }
 
+  listarConvites(){
+
+    const categoryDocRef = this.afs
+      .collection('psicologos')
+      .doc('d2LgmhJD27T4c2L4k9U2h4S1jHB2');
+
+    console.log("categoryDocRef", categoryDocRef.ref)
+
+    return this.afs.collection("convites", ref => ref.where('psicologo', '==', categoryDocRef.ref)).get()
+  }
+
   // superGet(doc) {
   //   const subs = [];
   //   this.findRefs(doc, subs);

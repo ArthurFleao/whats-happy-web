@@ -16,6 +16,7 @@ import { PerfilPageComponent } from './pages/perfil-page/perfil-page.component';
 import { ProntuarioPageComponent } from './pages/prontuario-page/prontuario-page.component';
 import { ListarPacientesPageComponent } from './pages/listar-pacientes-page/listar-pacientes-page.component';
 import { RegistrarConsultaPageComponent } from './pages/registrar-consulta-page/registrar-consulta-page.component';
+import { ListarConvitesComponent } from './pages/listar-convites/listar-convites.component';
 
 
 const redirectUnauthorizedToHome = () => redirectUnauthorizedTo(['login']);
@@ -39,6 +40,9 @@ const routes: Routes = [
       { path: 'relatos', component: ListarRelatosPageComponent }
     ]
   },
+
+  { path: 'listarConvites', component: ListarConvitesComponent},
+
 ];
 
 @NgModule({
