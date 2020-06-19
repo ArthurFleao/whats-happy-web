@@ -41,7 +41,7 @@ const routes: Routes = [
     ]
   },
 
-  { path: 'listarConvites', component: ListarConvitesComponent},
+  { path: 'listarConvites', component: ListarConvitesComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToHome } },
 
 ];
 

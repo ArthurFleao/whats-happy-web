@@ -129,11 +129,11 @@ export class DadosService {
 
   }
 
-  listarConvites(){
+  listarConvites(uid){
 
     const categoryDocRef = this.afs
       .collection('psicologos')
-      .doc('d2LgmhJD27T4c2L4k9U2h4S1jHB2');
+      .doc(uid);
 
     console.log("categoryDocRef", categoryDocRef.ref)
 

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DadosService } from 'src/app/services/dados.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-listar-convites',
@@ -8,24 +9,32 @@ import { DadosService } from 'src/app/services/dados.service';
 })
 export class ListarConvitesComponent implements OnInit {
 
+  myUid: string;
+
   constructor(
-    private db: DadosService
+    private db: DadosService,
+    private authService: AuthService,
   ) {
 
-    this.db.listarConvites().subscribe(querySnapshot => {
-      console.log('querySnapshot: ', querySnapshot);
+    this.authService.me().then(res => {
+      this.myUid = res.uid;
 
-      let arrayAux = new Array<any>()
+      this.db.listarConvites(this.myUid).subscribe(querySnapshot => {
+        console.log('querySnapshot: ', querySnapshot);
 
-      querySnapshot.forEach(doc => {
-        // doc.data() is never undefined for query doc snapshots
-        arrayAux.push(doc.data())
+        let arrayAux = new Array<any>()
 
-        console.log('doc.data(): ', doc.data());
+        querySnapshot.forEach(doc => {
+          // doc.data() is never undefined for query doc snapshots
+          arrayAux.push(doc.data())
 
-    })
+          console.log('doc.data(): ', doc.data());
 
-    })
+      })
+
+      })
+
+    });
 
    }
 
