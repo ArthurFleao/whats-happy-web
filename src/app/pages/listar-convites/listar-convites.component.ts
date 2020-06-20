@@ -20,20 +20,14 @@ export class ListarConvitesComponent implements OnInit {
       this.myUid = res.uid;
 
       this.db.listarConvites(this.myUid).subscribe(querySnapshot => {
-        console.log('querySnapshot: ', querySnapshot);
 
         let arrayAux = new Array<any>()
 
         querySnapshot.forEach(doc => {
           // doc.data() is never undefined for query doc snapshots
           arrayAux.push(doc.data())
-
-          console.log('doc.data(): ', doc.data());
-
+        })
       })
-
-      })
-
     });
 
    }

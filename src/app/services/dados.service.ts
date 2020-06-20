@@ -131,13 +131,29 @@ export class DadosService {
 
   listarConvites(uid){
 
-    const categoryDocRef = this.afs
+    //pegar a referencia da coleção psicologo
+    const psicologoRef = this.afs
       .collection('psicologos')
       .doc(uid);
 
-    console.log("categoryDocRef", categoryDocRef.ref)
+    return this.afs.collection("convites", ref => ref.where('psicologo', '==', psicologoRef.ref)).get()
+  }
 
-    return this.afs.collection("convites", ref => ref.where('psicologo', '==', categoryDocRef.ref)).get()
+
+  ///////////////////////////////ATUALIZAR PSICOLOGO RESPONSAVEL //////////////////////////////////////
+  updateResponsavel(pacienteId, psicologoResponsavelId){
+
+    //pegar a referencia da coleção psicologo
+    const psicologoResponsavelRef = this.afs
+      .collection('psicologos')
+      .doc(psicologoResponsavelId);
+
+      console.log("updateResponsavel Ref", psicologoResponsavelRef.ref)
+
+      this.afs.collection('pacientes').doc(pacienteId).update({
+        responsavel: psicologoResponsavelRef.ref
+      })
+
   }
 
   // superGet(doc) {
