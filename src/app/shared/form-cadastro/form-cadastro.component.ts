@@ -72,7 +72,7 @@ export class FormCadastroComponent implements OnInit {
         sexo: [this.bootstrap?.sexo || '', Validators.required],
         crp: [this.bootstrap?.crp || '', this.includeCrp ? Validators.required : undefined],
         dataNascimento: [this.bootstrap?.dataNascimento || '', Validators.required],
-        telefone: this.fb.array([this.initTelefone()]),
+        telefone: this.fb.array([this.initTelefone(this.bootstrap?.telefone[0]?.telefone)]),
         senha: [this.bootstrap?.senha || '', this.flagTravarCampo ? undefined : Validators.required],
         confirmaSenha: [this.bootstrap?.confirmaSenha || '', this.flagTravarCampo ? undefined : Validators.required],
       }, { validator: this.flagTravarCampo ? undefined : matchingPasswords('senha', 'confirmaSenha') }),
@@ -88,8 +88,13 @@ export class FormCadastroComponent implements OnInit {
         cidade: [this.bootstrap?.endereco?.cidade || '', Validators.required],
         numero: [this.bootstrap?.endereco?.numero || '', Validators.required],
       })
+
     });
     // ------------------------ FIM CAMPOS ENDEREÇO -------------
+
+    this.bootstrap?.telefone?.forEach(telefone => {
+      this.addTelefone(telefone.telefone)
+    });
 
     this.formChange.emit(this.form); // emite o form construido para cima
     this.form.valueChanges.subscribe(c => { // sempre que houver uma mudança no form
@@ -125,12 +130,10 @@ export class FormCadastroComponent implements OnInit {
     });
   }
 
-  initTelefone() {
-
-    //this.telefoneControl = this.bootstrap.telefone
+  initTelefone(telefone?) {
 
     return this.fb.group({
-        telefone: [this.bootstrap?.dadosUsuario?.telefone || '', Validators.required]
+        telefone: [telefone || '', Validators.required]
     });
   }
 
@@ -142,8 +145,8 @@ export class FormCadastroComponent implements OnInit {
     return this.formCadastroControl.get('telefone') as FormArray;
 }
 
-addTelefone() {
-  this.telefoneControl.push(this.initTelefone())
+addTelefone(telefone?) {
+  this.telefoneControl.push(this.initTelefone(telefone))
 }
 
 removeTelefone(i: number) {
