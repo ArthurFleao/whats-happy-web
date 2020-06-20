@@ -71,6 +71,7 @@ export class CadastroPacienteComponent implements OnInit {
         telefone: values.dadosUsuario.telefone,
         endereco: {
           bairro: values.endereco.bairro,
+          cidade: values.endereco.cidade,
           cep: values.endereco.cep,
           logradouro: values.endereco.logradouro,
           numero: values.endereco.numero,

@@ -71,6 +71,7 @@ export class LoginPageComponent implements OnInit {
         endereco: {
           bairro: values.endereco.bairro,
           cep: values.endereco.cep,
+          cidade: values.endereco.cidade,
           logradouro: values.endereco.logradouro,
           numero: values.endereco.numero,
           uf: values.endereco.uf,

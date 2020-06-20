@@ -42,24 +42,20 @@ export class PerfilPageComponent implements OnInit {
 
       // chama funcao do auth.service para recuperar dados do usuario logado
       this.db.getUserData(this.myUid).subscribe((resDadosUsuario: DadosUsuario) => {
-        this.authService.user$.subscribe(res => {
-          console.log('res', res);
-          this.loadingData = false; // indica que terminou de carregar
-
-          if (res.dadosPsicologo.crp) {
+        this.dadosUsuario = resDadosUsuario;
+        this.dadosUsuario.email = res.email;
+        this.authService.user$.subscribe(resauth => {
+          console.log('res', resauth);
+          if (resauth.dadosPsicologo?.crp) {
             this.showCrp = true;
-            this.dadosUsuario.crp = res.dadosPsicologo.crp;
+            this.dadosUsuario.crp = resauth.dadosPsicologo.crp;
           } else {
             this.showCrp = false;
           }
+          this.loadingData = false; // indica que terminou de carregar
         }, error => {
           console.error(error);
         });
-
-        this.dadosUsuario = resDadosUsuario;
-        this.dadosUsuario.email = res.email;
-        console.log('--------------------------------------');
-        console.log('this.dadosUsuario: ', this.dadosUsuario);
       }, error => {
         this.eh.handle(error);
         this.loadingData = false; // indica que terminou de carregar

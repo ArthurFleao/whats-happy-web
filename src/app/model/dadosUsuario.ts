@@ -11,6 +11,7 @@ export class DadosUsuario {
 export class Endereco {
   logradouro: string;
   cep: string;
+  cidade: string;
   numero: string;
   uf: string;
   bairro: string;
