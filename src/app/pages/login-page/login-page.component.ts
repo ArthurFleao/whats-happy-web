@@ -83,6 +83,7 @@ export class LoginPageComponent implements OnInit {
       this.db.dadosUsuarioSave(res.user.uid, dadosUsuario).then((result) => {
         this.db.psicologoSave(res.user.uid, psicologo).then((result) => {
           this.loading = false; // indica que terminou de carregar
+          this.router.navigate(['home']);
           this.snack.success('Você se registrou com sucesso!');
         }).catch((err) => {
           this.loading = false; // indica que terminou de carregar

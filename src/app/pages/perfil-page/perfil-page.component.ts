@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthService } from 'src/app/services/auth.service';
 // formulário
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 // model para usuario
 import { DadosUsuario } from './../../model/dadosUsuario';
 // service para mensagens
@@ -25,6 +25,7 @@ export class PerfilPageComponent implements OnInit {
   loading = false;
   loadingData = true;
   myUid: string;
+  showCrp: boolean;
 
   constructor(
     private authService: AuthService,
@@ -34,31 +35,43 @@ export class PerfilPageComponent implements OnInit {
     private snack: SnackService,
     private router: Router,
     fb: FormBuilder
-    ) {
-
+  ) {
     // recupera id do usuário logado
     this.authService.me().then(res => {
       this.myUid = res.uid;
 
       // chama funcao do auth.service para recuperar dados do usuario logado
       this.db.getUserData(this.myUid).subscribe((resDadosUsuario: DadosUsuario) => {
+        this.authService.user$.subscribe(res => {
+          console.log('res', res);
+          this.loadingData = false; // indica que terminou de carregar
+
+          if (res.dadosPsicologo.crp) {
+            this.showCrp = true;
+            this.dadosUsuario.crp = res.dadosPsicologo.crp;
+          } else {
+            this.showCrp = false;
+          }
+        }, error => {
+          console.error(error);
+        });
+
         this.dadosUsuario = resDadosUsuario;
         this.dadosUsuario.email = res.email;
-        this.loadingData = false; // indica que terminou de carregar
-        console.log('--------------------------------------')
+        console.log('--------------------------------------');
         console.log('this.dadosUsuario: ', this.dadosUsuario);
-    }, error => {
-      this.eh.handle(error);
-      this.loadingData = false; // indica que terminou de carregar
-    });
+      }, error => {
+        this.eh.handle(error);
+        this.loadingData = false; // indica que terminou de carregar
+      });
 
-   });
+    });
   }
 
   ngOnInit(): void {
   }
 
-  updateData(values){
+  updateData(values) {
     const data = values.dadosUsuario;
     data.endereco = values.endereco;
 
