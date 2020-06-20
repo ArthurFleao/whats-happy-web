@@ -52,11 +52,37 @@
         </mat-form-field>
       </div>
       <div fxFlex="100">
-        <mat-form-field appearance="outline">
-          <mat-label>Telefone</mat-label>
-          <input matInput required formControlName="telefone" mask="{{ maskPhoneNumber }}" (keyup)="switchPhoneMask(form.get('dadosUsuario.telefone').value)" placeholder="Ex: (00) 9 9999-9999">
 
-        </mat-form-field>
+        <div formArrayName="telefone">
+
+          <div *ngFor="let subtask of telefoneControl.controls; let i=index">
+            <div [formGroupName]="i">
+
+              <mat-form-field appearance="outline">
+                <mat-label>Telefone</mat-label>
+                <input matInput required formControlName="telefone" mask="{{ maskPhoneNumber }}" (keyup)="switchPhoneMask(form.get('dadosUsuario.telefone').value)" placeholder="Ex: (00) 9 9999-9999">
+              </mat-form-field>
+
+              <a class="btn btn-danger btn-sm" (click)="removeTelefone(i)">
+                <mat-icon>
+                  remove_circle
+                </mat-icon>
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <a class="btn btn-success btn-sm" (click)="addTelefone()">
+
+              <mat-icon>
+                  add_circle
+              </mat-icon>
+            </a>
+          </div>
+
+        </div>
+
+
       </div>
       <div *ngIf="!flagTravarCampo" fxFlex>
         <mat-form-field appearance="outline">

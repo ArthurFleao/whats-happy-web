@@ -1,7 +1,7 @@
 import { ErrorHandlerService } from './../../services/error-handler.service';
 import { environment } from './../../../environments/environment';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { matchingPasswords } from 'src/assets/utils/app-validators';
 // model para usuario
 import { DadosUsuario } from './../../model/dadosUsuario';
@@ -13,6 +13,10 @@ import { debounce, debounceTime } from 'rxjs/operators';
   templateUrl: './form-cadastro.component.html',
   styleUrls: ['./form-cadastro.component.scss']
 })
+
+//Adicionar campos no formulário
+//https://www.it-swarm.dev/pt/forms/como-adicionar-mais-campos-de-entrada-usando-um-botao-angular-2-formas-dinamicas/829045400/
+
 export class FormCadastroComponent implements OnInit {
 
   // variavel para travar campo(seu status é alterado por que utilizar o componente)
@@ -68,7 +72,7 @@ export class FormCadastroComponent implements OnInit {
         sexo: [this.bootstrap?.sexo || '', Validators.required],
         crp: [this.bootstrap?.crp || '', this.includeCrp ? Validators.required : undefined],
         dataNascimento: [this.bootstrap?.dataNascimento || '', Validators.required],
-        telefone: [this.bootstrap?.telefone || '', Validators.required],
+        telefone: this.fb.array([this.initTelefone()]),
         senha: [this.bootstrap?.senha || '', this.flagTravarCampo ? undefined : Validators.required],
         confirmaSenha: [this.bootstrap?.confirmaSenha || '', this.flagTravarCampo ? undefined : Validators.required],
       }, { validator: this.flagTravarCampo ? undefined : matchingPasswords('senha', 'confirmaSenha') }),
@@ -121,7 +125,27 @@ export class FormCadastroComponent implements OnInit {
     });
   }
 
+  initTelefone() {
+    return this.fb.group({
+      telefone: ['', Validators.required]
+    });
+  }
 
+  get formCadastroControl () {
+    return this.form.get('dadosUsuario') as FormGroup;
+  }
+
+  get telefoneControl () {
+    return this.formCadastroControl.get('telefone') as FormArray;
+}
+
+addTelefone() {
+  this.telefoneControl.push(this.initTelefone())
+}
+
+removeTelefone(i: number) {
+  this.telefoneControl.removeAt(i);
+}
 
   onSubmit() {
 
