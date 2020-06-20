@@ -126,8 +126,11 @@ export class FormCadastroComponent implements OnInit {
   }
 
   initTelefone() {
+
+    //this.telefoneControl = this.bootstrap.telefone
+
     return this.fb.group({
-      telefone: ['', Validators.required]
+        telefone: [this.bootstrap?.dadosUsuario?.telefone || '', Validators.required]
     });
   }
 
