@@ -72,7 +72,7 @@ export class FormCadastroComponent implements OnInit {
         sexo: [this.bootstrap?.sexo || '', Validators.required],
         crp: [this.bootstrap?.crp || '', this.includeCrp ? Validators.required : undefined],
         dataNascimento: [this.bootstrap?.dataNascimento || '', Validators.required],
-        telefone: this.fb.array([this.bootstrap?.telefone[0]?.telefone ? '' : this.initTelefone()]),
+        telefone: this.fb.array([this.initTelefone(this.bootstrap?.telefone[0]?.telefone)]),
         senha: [this.bootstrap?.senha || '', this.flagTravarCampo ? undefined : Validators.required],
         confirmaSenha: [this.bootstrap?.confirmaSenha || '', this.flagTravarCampo ? undefined : Validators.required],
       }, { validator: this.flagTravarCampo ? undefined : matchingPasswords('senha', 'confirmaSenha') }),
@@ -94,8 +94,11 @@ export class FormCadastroComponent implements OnInit {
 
     if (this.bootstrap?.telefone) {
       if (typeof (this.bootstrap?.telefone) !== 'string') { // retrocopatibilidade com os usuários antigos
-        this.bootstrap.telefone.forEach(telefone => {
-          this.addTelefone(telefone.telefone);
+        this.bootstrap.telefone.forEach((telefone, i) => {
+          if (telefone.telefone !== '' && i !== 0) { // autocorreção de salvamentos incorretos
+            console.log('telefone incoming', telefone);
+            this.addTelefone(telefone.telefone);
+          }
         });
       }
     }
