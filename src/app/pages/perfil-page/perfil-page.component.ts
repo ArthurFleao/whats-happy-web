@@ -39,14 +39,14 @@ export class PerfilPageComponent implements OnInit {
     // recupera id do usuário logado
     this.authService.me().then(res => {
       this.myUid = res.uid;
-      console.log('my uid', this.myUid);
 
       // chama funcao do auth.service para recuperar dados do usuario logado
       this.db.getUserData(this.myUid).subscribe((resDadosUsuario: DadosUsuario) => {
         this.dadosUsuario = resDadosUsuario;
         this.dadosUsuario.email = res.email;
         this.loadingData = false; // indica que terminou de carregar
-        console.log('tudo: ', this.dadosUsuario);
+        console.log('--------------------------------------')
+        console.log('this.dadosUsuario: ', this.dadosUsuario);
     }, error => {
       this.eh.handle(error);
       this.loadingData = false; // indica que terminou de carregar
@@ -61,8 +61,6 @@ export class PerfilPageComponent implements OnInit {
   updateData(values){
     const data = values.dadosUsuario;
     data.endereco = values.endereco;
-
-    console.log("data", data)
 
     this.loading = true; // indica que está carregando algo // indica que está carregando algo
     this.afs.collection('dadosUsuario').doc(this.myUid).update(data).then((finli) => {

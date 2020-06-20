@@ -34,15 +34,11 @@ export class ListarPacientesPageComponent implements OnInit {
     // recupera id do usuário logado
     this.authService.me().then(myRes => {
       this.myUid = myRes.uid;
-      console.log('my uid', this.myUid);
 
       // chama funcao do auth.service para recuperar dados do usuario logado
       this.db.getListaPacientes(this.myUid).subscribe(res => {
 
         const arrayTodosPacientes = [];
-
-        console.log('res: ', res);
-
         res.forEach((paciente: any) => {
           // coloca todos os pacientes do psicologo no array
 
@@ -55,7 +51,6 @@ export class ListarPacientesPageComponent implements OnInit {
         forkJoin(arrayTodosPacientes).subscribe(
           arrayPacientes => {
             this.pacientes.next(arrayPacientes);
-            console.log('pacientes:', arrayPacientes);
             this.loading = false;
           }, err => {
             this.loading = false;
@@ -73,7 +68,6 @@ export class ListarPacientesPageComponent implements OnInit {
     this.loadingDisabling = true;
     if (paciente.disabled) {
       this.db.enablePaciente(paciente.uid).then((result) => {
-        console.log('result', result);
         this.snack.success('Paciente foi habilitado!');
         this.loadingDisabling = false;
         paciente.disabled = false;
@@ -84,7 +78,6 @@ export class ListarPacientesPageComponent implements OnInit {
     }
     else {
       this.db.disablePaciente(paciente.uid).then((result) => {
-        console.log('result', result);
         this.loadingDisabling = false;
         this.snack.success('Paciente foi desabilitado!');
         paciente.disabled = true;

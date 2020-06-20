@@ -60,7 +60,7 @@ export class ListarRelatosPageComponent implements OnInit, OnDestroy {
           this.eh.handle(error);
           this.loadingRelatos = false;
         });
-        console.log('paciente:', res);
+
         this.loading = false;
         if (!res) {
           this.snack.danger('Paciente não encontrado.');

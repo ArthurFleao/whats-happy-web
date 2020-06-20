@@ -81,8 +81,6 @@ export class RegistrarConsultaPageComponent implements OnInit {
   registrarConsulta(values){
     this.loading = false; // indica que está carregando algo // indica que está carregando algo
 
-    console.log("values", values)
-
     this.afs.collection('pacientes').doc(values.dadosUsuario.idPaciente.uid).collection('fichasConsultas').add({
 
       dcHda: values.registroConsulta.dcHda,

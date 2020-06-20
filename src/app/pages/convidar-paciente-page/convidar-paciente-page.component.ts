@@ -45,7 +45,6 @@ export class ConvidarPacientePageComponent implements OnInit {
   onRegister(values) {
     this.loading = true;
     this.convites.newConvite(this.myUid, values.nomeCompleto, values.email).then((result) => {
-      console.log('result', result);
       this.loading = false;
       this.snack.success('Convite para ' + values.nomeCompleto + ' criado com sucesso!');
       this.conviteId = result.id;

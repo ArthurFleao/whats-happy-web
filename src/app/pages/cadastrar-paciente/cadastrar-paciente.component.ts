@@ -35,7 +35,6 @@ export class CadastroPacienteComponent implements OnInit {
       this.conviteId = params.get('id');
       this.convites.getConvite(params.get('id')).subscribe(res => {
         this.convite = res;
-        console.log('convite:', res);
         this.bootstrap.email = this.convite?.email;
         this.bootstrap.nomeCompleto = this.convite?.nomeCompleto;
 
@@ -57,7 +56,7 @@ export class CadastroPacienteComponent implements OnInit {
   ngOnInit(): void {
   }
   test() {
-    console.log('test convite', this.convite);
+//    console.log('test convite', this.convite);
   }
 
   onRegister(values) { // ao clicar em cadastrar
