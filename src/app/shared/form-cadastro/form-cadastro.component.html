@@ -36,7 +36,7 @@
         <!-- <h4>Gênero</h4> -->
         <mat-form-field appearance="outline">
           <mat-label>Gênero:</mat-label>
-          <mat-select   required formControlName="sexo">
+          <mat-select required formControlName="sexo">
             <mat-option value="m">Masculino</mat-option>
             <mat-option value="f">Feminino</mat-option>
             <mat-option value="outro">Outro</mat-option>
@@ -58,27 +58,34 @@
           <div *ngFor="let telefoneItem of telefoneControl.controls; let i=index">
             <div [formGroupName]="i">
 
-              <mat-form-field appearance="outline">
-                <mat-label>Telefone</mat-label>
-                <input matInput required formControlName="telefone" mask="{{ maskPhoneNumber }}" (keyup)="switchPhoneMask(form.get('dadosUsuario.telefone').value)" placeholder="Ex: (00) 9 9999-9999">
-              </mat-form-field>
+              <div fxLayout="row" fxLayoutAlign="start fill">
+                <mat-form-field fxFlex="90" appearance="outline">
+                  <mat-label>Telefone</mat-label>
+                  <input matInput required formControlName="telefone" mask="{{ maskPhoneNumber }}"
+                         (keyup)="switchPhoneMask(form.get('dadosUsuario.telefone').value)"
+                         placeholder="Ex: (00) 9 9999-9999">
+                </mat-form-field>
 
-              <a class="btn btn-danger btn-sm" (click)="removeTelefone(i)">
-                <mat-icon>
-                  remove_circle
-                </mat-icon>
-              </a>
+                <div fxFlex="5">
+                  <button *ngIf="i>0" mat-icon-button color="warn" (click)="removeTelefone(i)">
+                    <mat-icon>
+                      remove_circle
+                    </mat-icon>
+                  </button>
+                </div>
+                <div fxFlex="5">
+                  <button mat-icon-button color="success" *ngIf="(i+1 === telefoneControl.controls.length)"
+                          (click)="addTelefone()">
+                    <mat-icon>
+                      add_circle
+                    </mat-icon>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div>
-            <a class="btn btn-success btn-sm" (click)="addTelefone()">
 
-              <mat-icon>
-                  add_circle
-              </mat-icon>
-            </a>
-          </div>
 
         </div>
 
@@ -105,7 +112,8 @@
         <mat-form-field appearance="outline">
           <mat-label>CEP</mat-label>
           <input matInput required formControlName="cep" mask="00.000-000" placeholder="Ex: 999999-999">
-          <mat-spinner class="animate__animated animate__fadeIn" style="position: absolute; right: 0; top: 0;" [diameter]="35" *ngIf="loadingCep"></mat-spinner>
+          <mat-spinner class="animate__animated animate__fadeIn" style="position: absolute; right: 0; top: 0;"
+                       [diameter]="35" *ngIf="loadingCep"></mat-spinner>
         </mat-form-field>
         <mat-error *ngIf="form.get('endereco').get('cep').hasError('invalidCep')">Cep inválido!</mat-error>
       </div>
@@ -114,31 +122,38 @@
         <mat-form-field appearance="outline">
           <mat-label>UF</mat-label>
           <input [attr.disabled]="loadingCep? '' : null" matInput required formControlName="uf" placeholder="Ex: MG">
-          <mat-spinner class="animate__animated animate__fadeIn" style="position: absolute; right: 0; top: 0;" [diameter]="35" *ngIf="loadingCep"></mat-spinner>
+          <mat-spinner class="animate__animated animate__fadeIn" style="position: absolute; right: 0; top: 0;"
+                       [diameter]="35" *ngIf="loadingCep"></mat-spinner>
         </mat-form-field>
       </div>
 
       <div fxFlex>
         <mat-form-field appearance="outline">
           <mat-label>Cidade</mat-label>
-          <input [attr.disabled]="loadingCep? '' : null" matInput required formControlName="cidade" placeholder="Ex: Itajubá">
-          <mat-spinner class="animate__animated animate__fadeIn" style="position: absolute; right: 0; top: 0;" [diameter]="35" *ngIf="loadingCep"></mat-spinner>
+          <input [attr.disabled]="loadingCep? '' : null" matInput required formControlName="cidade"
+                 placeholder="Ex: Itajubá">
+          <mat-spinner class="animate__animated animate__fadeIn" style="position: absolute; right: 0; top: 0;"
+                       [diameter]="35" *ngIf="loadingCep"></mat-spinner>
         </mat-form-field>
       </div>
 
       <div fxFlex>
         <mat-form-field appearance="outline">
           <mat-label>Bairro</mat-label>
-          <input [attr.disabled]="loadingCep? '' : null" matInput required formControlName="bairro" placeholder="Ex: Laranjeiras">
-          <mat-spinner class="animate__animated animate__fadeIn" style="position: absolute; right: 0; top: 0;" [diameter]="35" *ngIf="loadingCep"></mat-spinner>
+          <input [attr.disabled]="loadingCep? '' : null" matInput required formControlName="bairro"
+                 placeholder="Ex: Laranjeiras">
+          <mat-spinner class="animate__animated animate__fadeIn" style="position: absolute; right: 0; top: 0;"
+                       [diameter]="35" *ngIf="loadingCep"></mat-spinner>
         </mat-form-field>
       </div>
 
       <div fxFlex>
         <mat-form-field appearance="outline">
           <mat-label>Logradouro</mat-label>
-          <input [attr.disabled]="loadingCep? '' : null" matInput required formControlName="logradouro" placeholder="Ex: Av. Brasil">
-          <mat-spinner class="animate__animated animate__fadeIn" style="position: absolute; right: 0; top: 0;" [diameter]="35" *ngIf="loadingCep"></mat-spinner>
+          <input [attr.disabled]="loadingCep? '' : null" matInput required formControlName="logradouro"
+                 placeholder="Ex: Av. Brasil">
+          <mat-spinner class="animate__animated animate__fadeIn" style="position: absolute; right: 0; top: 0;"
+                       [diameter]="35" *ngIf="loadingCep"></mat-spinner>
         </mat-form-field>
       </div>
 
