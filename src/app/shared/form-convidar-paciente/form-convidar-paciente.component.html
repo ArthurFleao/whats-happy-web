@@ -5,9 +5,10 @@
     <div fxFlex="100">
       <mat-form-field appearance="outline">
         <mat-label>Nome Completo do paciente</mat-label>
-        <input matInput required formControlName="nomeCompleto" placeholder="Rafael de Magalhães Dias Frinhani"
+        <input matInput required formControlName="nomeCompleto" placeholder="Ex. Jose dá Silva"
                [readonly]="flagTravarCampos">
       </mat-form-field>
+      <val-errors controlName="nomeCompleto" label="o nome do paciente" ></val-errors>
     </div>
     <div fxFlex="100">
       <mat-form-field appearance="outline">
@@ -15,6 +16,8 @@
         <input matInput formControlName="email" placeholder="Ex. jose@exemplo.com"
                [readonly]="flagTravarCampos">
       </mat-form-field>
+      <val-errors controlName="email"></val-errors>
+
     </div>
   </div>
   <!-- O NG CONTENT, É ONDE VAI SAIR O QUE VOCÊ ENFIAR PELO COMPONENTE DE CIMA, geralmente vai ser um botão -->

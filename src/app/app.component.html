@@ -23,4 +23,9 @@
       As senhas não são iguais!
     </mat-error>
   </ng-template>
+  <ng-template valError="minlength" let-error="error" let-label>
+    <mat-error class="animate__animated animate__fadeInDown">
+      São necessários aos menos 6 caractéres!
+    </mat-error>
+  </ng-template>
 </val-default-errors>

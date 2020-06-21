@@ -33,7 +33,7 @@ export class FormLoginComponent implements OnInit {
     // ------------------------ CAMPOS -------------
     this.form = this.fb.group({
       // formName: ['valorInicial', Validator]
-      login: [this.loginBoostrap?.login || '', Validators.required],
+      login: [this.loginBoostrap?.login || '', Validators.compose([Validators.required, Validators.email])],
       senha: [this.loginBoostrap?.senha || '', Validators.required]
     });
     // ------------------------ FIM CAMPOS -------------

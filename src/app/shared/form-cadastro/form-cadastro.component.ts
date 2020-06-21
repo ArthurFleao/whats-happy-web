@@ -66,14 +66,14 @@ export class FormCadastroComponent implements OnInit {
     this.form = this.fb.group({
       dadosUsuario: this.fb.group({
         // formName: ['valorInicial', Validator]
-        email: [this.bootstrap?.email || '', Validators.required],
+        email: [this.bootstrap?.email || '', Validators.compose([Validators.required, Validators.email])],
         nomeCompleto: [this.bootstrap?.nomeCompleto || '', Validators.required],
         cpf: [this.bootstrap?.cpf || '', Validators.required],
         sexo: [this.bootstrap?.sexo || '', Validators.required],
         crp: [this.bootstrap?.crp || '', this.includeCrp ? Validators.required : undefined],
         dataNascimento: [this.bootstrap?.dataNascimento || '', Validators.required],
         telefone: this.fb.array([this.initTelefone(this.bootstrap?.telefone[0]?.telefone)]),
-        senha: [this.bootstrap?.senha || '', this.flagTravarCampo ? undefined : Validators.required],
+        senha: [this.bootstrap?.senha || '', this.flagTravarCampo ? undefined : Validators.compose([Validators.required, Validators.minLength(6)])],
         confirmaSenha: [this.bootstrap?.confirmaSenha || '', this.flagTravarCampo ? undefined : Validators.required],
       }, { validator: this.flagTravarCampo ? undefined : matchingPasswords('senha', 'confirmaSenha') }),
       // ------------------------ FIM CAMPOS -------------

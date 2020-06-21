@@ -34,7 +34,7 @@ export class FormConvidarPacienteComponent implements OnInit {
     // ------------------------ CAMPOS -------------
     this.form = this.fb.group({
       nomeCompleto: [this.bootstrap?.nomeCompleto || '', Validators.required],
-      email: [this.bootstrap?.email || ''],
+      email: [this.bootstrap?.email || '', Validators.email],
     });
     // ------------------------ FIM CAMPOS -------------
 

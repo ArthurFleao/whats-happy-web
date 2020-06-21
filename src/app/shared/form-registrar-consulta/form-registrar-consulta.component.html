@@ -2,36 +2,43 @@
 
 
   <div fxLayout="column" class="w-100" fxLayoutAlign="center">
-    <fieldset *ngIf="!apenasFicha"  formArrayName="dadosUsuario">
+    <fieldset *ngIf="!apenasFicha" formArrayName="dadosUsuario">
 
       <div fxFlex="100">
-          <mat-form-field [appearance]="readOnly? 'fill' :  'outline'">
-            <mat-label>Paciente:</mat-label>
-            <mat-select   required formControlName="idPaciente" (selectionChange)="onChange($event)">
-              <mat-option  *ngFor="let paciente of pacientesArray | async" [value]="paciente">{{paciente.dadosUsuario.nomeCompleto}}</mat-option>
-            </mat-select>
-          </mat-form-field>
+        <mat-form-field [appearance]="readOnly? 'fill' :  'outline'">
+          <mat-label>Paciente:</mat-label>
+          <mat-select required formControlName="idPaciente" (selectionChange)="onChange($event)">
+            <mat-option *ngFor="let paciente of pacientesArray | async" [value]="paciente">
+              {{paciente.dadosUsuario.nomeCompleto}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <val-errors controlName="idPaciente"></val-errors>
       </div>
 
       <div fxFlex="100">
         <mat-form-field [appearance]="readOnly? 'fill' :  'outline'">
           <mat-label>Sexo</mat-label>
-          <input matInput formControlName="sexo" placeholder="sexo" [value]="pacienteSelected?.dadosUsuario?.sexo" readonly>
+          <input matInput formControlName="sexo" placeholder="sexo" [value]="pacienteSelected?.dadosUsuario?.sexo"
+                 readonly>
 
         </mat-form-field>
+        <val-errors controlName="sexo"></val-errors>
       </div>
       <div fxFlex="100">
         <mat-form-field [appearance]="readOnly? 'fill' :  'outline'">
           <mat-label>Data Nascimento</mat-label>
-          <input matInput formControlName="dataNascimento" placeholder="data nascimento" [value]="pacienteSelected?.dadosUsuario?.dataNascimento" readonly>
+          <input matInput formControlName="dataNascimento" placeholder="data nascimento"
+                 [value]="pacienteSelected?.dadosUsuario?.dataNascimento" readonly>
 
         </mat-form-field>
+        <val-errors controlName="dataNascimento"></val-errors>
       </div>
       <div fxFlex="100">
         <mat-form-field [appearance]="readOnly? 'fill' :  'outline'">
           <mat-label>Psicólogo</mat-label>
           <textarea matInput required formControlName="psicologo" placeholder="psicologo" readonly></textarea>
         </mat-form-field>
+        <val-errors controlName="psicologo"></val-errors>
       </div>
     </fieldset>
 
@@ -40,57 +47,73 @@
       <div fxFlex>
         <mat-form-field [appearance]="readOnly? 'fill' :  'outline'">
           <mat-label>DC/HDA - Diagnóstico clínico e história da doença atual</mat-label>
-          <textarea [readonly]="readOnly" matInput required formControlName="dcHda" placeholder="DC/HDA - Diagnóstico clínico e história da doença atual"></textarea>
+          <textarea [readonly]="readOnly" matInput required formControlName="dcHda"
+                    placeholder="DC/HDA - Diagnóstico clínico e história da doença atual"></textarea>
         </mat-form-field>
+        <val-errors controlName="dcHda"></val-errors>
       </div>
 
       <div fxFlex>
         <mat-form-field [appearance]="readOnly? 'fill' :  'outline'">
           <mat-label>Reações frente ao diagnóstico</mat-label>
-          <textarea [readonly]="readOnly" matInput required formControlName="reacoesFrenteDiagnostico" placeholder="Reações frente ao diagnóstico"></textarea>
+          <textarea [readonly]="readOnly" matInput required formControlName="reacoesFrenteDiagnostico"
+                    placeholder="Reações frente ao diagnóstico"></textarea>
         </mat-form-field>
+        <val-errors controlName="reacoesFrenteDiagnostico"></val-errors>
       </div>
 
       <div fxFlex>
         <mat-form-field [appearance]="readOnly? 'fill' :  'outline'">
           <mat-label>Estado emocional atual e mecanismo de enfrentamento</mat-label>
-          <textarea [readonly]="readOnly" matInput required formControlName="estadoEmocionalAtual" placeholder="Estado emocional atual e mecanismo de enfrentamento"></textarea>
+          <textarea [readonly]="readOnly" matInput required formControlName="estadoEmocionalAtual"
+                    placeholder="Estado emocional atual e mecanismo de enfrentamento"></textarea>
         </mat-form-field>
+        <val-errors controlName="estadoEmocionalAtual"></val-errors>
       </div>
 
       <div fxFlex>
         <mat-form-field [appearance]="readOnly? 'fill' :  'outline'">
           <mat-label>Histórico pessoal e familiar (avaliação psicossocial)</mat-label>
-          <textarea [readonly]="readOnly" matInput required formControlName="historicoPessoal" placeholder="Histórico pessoal e familiar (avaliação psicossocial)"></textarea>
+          <textarea [readonly]="readOnly" matInput required formControlName="historicoPessoal"
+                    placeholder="Histórico pessoal e familiar (avaliação psicossocial)"></textarea>
         </mat-form-field>
+        <val-errors controlName="historicoPessoal"></val-errors>
       </div>
 
       <div fxFlex>
         <mat-form-field [appearance]="readOnly? 'fill' :  'outline'">
           <mat-label>Exame psiquico / sinais e sintomas piscopatológicos</mat-label>
-          <textarea [readonly]="readOnly" matInput required formControlName="examePsiquico" placeholder="Exame psiquico / sinais e sintomas piscopatológicos"></textarea>
+          <textarea [readonly]="readOnly" matInput required formControlName="examePsiquico"
+                    placeholder="Exame psiquico / sinais e sintomas piscopatológicos"></textarea>
         </mat-form-field>
+        <val-errors controlName="examePsiquico"></val-errors>
       </div>
 
       <div fxFlex>
         <mat-form-field [appearance]="readOnly? 'fill' :  'outline'">
           <mat-label>Conduta psicológica</mat-label>
-          <textarea [readonly]="readOnly" matInput required formControlName="condutaPsicologica" placeholder="Conduta psicológica"></textarea>
+          <textarea [readonly]="readOnly" matInput required formControlName="condutaPsicologica"
+                    placeholder="Conduta psicológica"></textarea>
         </mat-form-field>
+        <val-errors controlName="condutaPsicologica"></val-errors>
       </div>
 
       <div fxFlex>
         <mat-form-field [appearance]="readOnly? 'fill' :  'outline'">
           <mat-label>Orientação à equipe e/ou familiares - acompanhantes</mat-label>
-          <textarea [readonly]="readOnly" matInput required formControlName="orientacao" placeholder="Orientação à equipe e/ou familiares - acompanhantes"></textarea>
+          <textarea [readonly]="readOnly" matInput required formControlName="orientacao"
+                    placeholder="Orientação à equipe e/ou familiares - acompanhantes"></textarea>
         </mat-form-field>
+        <val-errors controlName="orientacao"></val-errors>
       </div>
 
       <div fxFlex>
         <mat-form-field [appearance]="readOnly? 'fill' :  'outline'">
           <mat-label>Outros</mat-label>
-          <textarea [readonly]="readOnly" matInput required formControlName="Outros" placeholder="Orientação à equipe e/ou familiares - acompanhantes"></textarea>
+          <textarea [readonly]="readOnly" matInput required formControlName="Outros"
+                    placeholder="Orientação à equipe e/ou familiares - acompanhantes"></textarea>
         </mat-form-field>
+        <val-errors controlName="Outros"></val-errors>
       </div>
 
     </fieldset>
