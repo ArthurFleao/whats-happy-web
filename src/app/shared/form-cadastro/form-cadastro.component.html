@@ -55,9 +55,8 @@
 
         <div formArrayName="telefone">
 
-          <div *ngFor="let telefoneItem of telefoneControl.controls; let i=index">
+          <div class="animate__animated animate__fadeIn" *ngFor="let telefoneItem of telefoneControl.controls; let i=index">
             <div [formGroupName]="i">
-
               <div fxLayout="row" fxLayoutAlign="start fill">
                 <mat-form-field fxFlex="90" appearance="outline">
                   <mat-label>Telefone</mat-label>
