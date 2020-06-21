@@ -81,6 +81,8 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import {NgxMaskModule} from 'ngx-mask';
 import { ListarConvitesComponent } from './pages/listar-convites/listar-convites.component';
 import { ValdemortModule } from 'ngx-valdemort';
+import { SexoPipe } from './pipes/sexo.pipe';
+import { IdadePipe } from './pipes/idade.pipe';
 
 const material = [
   ClipboardModule,
@@ -151,6 +153,8 @@ const material = [
     RegistrarConsultaPageComponent,
     FormRegistrarConsultaComponent,
     ListarConvitesComponent,
+    SexoPipe,
+    IdadePipe,
   ],
   imports: [
     material,

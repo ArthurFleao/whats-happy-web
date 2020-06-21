@@ -18,9 +18,9 @@
 
       <div fxFlex="100">
         <mat-form-field appearance="outline">
-          <mat-label>Sexo</mat-label>
-          <input matInput formControlName="sexo" placeholder="sexo" [value]="pacienteSelected?.dadosUsuario?.sexo"
-                 readonly>
+          <mat-label>Gênero</mat-label>
+          <input matInput formControlName="sexo" placeholder="sexo"
+                 [value]="pacienteSelected?.dadosUsuario?.sexo | sexo" readonly>
 
         </mat-form-field>
       </div>
@@ -28,8 +28,8 @@
         <mat-form-field appearance="outline">
           <mat-label>Data Nascimento</mat-label>
           <input matInput formControlName="dataNascimento" placeholder="data nascimento"
-                 [value]="pacienteSelected?.dadosUsuario?.dataNascimento" readonly>
-
+                 [value]="pacienteSelected?.dadosUsuario?.dataNascimento + ' - ('+ (pacienteSelected?.dadosUsuario?.dataNascimento | idade) + ') anos'"
+                 readonly>
         </mat-form-field>
       </div>
     </fieldset>
