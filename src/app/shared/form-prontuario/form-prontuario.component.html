@@ -28,7 +28,7 @@
         <mat-form-field appearance="outline">
           <mat-label>Data Nascimento</mat-label>
           <input matInput formControlName="dataNascimento" placeholder="data nascimento"
-                 [value]="pacienteSelected?.dadosUsuario?.dataNascimento + ' - ('+ (pacienteSelected?.dadosUsuario?.dataNascimento | idade) + ') anos'"
+                 [value]="pacienteSelected?.dadosUsuario?.dataNascimento + ' - ('+ (pacienteSelected?.dadosUsuario?.dataNascimento | idade) + ' anos)'"
                  readonly>
         </mat-form-field>
       </div>
