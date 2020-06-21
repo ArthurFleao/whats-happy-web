@@ -58,13 +58,6 @@ export class MenuLateralComponent implements OnInit {
 
     {
       perfilUsuario: 'psicologo',
-      tituloItemMenu: 'Relatórios',
-      link: '/relatorios',
-      icone: 'source'
-    },
-
-    {
-      perfilUsuario: 'psicologo',
       tituloItemMenu: 'Registrar Consulta',
       link: '/registrarConsulta',
       icone: 'description'
@@ -84,6 +77,14 @@ export class MenuLateralComponent implements OnInit {
       link: '/enviarRelato',
       icone: 'send'
     },
+
+    {
+      perfilUsuario: 'psicologo',
+      tituloItemMenu: 'Relatórios',
+      link: '/relatorios',
+      icone: 'source'
+    },
+
     // itens de menu para ambos perfis de usuário
     {
       perfilUsuario: 'ambos',
@@ -104,7 +105,7 @@ export class MenuLateralComponent implements OnInit {
       if (val instanceof NavigationEnd) {
         let str = val.urlAfterRedirects.substring(
           val.urlAfterRedirects.indexOf('/', 0) + 1,
-          );
+        );
         if (str.indexOf('/', 0) !== -1) {
           console.log('redoing');
           str = str.substring(0,

@@ -5,9 +5,7 @@
       <img src="assets/img/logo.png">
     </div>
     <mat-divider></mat-divider>
-    <div class="centralizer" *ngIf="!user">
-      <mat-spinner color="primary"></mat-spinner>
-    </div>
+    <mat-progress-bar *ngIf="!user"  mode="query" ></mat-progress-bar>
     <div *ngIf="user" class="container">
       <!-- Menu criado pelo array menu, no arquivo home-page.component.ts -->
       <ng-container *ngFor="let item of menu">
