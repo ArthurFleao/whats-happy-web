@@ -174,8 +174,10 @@ mat-flat-button.mat-green,
   top: 0;
 }
 
-.mat-form-field-wrapper {
-  padding-bottom: 0 !important;
-  margin-bottom: 10px !important;
-  margin-top: 10px !important;
+.no-pad-form {
+  .mat-form-field-wrapper {
+    padding-bottom: 0 !important;
+    margin-bottom: 10px !important;
+    margin-top: 10px !important;
+  }
 }

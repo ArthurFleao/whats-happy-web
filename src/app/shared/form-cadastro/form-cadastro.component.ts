@@ -72,7 +72,7 @@ export class FormCadastroComponent implements OnInit {
         sexo: [this.bootstrap?.sexo || '', Validators.required],
         crp: [this.bootstrap?.crp || '', this.includeCrp ? Validators.required : undefined],
         dataNascimento: [this.bootstrap?.dataNascimento || '', Validators.required],
-        telefone: this.fb.array([this.initTelefone(this.bootstrap?.telefone[0]?.telefone)]),
+        telefone: this.fb.array([this.initTelefone(this.bootstrap?.telefone ? this.bootstrap?.telefone[0]?.telefone : undefined)]), // GO HORSE, GO!
         senha: [this.bootstrap?.senha || '', this.flagTravarCampo ? undefined : Validators.compose([Validators.required, Validators.minLength(6)])],
         confirmaSenha: [this.bootstrap?.confirmaSenha || '', this.flagTravarCampo ? undefined : Validators.required],
       }, { validator: this.flagTravarCampo ? undefined : matchingPasswords('senha', 'confirmaSenha') }),

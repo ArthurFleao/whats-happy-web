@@ -1,6 +1,6 @@
 <app-test-box> <button (click)="setValidTestValues()">Preencher form</button> </app-test-box>
 
-<form focusInvalidInput class="w-100" [formGroup]="form" (ngSubmit)="onSubmit()">
+<form focusInvalidInput class="w-100 no-pad-form" [formGroup]="form" (ngSubmit)="onSubmit()">
   <div fxLayout="column" class="w-100" fxLayoutAlign="center">
     <fieldset formArrayName="dadosUsuario">
       <div fxFlex.lt-md="100" fxFlex="100">

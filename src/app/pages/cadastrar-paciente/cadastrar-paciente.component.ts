@@ -41,7 +41,7 @@ export class CadastroPacienteComponent implements OnInit {
         if (!this.convite) {
           this.snack.warning('Link de convite inválido!');
           this.router.navigate(['/login']);
-        }
+        } else
         if (this.convite.used === true) {
           this.snack.warning('Esse convite já foi usado!');
           this.router.navigate(['/login']);
