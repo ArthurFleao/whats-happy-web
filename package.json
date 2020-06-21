@@ -29,6 +29,7 @@
     "moment": "^2.26.0",
     "ngx-audio-player": "^9.1.0",
     "ngx-mask": "^9.1.2",
+    "ngx-valdemort": "^3.0.0",
     "recordrtc": "^5.6.1",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",

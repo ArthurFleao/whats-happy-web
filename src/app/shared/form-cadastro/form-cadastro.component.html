@@ -3,36 +3,37 @@
 <form focusInvalidInput class="w-100" [formGroup]="form" (ngSubmit)="onSubmit()">
   <div fxLayout="column" class="w-100" fxLayoutAlign="center">
     <fieldset formArrayName="dadosUsuario">
-      <div fxFlex="100">
+      <div fxFlex.lt-md="100" fxFlex="100">
         <mat-form-field appearance="outline">
           <mat-label>E-mail</mat-label>
           <input matInput required formControlName="email" placeholder="Ex. jose@exemplo.com"
                  [readonly]="flagTravarCampo">
-
         </mat-form-field>
+        <val-errors controlName="email"></val-errors>
       </div>
-      <div fxFlex="100">
+      <div fxFlex.lt-md="100" fxFlex="100">
         <mat-form-field appearance="outline">
           <mat-label>Nome Completo</mat-label>
           <input matInput required formControlName="nomeCompleto" placeholder="Ex: José da silva">
-
         </mat-form-field>
+        <val-errors controlName="nomeCompleto"></val-errors>
       </div>
-      <div fxFlex="100">
+      <div fxFlex.lt-md="100" fxFlex="100">
         <mat-form-field appearance="outline">
           <mat-label>CPF</mat-label>
           <input matInput required formControlName="cpf" mask="000.000.000-00" placeholder="Ex: 111.111.111-00">
-
         </mat-form-field>
+        <val-errors controlName="cpf"></val-errors>
       </div>
-      <div *ngIf="includeCrp" fxFlex="100">
+      <div *ngIf="includeCrp" fxFlex.lt-md="100" fxFlex="100">
         <mat-form-field appearance="outline">
           <mat-label>CRP</mat-label>
           <input matInput required formControlName="crp" placeholder="Ex: 06/XXXX/J">
 
         </mat-form-field>
+        <val-errors controlName="crp"></val-errors>
       </div>
-      <div fxFlex="100">
+      <div fxFlex.lt-md="100" fxFlex="100">
         <!-- <h4>Gênero</h4> -->
         <mat-form-field appearance="outline">
           <mat-label>Gênero:</mat-label>
@@ -43,19 +44,20 @@
             <mat-option value="no">Não especificar</mat-option>
           </mat-select>
         </mat-form-field>
+        <val-errors controlName="sexo"></val-errors>
       </div>
-      <div fxFlex="100">
+      <div fxFlex.lt-md="100" fxFlex="100">
         <mat-form-field appearance="outline">
           <mat-label>Data de Nascimento</mat-label>
-          <input matInput required formControlName="dataNascimento" mask="00/00/0000" placeholder="Ex: 01/01/1990">
-
+          <input type="date" matInput required formControlName="dataNascimento" placeholder="Ex: 01/01/1990">
         </mat-form-field>
+        <val-errors controlName="dataNascimento"></val-errors>
       </div>
-      <div fxFlex="100">
+      <div fxFlex.lt-md="100" fxFlex="100">
 
         <div formArrayName="telefone">
-
-          <div class="animate__animated animate__fadeIn" *ngFor="let telefoneItem of telefoneControl.controls; let i=index">
+          <div class="animate__animated animate__fadeIn"
+               *ngFor="let telefoneItem of telefoneControl.controls; let i=index">
             <div [formGroupName]="i">
               <div fxLayout="row" fxLayoutAlign="start fill">
                 <mat-form-field fxFlex="90" appearance="outline">
@@ -63,18 +65,30 @@
                   <input matInput required formControlName="telefone" mask="{{ maskPhoneNumber }}"
                          (keyup)="switchPhoneMask(form.get('dadosUsuario.telefone').value)"
                          placeholder="Ex: (00) 9 9999-9999">
+                  <div *ngIf="telefoneItem.get('telefone').invalid && telefoneItem.get('telefone').touched" class="mt-1 animate__animated animate__fadeInDown">
+                    <mat-error *ngIf="telefoneItem.get('telefone').hasError('required') && telefoneItem.touched">Faltou
+                      preencher esse telefone!</mat-error>
+                    <mat-error *ngIf="telefoneItem.get('telefone').hasError('mask') && telefoneItem.touched">Esse telefone
+                      parece inválido!</mat-error>
+                  </div>
                 </mat-form-field>
-
+                <app-test-box>
+                  <button (click)="test(telefoneItem)" type="button">
+                    testar
+                  </button>
+                </app-test-box>
+                <!-- <val-errors [formControl]="telefoneItem.get('telefone')"></val-errors> -->
                 <div fxFlex="5">
-                  <button *ngIf="i>0" mat-icon-button color="warn" (click)="removeTelefone(i)">
+                  <button matTooltip="Remover este telefone" *ngIf="i>0" mat-icon-button color="warn"
+                          (click)="removeTelefone(i)">
                     <mat-icon>
                       remove_circle
                     </mat-icon>
                   </button>
                 </div>
                 <div fxFlex="5">
-                  <button mat-icon-button color="success" *ngIf="(i+1 === telefoneControl.controls.length)"
-                          (click)="addTelefone()">
+                  <button matTooltip="Adicionar outro telefone" mat-icon-button color="success"
+                          *ngIf="(i+1 === telefoneControl.controls.length)" (click)="addTelefone()">
                     <mat-icon>
                       add_circle
                     </mat-icon>
@@ -94,15 +108,15 @@
         <mat-form-field appearance="outline">
           <mat-label>Senha</mat-label>
           <input matInput required formControlName="senha" type="password" placeholder="Insira sua senha">
-
         </mat-form-field>
+        <val-errors controlName="senha"></val-errors>
       </div>
       <div *ngIf="!flagTravarCampo" fxFlex>
         <mat-form-field appearance="outline">
           <mat-label>Confirmar Senha</mat-label>
           <input matInput required formControlName="confirmaSenha" type="password" placeholder="Confirme sua senha">
-
         </mat-form-field>
+        <val-errors controlName="confirmaSenha"></val-errors>
       </div>
     </fieldset>
 
@@ -114,7 +128,8 @@
           <mat-spinner class="animate__animated animate__fadeIn" style="position: absolute; right: 0; top: 0;"
                        [diameter]="35" *ngIf="loadingCep"></mat-spinner>
         </mat-form-field>
-        <mat-error *ngIf="form.get('endereco').get('cep').hasError('invalidCep')">Cep inválido!</mat-error>
+        <val-errors controlName="cep"></val-errors>
+        <!-- <mat-error *ngIf="form.get('endereco').get('cep').hasError('invalidCep')">Cep inválido!</mat-error> -->
       </div>
 
       <div fxFlex>
@@ -124,6 +139,7 @@
           <mat-spinner class="animate__animated animate__fadeIn" style="position: absolute; right: 0; top: 0;"
                        [diameter]="35" *ngIf="loadingCep"></mat-spinner>
         </mat-form-field>
+        <val-errors controlName="uf"></val-errors>
       </div>
 
       <div fxFlex>
@@ -131,6 +147,7 @@
           <mat-label>Cidade</mat-label>
           <input [attr.disabled]="loadingCep? '' : null" matInput required formControlName="cidade"
                  placeholder="Ex: Itajubá">
+          <val-errors controlName="cidade"></val-errors>
           <mat-spinner class="animate__animated animate__fadeIn" style="position: absolute; right: 0; top: 0;"
                        [diameter]="35" *ngIf="loadingCep"></mat-spinner>
         </mat-form-field>
@@ -141,6 +158,7 @@
           <mat-label>Bairro</mat-label>
           <input [attr.disabled]="loadingCep? '' : null" matInput required formControlName="bairro"
                  placeholder="Ex: Laranjeiras">
+          <val-errors controlName="bairro"></val-errors>
           <mat-spinner class="animate__animated animate__fadeIn" style="position: absolute; right: 0; top: 0;"
                        [diameter]="35" *ngIf="loadingCep"></mat-spinner>
         </mat-form-field>
@@ -151,6 +169,7 @@
           <mat-label>Logradouro</mat-label>
           <input [attr.disabled]="loadingCep? '' : null" matInput required formControlName="logradouro"
                  placeholder="Ex: Av. Brasil">
+          <val-errors controlName="logradouro"></val-errors>
           <mat-spinner class="animate__animated animate__fadeIn" style="position: absolute; right: 0; top: 0;"
                        [diameter]="35" *ngIf="loadingCep"></mat-spinner>
         </mat-form-field>
@@ -161,6 +180,7 @@
           <mat-label>Número</mat-label>
           <input matInput required formControlName="numero" placeholder="Ex: 99">
         </mat-form-field>
+        <val-errors controlName="numero"></val-errors>
       </div>
     </fieldset>
 

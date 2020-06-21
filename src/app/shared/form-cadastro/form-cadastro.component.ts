@@ -136,6 +136,9 @@ export class FormCadastroComponent implements OnInit {
       }
     });
   }
+  test(test) {
+    console.log(test);
+  }
 
   initTelefone(telefone?) {
 

@@ -79,7 +79,8 @@ import { RegistrarConsultaPageComponent } from './pages/registrar-consulta-page/
 import { FormRegistrarConsultaComponent } from './shared/form-registrar-consulta/form-registrar-consulta.component'; // Importando o módulo
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import {NgxMaskModule} from 'ngx-mask';
-import { ListarConvitesComponent } from './pages/listar-convites/listar-convites.component'
+import { ListarConvitesComponent } from './pages/listar-convites/listar-convites.component';
+import { ValdemortModule } from 'ngx-valdemort';
 
 const material = [
   ClipboardModule,
@@ -154,6 +155,7 @@ const material = [
   imports: [
     material,
     BrowserModule,
+    ValdemortModule,
     FlexLayoutModule,
     AngularFireStorageModule,
     NgxAudioPlayerModule.forRoot(),
@@ -167,7 +169,7 @@ const material = [
     BrowserAnimationsModule,
     AngularFirestoreModule,
     NgxMaskModule.forRoot({
-      showMaskTyped : true,
+      showMaskTyped : false,
     }),
 
   ],

@@ -1,3 +1,26 @@
 <app-menu-lateral>
   <router-outlet></router-outlet>
 </app-menu-lateral>
+
+<val-default-errors>
+  <ng-template valError="required" let-label>
+    <mat-error class="animate__animated animate__fadeInDown">
+      Faltou preencher {{ label || 'esse campo' }}!
+    </mat-error>
+  </ng-template>
+  <ng-template valError="email" let-label>
+    <mat-error class="animate__animated animate__fadeInDown">
+      Esse {{ label || 'e-mail' }} não parece certo...
+    </mat-error>
+  </ng-template>
+  <ng-template valError="invalidCep" let-label>
+    <mat-error class="animate__animated animate__fadeInDown">
+      Esse CEP é inválido!
+    </mat-error>
+  </ng-template>
+  <ng-template valError="mismatchedPasswords" let-label>
+    <mat-error class="animate__animated animate__fadeInDown">
+      As senhas não são iguais!
+    </mat-error>
+  </ng-template>
+</val-default-errors>
