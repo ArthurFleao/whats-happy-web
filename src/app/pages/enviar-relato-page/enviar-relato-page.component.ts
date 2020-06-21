@@ -21,6 +21,8 @@ export class EnviarRelatoPageComponent implements OnInit {
   audioUrl: string;
   audio;
   uploadPercentage;
+  form;
+  relatoRequired: boolean;
 
   constructor(
     private auth: AuthService,
@@ -62,8 +64,8 @@ export class EnviarRelatoPageComponent implements OnInit {
         this.uploadPercentage = task.percentageChanges();
         task.then((result) => {
           this.loading = false; // indica que terminou de carregar
-            // console.log('after upload', finli);
-            this.afs.doc(finli.path).update({ audioUploaded: true }).then((result) => {
+          // console.log('after upload', finli);
+          this.afs.doc(finli.path).update({ audioUploaded: true }).then((result) => {
           }).catch((err) => {
             console.error(err);
           });
@@ -89,6 +91,9 @@ export class EnviarRelatoPageComponent implements OnInit {
     link = this.sanitizer.bypassSecurityTrustUrl(link);
     this.audioUrl = link;
     this.audio = audio;
+    this.form.get('relato').clearValidators();
+    this.form.get('relato').updateValueAndValidity();
+    this.relatoRequired = false;
   }
 
 }

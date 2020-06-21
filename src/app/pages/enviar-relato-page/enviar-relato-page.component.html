@@ -1,7 +1,7 @@
 <app-card [title]="'Enviar relato'">
 
 
-  <app-form-enviar-relato class="w-100" (submited)="enviarRelato($event)">
+  <app-form-enviar-relato class="w-100" [relatoRequired]="relatoRequired" [(form)]="form" (submited)="enviarRelato($event)">
     <div *ngIf="audio && loading">
       <mat-progress-bar [mode]="uploadPercentage? 'determinate' : 'query'" [value]="uploadPercentage | async"
                         color="primary">

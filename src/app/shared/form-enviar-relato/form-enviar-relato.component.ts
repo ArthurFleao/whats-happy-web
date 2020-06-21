@@ -9,6 +9,8 @@ import { FormGroup, FormBuilder, Validators} from '@angular/forms';
 export class FormEnviarRelatoComponent implements OnInit {
 
   @Input()
+  relatoRequired = true;
+  @Input()
   includeCrp: boolean;
   // Form Group controla N Form Controls
   // Form Control controla UM campo.

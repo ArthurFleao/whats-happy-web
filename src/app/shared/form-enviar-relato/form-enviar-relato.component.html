@@ -54,7 +54,7 @@
       <mat-form-field class="example-full-width">
         <mat-label>Relato</mat-label>
         <textarea
-        required
+        [required]="relatoRequired"
         cdkTextareaAutosize
         #autosize="cdkTextareaAutosize"
         cdkAutosizeMinRows="1"
