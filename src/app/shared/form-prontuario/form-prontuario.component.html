@@ -4,94 +4,49 @@
     <fieldset formArrayName="cabecalhoProtuario">
 
       <div fxFlex="100">
-          <mat-form-field appearance="outline">
-            <mat-label>Paciente:</mat-label>
-            <mat-select   required formControlName="idPaciente" (selectionChange)="onChange($event)" >
-              <mat-option  *ngFor="let paciente of pacientesArray | async" [value]="paciente">{{paciente.dadosUsuario.nomeCompleto}}</mat-option>
-            </mat-select>
-          </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-spinner style="position: absolute; right: 10px;" diameter="25" *ngIf="!(pacientesArray$ | async)"
+                       color="primary"></mat-spinner>
+          <mat-label>Paciente:</mat-label>
+          <mat-select [disabled]="!(pacientesArray$ | async)" required formControlName="idPaciente"
+                      (selectionChange)="onChange($event)">
+            <mat-option *ngFor="let paciente of pacientesArray$ | async" [value]="paciente">
+              {{paciente.dadosUsuario.nomeCompleto}}</mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
 
       <div fxFlex="100">
         <mat-form-field appearance="outline">
           <mat-label>Sexo</mat-label>
-          <input matInput formControlName="sexo" placeholder="sexo"  [value] = "pacienteSelected?.dadosUsuario?.sexo"  readonly>
+          <input matInput formControlName="sexo" placeholder="sexo" [value]="pacienteSelected?.dadosUsuario?.sexo"
+                 readonly>
 
         </mat-form-field>
       </div>
       <div fxFlex="100">
         <mat-form-field appearance="outline">
           <mat-label>Data Nascimento</mat-label>
-          <input matInput formControlName="dataNascimento" placeholder="data nascimento" [value] = "pacienteSelected?.dadosUsuario?.dataNascimento" readonly>
+          <input matInput formControlName="dataNascimento" placeholder="data nascimento"
+                 [value]="pacienteSelected?.dadosUsuario?.dataNascimento" readonly>
 
         </mat-form-field>
       </div>
     </fieldset>
 
     <!-- protuario -->
-    <fieldset formArrayName="registroConsulta">
+    <!-- <fieldset formArrayName="registroConsulta"> -->
 
-      <div *ngFor="let ficha of arrayDadosFichasCadastro">
-        <div fxFlex>
-          <mat-form-field appearance="outline">
-            <mat-label>DC/HDA - Diagnóstico clínico e história da doença atual</mat-label>
-            <textarea matInput formControlName="dcHda" [value] = "ficha.dcHda" placeholder="DC/HDA - Diagnóstico clínico e história da doença atual"></textarea>
-          </mat-form-field>
-        </div>
-
-        <div fxFlex>
-          <mat-form-field appearance="outline">
-            <mat-label>Reações frente ao diagnóstico</mat-label>
-            <textarea matInput formControlName="reacoesFrenteDiagnostico" [value] = "ficha.reacoesFrenteDiagnostico" placeholder="Reações frente ao diagnóstico"></textarea>
-          </mat-form-field>
-        </div>
-
-        <div fxFlex>
-          <mat-form-field appearance="outline">
-            <mat-label>Estado emocional atual e mecanismo de enfrentamento</mat-label>
-            <textarea matInput formControlName="estadoEmocionalAtual" [value] = "ficha.estadoEmocionalAtual" placeholder="Estado emocional atual e mecanismo de enfrentamento"></textarea>
-          </mat-form-field>
-        </div>
-
-        <div fxFlex>
-          <mat-form-field appearance="outline">
-            <mat-label>Histórico pessoal e familiar (avaliação psicossocial)</mat-label>
-            <textarea matInput formControlName="historicoPessoal" [value] = "ficha.historicoPessoal" placeholder="Histórico pessoal e familiar (avaliação psicossocial)"></textarea>
-          </mat-form-field>
-        </div>
-
-        <div fxFlex>
-          <mat-form-field appearance="outline">
-            <mat-label>Exame psiquico / sinais e sintomas piscopatológicos</mat-label>
-            <textarea matInput formControlName="examePsiquico" [value] = "ficha.examePsiquico" placeholder="Exame psiquico / sinais e sintomas piscopatológicos"></textarea>
-          </mat-form-field>
-        </div>
-
-        <div fxFlex>
-          <mat-form-field appearance="outline">
-            <mat-label>Conduta psicológica</mat-label>
-            <textarea matInput formControlName="condutaPsicologica" [value] = "ficha.condutaPsicologica" placeholder="Conduta psicológica"></textarea>
-          </mat-form-field>
-        </div>
-
-        <div fxFlex>
-          <mat-form-field appearance="outline">
-            <mat-label>Orientação à equipe e/ou familiares - acompanhantes</mat-label>
-            <textarea matInput formControlName="orientacao" [value] = "ficha.orientacao" placeholder="Orientação à equipe e/ou familiares - acompanhantes"></textarea>
-          </mat-form-field>
-        </div>
-
-        <div fxFlex>
-          <mat-form-field appearance="outline">
-            <mat-label>Outros</mat-label>
-            <textarea matInput formControlName="Outros" [value] = "ficha.Outros" placeholder="Orientação à equipe e/ou familiares - acompanhantes"></textarea>
-          </mat-form-field>
-        </div>
-
-        <art-button [type]="'submit'">Salvar edição</art-button>
-
-      </div>
-    </fieldset>
+    <div *ngFor="let ficha of arrayDadosFichasCadastro">
+      <mat-divider></mat-divider>
+      <app-form-registrar-consulta [readOnly]="!ficha.editando" (submited)="editarFicha(ficha, $event)"
+                                   [bootstrap]="ficha" [apenasFicha]="true">
+        <art-button *ngIf="!ficha.editando" (click)="ficha.editando = true" [type]="'button'">Editar</art-button>
+        <art-button *ngIf="ficha.editando" [loading]="ficha.loading" [type]="'submit'">Salvar edição</art-button>
+      </app-form-registrar-consulta>
+      <mat-divider></mat-divider>
+    </div>
+    <!-- </fieldset> -->
 
 
 

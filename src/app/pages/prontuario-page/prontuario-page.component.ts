@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DadosUsuario } from 'src/app/model/dadosUsuario';
 import { first, map } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { SnackService } from 'src/app/services/snack.service';
 
 @Component({
   selector: 'app-prontuario-page',
@@ -14,16 +15,17 @@ import { AngularFirestore } from '@angular/fire/firestore';
 })
 export class ProntuarioPageComponent implements OnInit {
 
-  arrayFichasCadastro: Array<any>
+  arrayFichasCadastro: Array<any>;
   pacientes = new Subject<Array<any>>();
   myUid: string;
   dadosUsuario: any;
-  loading = true;
+  loading = false;
 
   constructor(
     private authService: AuthService,
     private dadosService: DadosService,
     private eh: ErrorHandlerService,
+    private snack: SnackService,
     private db: DadosService,
     private afs: AngularFirestore,
   ) {
@@ -73,29 +75,49 @@ export class ProntuarioPageComponent implements OnInit {
   ngOnInit(): void {
 
   }
-
-  getFichasConsultas(uid){
-
-    this.dadosService.getProntuario(uid).subscribe(querySnapshot => {
-
-      let arrayAux = new Array<any>()
-
-      querySnapshot.forEach(doc => {
-          // doc.data() is never undefined for query doc snapshots
-          arrayAux.push(doc.data())
-      })
-
-      this.arrayFichasCadastro = arrayAux
-      console.log("arrayAux", arrayAux)
-
-    }, error => {
-    this.eh.handle(error)
+  onFichaSaved(ficha) {
+    console.log('ficha saved', ficha);
+    ficha.loading = true;
+    this.afs.doc(ficha.uid).update(ficha.form.registroConsulta).then((result) => {
+      ficha.loading = false;
+      ficha.editando = false;
+      this.snack.success('A ficha foi salva com sucesso!');
+    }).catch((err) => {
+      ficha.loading = false;
+      this.eh.handle(err);
     });
+
   }
 
-  updateProntuario(value){
-    console.log("aqui")
-    console.log("value ", value)
+  getFichasConsultas(uid) {
+    console.log('uid', uid); // :(
+    if (typeof (uid) === 'string') {
+      this.loading = true;
+      this.dadosService.getProntuario(uid).subscribe(querySnapshot => {
+
+        const arrayAux = new Array<any>();
+
+        querySnapshot.forEach(doc => {
+          // doc.data() is never undefined for query doc snapshots
+          const data = doc.data();
+          data.uid = doc.ref;
+          arrayAux.push(data);
+        });
+
+        this.arrayFichasCadastro = arrayAux;
+        console.log('arrayAux', arrayAux);
+        this.loading = false;
+
+      }, error => {
+        this.loading = false;
+        this.eh.handle(error);
+      });
+    }
+  }
+
+  updateProntuario(value) {
+    console.log('aqui');
+    console.log('value ', value);
   }
 
 }

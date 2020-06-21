@@ -64,6 +64,10 @@
         <mat-hint>Transcrição do áudio em andamento...</mat-hint>
         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
       </div>
+      <div class="mb-2" *ngIf="relato.audioTranscrito && !relato.analiseAudioTranscrito">
+        <mat-hint>Análise da transcrição em andamento...</mat-hint>
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </div>
     </div>
 
     <div class="mb-2">
@@ -72,6 +76,10 @@
         <textarea readonly [value]="relato.relato || 'Sem relato'" matInput cdkTextareaAutosize
                   #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" cdkAutosizeMaxRows="50"></textarea>
       </mat-form-field>
+      <div class="mb-2" *ngIf="relato.relato && !relato.analiseRelato">
+        <mat-hint>Análise do relato escrito em andamento...</mat-hint>
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </div>
 
       <mat-chip-list *ngIf="palavrasRelato">
         <mat-chip color="primary" selected *ngFor="let palavra of palavrasRelato">{{palavra}}</mat-chip>

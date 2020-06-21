@@ -5,7 +5,6 @@ import * as language from '@google-cloud/language';
 // admin.initializeApp(functions.config().firebase);
 admin.initializeApp();
 const db = admin.firestore();
-console.log(db);
 
 const DADOS_RELATORIO_COLLECTION = 'dadosRelatorio';
 
@@ -39,7 +38,7 @@ export const onRelatoChanged = functions.firestore.document('pacientes/{userId}/
 
 
   return generateReport(change, context).then((result) => {
-    console.log(result);
+    console.log('report salvo');
   }).catch((err) => {
     console.error(err);
   });
@@ -47,7 +46,7 @@ export const onRelatoChanged = functions.firestore.document('pacientes/{userId}/
 
 function saveDataToRelato(idPaciente: any, idRelato: any, data: any) {
   db.collection(`pacientes/${idPaciente}/relatos`).doc(idRelato).update(data).then((result) => {
-    console.log(result);
+    console.log('data saved to relato');
   }).catch((err) => {
     console.error(err);
   });
@@ -57,12 +56,13 @@ function sendToNaturalLanguageApi(texto: string) {
   const request: any = {
     document: {
       content: texto,
+      laguage:'pt-BR',
       type: "PLAIN_TEXT",
     },
     features: {
       extractSyntax: true,
       // extractEntitySentiment: true, // não funciona em pt-br
-      extractEntity: true,
+      extractEntities: true,
       extractDocumentSentiment: true,
       // classifyText: true // não funciona em pt-br
     },
@@ -87,7 +87,7 @@ function generateReport(change: any, context: any) {
     // console.log('dataUser', dataUser);
 
     if (dataPaciente && dataUser) { // se tudo tiver ok
-      console.log('idResponsavel', dataPaciente.responsavel);
+      // console.log('idResponsavel', dataPaciente.responsavel);
       const idResponsavel = dataPaciente.responsavel.id; // recupera o id do responsável
 
       db.collection('dadosUsuario').doc(idResponsavel).get().then((responsavel) => { // pega os dados do responsavel
@@ -101,7 +101,7 @@ function generateReport(change: any, context: any) {
         // console.log('relato id', context.params.relatoId);
 
         db.collection(DADOS_RELATORIO_COLLECTION).doc(context.params.relatoId).set(data).then((final: any) => { // cria ou modifica o documento na collection dados relatorio. Agora está pronto para ir pro BigQuery
-          console.log('relato saved to db', final);
+          console.log('relato saved to db');
         }).catch((error: any) => {
           console.error(error);
         });

@@ -4,6 +4,6 @@
   </div>
   <app-form-registrar-consulta class="w-100" [bootstrap]="dadosUsuario" [pacientesArray] = "pacientes" *ngIf="!loading"  (submited)="registrarConsulta($event)">
     <!-- Botão será inserido no <ng-content> do app-form-cadastro  -->
-    <art-button [type]="'submit'" [loading]="loading">Salvar Ficha de Consulta</art-button>
+    <art-button [type]="'submit'" [loading]="saving">Salvar ficha de consulta</art-button>
   </app-form-registrar-consulta>
 </app-card>

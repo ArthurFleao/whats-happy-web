@@ -9,6 +9,12 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class FormRegistrarConsultaComponent implements OnInit {
 
   @Input()
+  apenasFicha: boolean;
+
+  @Input()
+  readOnly: boolean;
+
+  @Input()
   bootstrap; // se quizer inicialisar o form
   // Form Group controla N Form Controls
   // Form Control controla UM campo.
@@ -25,23 +31,25 @@ export class FormRegistrarConsultaComponent implements OnInit {
   @Input()
   pacientesArray; // se quizer inicialisar o form
 
-  pacienteSelected
+  pacienteSelected;
 
   constructor(
     private fb: FormBuilder// importa o formbuilder para poder usar
   ) { }
 
   ngOnInit(): void {
+    console.log('entrando em registrar consult', this.bootstrap);
 
     this.form = this.fb.group({
       // ------------------------ dados do usuario -------------
-      dadosUsuario: this.fb.group({
-        // formName: ['valorInicial', Validator]
-        idPaciente: ['', Validators.nullValidator],
-        sexo: ['', Validators.nullValidator],
-        dataNascimento: ['', Validators.nullValidator],
-        psicologo: [this.bootstrap?.nomeCompleto || '', Validators.nullValidator],
-      }),
+      dadosUsuario:
+        this.apenasFicha ? undefined : this.fb.group({
+          // formName: ['valorInicial', Validator]
+          idPaciente: ['', Validators.nullValidator],
+          sexo: ['', Validators.nullValidator],
+          dataNascimento: ['', Validators.nullValidator],
+          psicologo: [this.bootstrap?.nomeCompleto || '', Validators.nullValidator],
+        }),
 
       // ------------------------ ficha de consulta -------------
       registroConsulta: this.fb.group({
@@ -60,16 +68,17 @@ export class FormRegistrarConsultaComponent implements OnInit {
 
     this.formChange.emit(this.form); // emite o form construido para cima
     this.form.valueChanges.subscribe(c => { // sempre que houver uma mudança no form
-    this.formChange.emit(this.form); // emite o form para cima
+      this.formChange.emit(this.form); // emite o form para cima
     });
 
   }
 
-  onSubmit(){
+  onSubmit() {
+console.log('registra submited');
 
 
-    this.form.markAllAsTouched(); // Marcar que o usuário tentou interagir com todos os campos, para mostrar erros caso existam
-    if (this.form.valid) { // se o formulário estiver válido
+this.form.markAllAsTouched(); // Marcar que o usuário tentou interagir com todos os campos, para mostrar erros caso existam
+if (this.form.valid) { // se o formulário estiver válido
       this.submited.emit(this.form.value); // avisar o componente de cima que o form foi enviado e mandar os valores
     } else {
       console.log('form invalido!', this.form.value);
@@ -77,7 +86,7 @@ export class FormRegistrarConsultaComponent implements OnInit {
   }
 
   onChange(value) {
-    this.pacienteSelected = value.value
+    this.pacienteSelected = value.value;
 
     this.formChange.emit(this.pacienteSelected.uid); // mada o valor pra cima
   }

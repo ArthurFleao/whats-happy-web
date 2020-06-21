@@ -25,6 +25,8 @@ export class RelatoCardComponent implements OnInit, OnDestroy {
   private onDestroy$ = new EventEmitter();
   palavrasAudio: any[];
   palavrasRelato: any[];
+  analisandoRelato: boolean;
+  analisandoAudio: boolean;
 
   constructor(
     private audioStore: AudioStorageService,
@@ -84,19 +86,25 @@ export class RelatoCardComponent implements OnInit, OnDestroy {
 
   atualizaSentiments() {
     if (this.relato.analiseAudioTranscrito) {
+      this.analisandoAudio = false;
       const analise = this.relato.analiseAudioTranscrito[0];
       const score = analise.documentSentiment.score;
       const magnitude = analise.documentSentiment.magnitude;
       this.sentimentoAudio = this.classificaSentiment(score, magnitude);
       this.palavrasAudio = this.getPalavrasImportantes(analise.entities);
+    } else {
+      this.analisandoAudio = true;
     }
 
     if (this.relato.analiseRelato) {
+      this.analisandoRelato = false;
       const analise = this.relato.analiseRelato[0];
       const score = analise.documentSentiment.score;
       const magnitude = analise.documentSentiment.magnitude;
       this.sentimentoRelato = this.classificaSentiment(score, magnitude);
       this.palavrasRelato = this.getPalavrasImportantes(analise.entities);
+    } else {
+      this.analisandoRelato = true;
     }
   }
 
@@ -126,7 +134,7 @@ export class RelatoCardComponent implements OnInit, OnDestroy {
   getPalavrasImportantes(entities) {
     const palavrasList = [];
     entities?.forEach(entity => {
-      if (palavrasList.length < 5) {
+      if (palavrasList.length < 10) {
         if (!palavrasList.includes(entity.name)) {
           palavrasList.push(entity.name);
         }

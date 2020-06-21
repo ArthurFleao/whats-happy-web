@@ -10,10 +10,10 @@ export class FormProntuarioComponent implements OnInit {
 
   // Form Control controla UM campo.
   @Input()
-  arrayDadosFichasCadastro: Array<any>
+  arrayDadosFichasCadastro: Array<any>;
 
   @Input()
-  pacientesArray; // se quizer inicialisar o form
+  pacientesArray$; // se quizer inicialisar o form
 
   @Input()
   bootstrap; // se quizer inicialisar o form
@@ -26,15 +26,21 @@ export class FormProntuarioComponent implements OnInit {
   formChange = new EventEmitter(); // evento de mudança no form
 
   @Output()
+  updateFicha = new EventEmitter(); // evento de mudança no form
+
+  @Output()
   submited = new EventEmitter(); // evento de envio no form
 
-  pacienteSelected
+  pacienteSelected;
 
   constructor(
     private fb: FormBuilder// importa o formbuilder para poder usar
   ) { }
 
   ngOnInit(): void {
+    console.log('bota strap', this.bootstrap);
+    console.log('arreio de pacientes', this.pacientesArray$);
+
 
     this.form = this.fb.group({
       // ------------------------ dados do usuario -------------
@@ -46,18 +52,18 @@ export class FormProntuarioComponent implements OnInit {
         psicologo: [this.bootstrap?.nomeCompleto || '', Validators.nullValidator],
       }),
 
-      // ------------------------ ficha de consulta -------------
-      registroConsulta: this.fb.group({
-        // formName: ['valorInicial', Validator]
-        dcHda: [this.bootstrap?.dcHda || '', Validators.required],
-        reacoesFrenteDiagnostico: [this.bootstrap?.reacoesFrenteDiagnostico || '', Validators.required],
-        estadoEmocionalAtual: [this.bootstrap?.estadoEmocionalAtual || '', Validators.required],
-        historicoPessoal: [this.bootstrap?.historicoPessoal || '', Validators.required],
-        examePsiquico: [this.bootstrap?.examePsiquico || '', Validators.required],
-        condutaPsicologica: [this.bootstrap?.condutaPsicologica || '', Validators.required],
-        orientacao: [this.bootstrap?.orientacao || '', Validators.required],
-        Outros: [this.bootstrap?.Outros || '', Validators.required],
-      })
+      // // ------------------------ ficha de consulta -------------
+      // registroConsulta: this.fb.group({
+      //   // formName: ['valorInicial', Validator]
+      //   dcHda: [this.bootstrap?.dcHda || '', Validators.required],
+      //   reacoesFrenteDiagnostico: [this.bootstrap?.reacoesFrenteDiagnostico || '', Validators.required],
+      //   estadoEmocionalAtual: [this.bootstrap?.estadoEmocionalAtual || '', Validators.required],
+      //   historicoPessoal: [this.bootstrap?.historicoPessoal || '', Validators.required],
+      //   examePsiquico: [this.bootstrap?.examePsiquico || '', Validators.required],
+      //   condutaPsicologica: [this.bootstrap?.condutaPsicologica || '', Validators.required],
+      //   orientacao: [this.bootstrap?.orientacao || '', Validators.required],
+      //   Outros: [this.bootstrap?.Outros || '', Validators.required],
+      // })
 
     });
 
@@ -70,7 +76,7 @@ export class FormProntuarioComponent implements OnInit {
   }
 
   onChange(value) {
-    this.pacienteSelected = value.value
+    this.pacienteSelected = value.value;
     this.formChange.emit(value.value.uid); // mada o valor pra cima
   }
 
@@ -82,6 +88,13 @@ export class FormProntuarioComponent implements OnInit {
     } else {
       console.log('form invalido!', this.form.value);
     }
+  }
+
+  editarFicha(ficha, form) {
+    console.log('editar ficha');
+
+    ficha.form = form;
+    this.updateFicha.emit(ficha);
   }
 
 }

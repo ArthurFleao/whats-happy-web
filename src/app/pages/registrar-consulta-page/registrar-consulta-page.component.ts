@@ -21,6 +21,7 @@ export class RegistrarConsultaPageComponent implements OnInit {
   myUid: string;
   dadosUsuario: any;
   pacientes = new Subject<Array<any>>();
+  saving: boolean;
 
   constructor(
     private authService: AuthService,
@@ -78,8 +79,8 @@ export class RegistrarConsultaPageComponent implements OnInit {
 
   }
 
-  registrarConsulta(values){
-    this.loading = false; // indica que está carregando algo // indica que está carregando algo
+  registrarConsulta(values) {
+    this.saving = true; // indica que está carregando algo // indica que está carregando algo
 
     this.afs.collection('pacientes').doc(values.dadosUsuario.idPaciente.uid).collection('fichasConsultas').add({
 
@@ -95,11 +96,11 @@ export class RegistrarConsultaPageComponent implements OnInit {
       idPsicologo: this.myUid
 
     }).then((finli) => {
-     this.loading = false; // indica que terminou de carregar
+      this.saving = false; // indica que terminou de carregar
       this.snack.success('Consulta registrada com sucesso!');
       this.router.navigate(['/home']);
     }).catch((err) => {
-     this.eh.handle(err);
+      this.eh.handle(err);
     });
 
   }
