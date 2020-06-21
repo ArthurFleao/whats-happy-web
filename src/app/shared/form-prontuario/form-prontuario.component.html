@@ -5,7 +5,7 @@
 
       <div fxFlex="100">
         <mat-form-field appearance="outline">
-          <mat-spinner style="position: absolute; right: 10px;" diameter="25" *ngIf="!(pacientesArray$ | async)"
+          <mat-spinner style="position: absolute; top: 0; right: 25px;" diameter="25" *ngIf="!(pacientesArray$ | async)"
                        color="primary"></mat-spinner>
           <mat-label>Paciente:</mat-label>
           <mat-select [disabled]="!(pacientesArray$ | async)" required formControlName="idPaciente"

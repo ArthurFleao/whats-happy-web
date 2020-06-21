@@ -7,7 +7,9 @@
       <div fxFlex="100">
         <mat-form-field [appearance]="readOnly? 'fill' :  'outline'">
           <mat-label>Paciente:</mat-label>
-          <mat-select required formControlName="idPaciente" (selectionChange)="onChange($event)">
+          <mat-spinner style="position: absolute; top: 0; right: 25px;" diameter="25" *ngIf="!(pacientesArray | async)"
+                       color="primary"></mat-spinner>
+          <mat-select [disabled]="!(pacientesArray | async)" required formControlName="idPaciente" (selectionChange)="onChange($event)">
             <mat-option *ngFor="let paciente of pacientesArray | async" [value]="paciente">
               {{paciente.dadosUsuario.nomeCompleto}}</mat-option>
           </mat-select>
