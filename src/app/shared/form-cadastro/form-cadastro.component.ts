@@ -14,8 +14,8 @@ import { debounce, debounceTime } from 'rxjs/operators';
   styleUrls: ['./form-cadastro.component.scss']
 })
 
-//Adicionar campos no formulário
-//https://www.it-swarm.dev/pt/forms/como-adicionar-mais-campos-de-entrada-usando-um-botao-angular-2-formas-dinamicas/829045400/
+// Adicionar campos no formulário
+// https://www.it-swarm.dev/pt/forms/como-adicionar-mais-campos-de-entrada-usando-um-botao-angular-2-formas-dinamicas/829045400/
 
 export class FormCadastroComponent implements OnInit {
 
@@ -51,6 +51,7 @@ export class FormCadastroComponent implements OnInit {
   submited = new EventEmitter(); // evento de envio no form
   cepHasErrors: boolean;
   loadingCep: boolean;
+  maskPhoneNumber;
   constructor(
     private fb: FormBuilder, // importa o formbuilder para poder usar
     private viacep: NgxViacepService,
@@ -58,7 +59,6 @@ export class FormCadastroComponent implements OnInit {
   ) {
   }
 
-  maskPhoneNumber
 
   ngOnInit(): void {
 
@@ -92,9 +92,16 @@ export class FormCadastroComponent implements OnInit {
     });
     // ------------------------ FIM CAMPOS ENDEREÇO -------------
 
-    this.bootstrap?.telefone?.forEach(telefone => {
-      this.addTelefone(telefone.telefone)
-    });
+    if (this.bootstrap?.telefone) {
+      if (typeof (this.bootstrap?.telefone) !== 'string') { // retrocopatibilidade com os usuários antigos
+        this.bootstrap.telefone.forEach((telefone, i) => {
+          if (telefone.telefone !== '' && i !== 0) { // autocorreção de salvamentos incorretos
+            console.log('telefone incoming', telefone);
+            this.addTelefone(telefone.telefone);
+          }
+        });
+      }
+    }
 
     this.formChange.emit(this.form); // emite o form construido para cima
     this.form.valueChanges.subscribe(c => { // sempre que houver uma mudança no form
@@ -133,25 +140,25 @@ export class FormCadastroComponent implements OnInit {
   initTelefone(telefone?) {
 
     return this.fb.group({
-        telefone: [telefone || '', Validators.required]
+      telefone: [telefone || '', Validators.required]
     });
   }
 
-  get formCadastroControl () {
+  get formCadastroControl() {
     return this.form.get('dadosUsuario') as FormGroup;
   }
 
-  get telefoneControl () {
+  get telefoneControl() {
     return this.formCadastroControl.get('telefone') as FormArray;
-}
+  }
 
-addTelefone(telefone?) {
-  this.telefoneControl.push(this.initTelefone(telefone))
-}
+  addTelefone(telefone?) {
+    this.telefoneControl.push(this.initTelefone(telefone));
+  }
 
-removeTelefone(i: number) {
-  this.telefoneControl.removeAt(i);
-}
+  removeTelefone(i: number) {
+    this.telefoneControl.removeAt(i);
+  }
 
   onSubmit() {
 
@@ -194,8 +201,8 @@ removeTelefone(i: number) {
 
   public switchPhoneMask(phone: number) {
 
-    console.log("phone")
-    console.log("phone ", phone)
+    console.log('phone');
+    console.log('phone ', phone);
 
     if (phone.toString().length > 10) {
       this.maskPhoneNumber = '(00) 0 0000-0000';
