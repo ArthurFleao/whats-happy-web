@@ -56,7 +56,7 @@ function sendToNaturalLanguageApi(texto: string) {
   const request: any = {
     document: {
       content: texto,
-      laguage:'pt-BR',
+      laguage:'pt-BR',                
       type: "PLAIN_TEXT",
     },
     features: {
