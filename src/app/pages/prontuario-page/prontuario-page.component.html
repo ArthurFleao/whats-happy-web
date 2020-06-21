@@ -1,5 +1,7 @@
 <app-card [title]="'Protuário'">
-  <app-form-prontuario class="w-100" [arrayDadosFichasCadastro]="arrayFichasCadastro" [pacientesArray] = "pacientes" (formChange) = "getFichasConsultas($event)">
-  </app-form-prontuario>
+  <div>
+    <app-form-prontuario class="w-100"  [arrayDadosFichasCadastro]="arrayFichasCadastro" [pacientesArray] = "pacientes" (formChange) = "getFichasConsultas($event)" (submited)="updateProntuario($event)" >
+    </app-form-prontuario>
+  </div>
 </app-card>
 

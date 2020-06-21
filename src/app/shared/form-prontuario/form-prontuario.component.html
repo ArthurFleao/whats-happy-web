@@ -1,4 +1,4 @@
-<form focusInvalidInput class="w-100" [formGroup]="form">
+<form focusInvalidInput class="w-100" [formGroup]="form" (ngSubmit)="onSubmit()">
 
   <div fxLayout="column" class="w-100" fxLayoutAlign="center">
     <fieldset formArrayName="cabecalhoProtuario">
@@ -35,60 +35,65 @@
         <div fxFlex>
           <mat-form-field appearance="outline">
             <mat-label>DC/HDA - Diagnóstico clínico e história da doença atual</mat-label>
-            <textarea matInput  [value] = "ficha.dcHda" placeholder="DC/HDA - Diagnóstico clínico e história da doença atual" readonly></textarea>
+            <textarea matInput formControlName="dcHda" [value] = "ficha.dcHda" placeholder="DC/HDA - Diagnóstico clínico e história da doença atual"></textarea>
           </mat-form-field>
         </div>
 
         <div fxFlex>
           <mat-form-field appearance="outline">
             <mat-label>Reações frente ao diagnóstico</mat-label>
-            <textarea matInput [value] = "ficha.reacoesFrenteDiagnostico" placeholder="Reações frente ao diagnóstico" readonly></textarea>
+            <textarea matInput formControlName="reacoesFrenteDiagnostico" [value] = "ficha.reacoesFrenteDiagnostico" placeholder="Reações frente ao diagnóstico"></textarea>
           </mat-form-field>
         </div>
 
         <div fxFlex>
           <mat-form-field appearance="outline">
             <mat-label>Estado emocional atual e mecanismo de enfrentamento</mat-label>
-            <textarea matInput [value] = "ficha.estadoEmocionalAtual" placeholder="Estado emocional atual e mecanismo de enfrentamento" readonly></textarea>
+            <textarea matInput formControlName="estadoEmocionalAtual" [value] = "ficha.estadoEmocionalAtual" placeholder="Estado emocional atual e mecanismo de enfrentamento"></textarea>
           </mat-form-field>
         </div>
 
         <div fxFlex>
           <mat-form-field appearance="outline">
             <mat-label>Histórico pessoal e familiar (avaliação psicossocial)</mat-label>
-            <textarea matInput [value] = "ficha.historicoPessoal" placeholder="Histórico pessoal e familiar (avaliação psicossocial)" readonly></textarea>
+            <textarea matInput formControlName="historicoPessoal" [value] = "ficha.historicoPessoal" placeholder="Histórico pessoal e familiar (avaliação psicossocial)"></textarea>
           </mat-form-field>
         </div>
 
         <div fxFlex>
           <mat-form-field appearance="outline">
             <mat-label>Exame psiquico / sinais e sintomas piscopatológicos</mat-label>
-            <textarea matInput [value] = "ficha.examePsiquico" placeholder="Exame psiquico / sinais e sintomas piscopatológicos" readonly></textarea>
+            <textarea matInput formControlName="examePsiquico" [value] = "ficha.examePsiquico" placeholder="Exame psiquico / sinais e sintomas piscopatológicos"></textarea>
           </mat-form-field>
         </div>
 
         <div fxFlex>
           <mat-form-field appearance="outline">
             <mat-label>Conduta psicológica</mat-label>
-            <textarea matInput [value] = "ficha.condutaPsicologica" placeholder="Conduta psicológica" readonly></textarea>
+            <textarea matInput formControlName="condutaPsicologica" [value] = "ficha.condutaPsicologica" placeholder="Conduta psicológica"></textarea>
           </mat-form-field>
         </div>
 
         <div fxFlex>
           <mat-form-field appearance="outline">
             <mat-label>Orientação à equipe e/ou familiares - acompanhantes</mat-label>
-            <textarea matInput [value] = "ficha.orientacao" placeholder="Orientação à equipe e/ou familiares - acompanhantes" readonly></textarea>
+            <textarea matInput formControlName="orientacao" [value] = "ficha.orientacao" placeholder="Orientação à equipe e/ou familiares - acompanhantes"></textarea>
           </mat-form-field>
         </div>
 
         <div fxFlex>
           <mat-form-field appearance="outline">
             <mat-label>Outros</mat-label>
-            <textarea matInput [value] = "ficha.Outros" placeholder="Orientação à equipe e/ou familiares - acompanhantes" readonly></textarea>
+            <textarea matInput formControlName="Outros" [value] = "ficha.Outros" placeholder="Orientação à equipe e/ou familiares - acompanhantes"></textarea>
           </mat-form-field>
         </div>
+
+        <art-button [type]="'submit'">Salvar edição</art-button>
+
       </div>
     </fieldset>
+
+
 
   </div>
 

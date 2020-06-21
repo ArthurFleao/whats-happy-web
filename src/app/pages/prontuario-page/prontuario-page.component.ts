@@ -75,6 +75,7 @@ export class ProntuarioPageComponent implements OnInit {
   }
 
   getFichasConsultas(uid){
+
     this.dadosService.getProntuario(uid).subscribe(querySnapshot => {
 
       let arrayAux = new Array<any>()
@@ -85,10 +86,16 @@ export class ProntuarioPageComponent implements OnInit {
       })
 
       this.arrayFichasCadastro = arrayAux
+      console.log("arrayAux", arrayAux)
 
     }, error => {
     this.eh.handle(error)
     });
+  }
+
+  updateProntuario(value){
+    console.log("aqui")
+    console.log("value ", value)
   }
 
 }

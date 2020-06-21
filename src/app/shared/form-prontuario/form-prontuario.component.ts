@@ -25,6 +25,9 @@ export class FormProntuarioComponent implements OnInit {
   @Output()
   formChange = new EventEmitter(); // evento de mudança no form
 
+  @Output()
+  submited = new EventEmitter(); // evento de envio no form
+
   pacienteSelected
 
   constructor(
@@ -58,11 +61,27 @@ export class FormProntuarioComponent implements OnInit {
 
     });
 
+    this.formChange.emit(this.form); // emite o form construido para cima
+    this.form.valueChanges.subscribe(c => { // sempre que houver uma mudança no form
+      // console.log('value change', c);
+      this.formChange.emit(this.form); // emite o form para cima
+    });
+
   }
 
   onChange(value) {
     this.pacienteSelected = value.value
     this.formChange.emit(value.value.uid); // mada o valor pra cima
+  }
+
+  onSubmit(){
+
+    this.form.markAllAsTouched(); // Marcar que o usuário tentou interagir com todos os campos, para mostrar erros caso existam
+    if (this.form.valid) { // se o formulário estiver válido
+      this.submited.emit(this.form.value); // avisar o componente de cima que o form foi enviado e mandar os valores
+    } else {
+      console.log('form invalido!', this.form.value);
+    }
   }
 
 }
