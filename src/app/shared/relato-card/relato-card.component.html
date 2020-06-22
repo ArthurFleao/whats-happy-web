@@ -71,9 +71,9 @@
     </div>
 
     <div class="mb-2">
-      <mat-form-field appearance="outline">
+      <mat-form-field *ngIf="relato.relato"  appearance="outline">
         <mat-label>Relato escrito</mat-label>
-        <textarea readonly [value]="relato.relato || 'Sem relato'" matInput cdkTextareaAutosize
+        <textarea readonly [value]="relato.relato || 'Sem relato escrito.'" matInput cdkTextareaAutosize
                   #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" cdkAutosizeMaxRows="50"></textarea>
       </mat-form-field>
       <div class="mb-2" *ngIf="relato.relato && !relato.analiseRelato">
