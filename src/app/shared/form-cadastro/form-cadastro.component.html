@@ -62,8 +62,7 @@
               <div fxLayout="row" fxLayoutAlign="start fill">
                 <mat-form-field fxFlex="90" appearance="outline">
                   <mat-label>Telefone</mat-label>
-                  <input matInput required formControlName="telefone" mask="{{ maskPhoneNumber }}"
-                         (keyup)="switchPhoneMask(form.get('dadosUsuario.telefone').value)"
+                  <input matInput required formControlName="telefone" mask="(00) 0000-0000||(00) 0 0000-0000"
                          placeholder="Ex: (00) 9 9999-9999">
                   <div *ngIf="telefoneItem.get('telefone').invalid && telefoneItem.get('telefone').touched" class="mt-1 animate__animated animate__fadeInDown">
                     <mat-error *ngIf="telefoneItem.get('telefone').hasError('required') && telefoneItem.touched">Faltou

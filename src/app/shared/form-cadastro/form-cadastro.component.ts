@@ -183,7 +183,6 @@ export class FormCadastroComponent implements OnInit {
         sexo: 'm',
         crp: '11111111111',
         dataNascimento: '01/01/1990',
-        telefone: '99999999999',
         senha: '123456',
         confirmaSenha: '123456',
       },
@@ -202,17 +201,17 @@ export class FormCadastroComponent implements OnInit {
     return Math.floor((Math.random() * 9999) + 1);
   }
 
-  public switchPhoneMask(phone: number) {
+  // public switchPhoneMask(phone: number) {
 
-    console.log('phone');
-    console.log('phone ', phone);
+  //   console.log('phone');
+  //   console.log('phone ', phone);
 
-    if (phone.toString().length > 10) {
-      this.maskPhoneNumber = '(00) 0 0000-0000';
-    }
-    else {
-      this.maskPhoneNumber = '(00) 0000-00009';
-    }
-  }
+  //   if (phone.toString().length > 10) {
+  //     this.maskPhoneNumber = '(00) 0 0000-0000';
+  //   }
+  //   else {
+  //     this.maskPhoneNumber = '(00) 0000-00009';
+  //   }
+  // }
 
 }

@@ -11,12 +11,13 @@
       </div>
       <div class="info">
         <p *ngIf="person.dadosPsicologo?.crp"> <b>CRP: </b>{{person.dadosPsicologo.crp}}</p>
-        <p> <b>CPF: </b>{{person.dadosUsuario.cpf}}</p>
-        <p> <b>Data de nascimento: </b>{{person.dadosUsuario.dataNascimento}} - ({{person.dadosUsuario.dataNascimento | idade}} anos) </p>
+        <p> <b>CPF: </b>{{person.dadosUsuario.cpf | mask: '000.000.000-00'}}</p>
+        <p> <b>Data de nascimento: </b>{{person.dadosUsuario.dataNascimento}} -
+          ({{person.dadosUsuario.dataNascimento | idade}} anos) </p>
         <p> <b>Gênero: </b>{{person.dadosUsuario.sexo | sexo}}</p>
         <p> <b>Telefone{{person.dadosUsuario.telefone.length > 1? 's' : ''}}: </b>
           <span *ngFor="let tel of person.dadosUsuario.telefone; let i = index">
-            {{tel.telefone}}{{person.dadosUsuario.telefone.length > 1?  i+1 === person.dadosUsuario.telefone.length? '' : ' / ' : ''}}
+            {{tel.telefone.length > 10 ? (tel.telefone  | mask: '(00) 0 0000-0000') : (tel.telefone | mask : '(00) 0000-0000')}}{{person.dadosUsuario.telefone.length > 1?  i+1 === person.dadosUsuario.telefone.length? '' : ' / ' : ''}}
           </span>
         </p>
       </div>
