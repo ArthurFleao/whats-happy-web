@@ -1,3 +1,7 @@
+import { ConfirmModalComponent } from './shared/notificacoes/confirm-modal/confirm-modal.component';
+import { ListarNotificacoesComponent } from './shared/notificacoes/listar-notificacoes/listar-notificacoes.component';
+import { NotificacaoCardComponent } from './shared/notificacoes/notificacao-card/notificacao-card.component';
+import { NotificacoesPopoverComponent } from './shared/notificacoes/notificacoes-popover/notificacoes-popover.component';
 import { RelatorioPageComponent } from './pages/relatorio-page/relatorio-page.component';
 import { HttpErrorInterceptor } from './services/http-error.interceptor';
 import { HeaderMenuComponent } from './shared/header-menu/header-menu.component';
@@ -123,6 +127,10 @@ const material = [
 ];
 @NgModule({
   declarations: [
+    ConfirmModalComponent,
+    NotificacoesPopoverComponent,
+    NotificacaoCardComponent,
+    ListarNotificacoesComponent,
     AppComponent,
     RelatorioPageComponent,
     TestComponent,

@@ -1,0 +1,9 @@
+<div class="content-container">
+  <h2 class="text-center m-0">Notificações</h2>
+  <mat-divider class="mb-1"></mat-divider>
+  <app-listar-notificacoes (delete)="delete.emit($event)"
+                           [notificacoes]="notificacoes"
+                           [config]="config"
+                           [showVerMais]="notificacoes.length > 5">
+  </app-listar-notificacoes>
+</div>

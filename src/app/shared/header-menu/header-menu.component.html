@@ -7,20 +7,21 @@
       {{(user | async)?.dadosUsuario?.nomeCompleto? 'Bem-vindo(a), ' + (user | async)?.dadosUsuario?.nomeCompleto + '!' : 'Bem-vindo(a)!'}}
     </p>
     <div>
-      <!-- <i class="fas fa-bell header-icon"
+      <i class="fas fa-bell header-icon"
          [matBadge]="quantidadeNotificacoesNaoLidas"
          [matBadgeHidden]="quantidadeNotificacoesNaoLidas < 1"
          [matBadgeSize]="'small'"
          matBadgeColor="warn"
          [ngStyle]="{'color': showNotificacoes ? '#01afc3' : '#000000de'}"
-         (click)="openNotificacoes()"></i> -->
+         (click)="openNotificacoes()"></i>
       <mat-icon matTooltip="Sair da conta" matRipple class="logout-icon" (click)="logout()">power_settings_new</mat-icon>
     </div>
-    <!-- <app-notificacoes-popover [notificacoes]="notificacoes"
+    <app-notificacoes-popover *ngIf="notificacoes"
+                              [notificacoes]="notificacoes"
                               [config]="notificationConfig"
                               (delete)="onDeleteNotification($event)"
                               [hidden]="!showNotificacoes"
                               (mouseleave)="showNotificacoes = false"
-    ></app-notificacoes-popover> -->
+    ></app-notificacoes-popover>
   </div>
 </div>

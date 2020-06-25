@@ -1,0 +1,17 @@
+<div class="content-container">
+  <h2 class="text-center m-0">{{title}}</h2>
+  <mat-divider></mat-divider>
+  <p [innerHTML]="description"></p>
+
+  <art-button (click)="onCloseClicked(false)" >Cancelar</art-button>
+  <art-button (click)="onCloseClicked(true)" >Confirmar</art-button>
+  <!-- <div class="footer-container text-center w-100">
+    <button mat-raised-button color="primary" (click)="onCloseClicked(true)">
+      {{yesButton ? yesButton : 'Confirmar'}}</button>
+    <button class="ml-1" mat-raised-button color="primary" (click)="onCloseClicked(false)">
+      {{noButton ? noButton : 'Cancelar'}}</button>
+  </div> -->
+  <span class="material-icons close-icon" (click)="onCloseClicked(null)">
+    clear
+  </span>
+</div>

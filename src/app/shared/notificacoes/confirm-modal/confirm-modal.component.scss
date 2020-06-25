@@ -1,0 +1,11 @@
+.content-container {
+  position: relative;
+  p {
+    margin: 10px;
+  }
+  .footer-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+}

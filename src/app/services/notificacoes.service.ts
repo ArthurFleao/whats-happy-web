@@ -12,4 +12,9 @@ export class NotificacoesService {
   list(userId) {
     return this.afs.collection('notificacoes/' + userId + '/notificacoes').valueChanges({ idField: 'uid' });
   }
+
+  delete(not) {
+    console.log('delete', not);
+
+  }
 }

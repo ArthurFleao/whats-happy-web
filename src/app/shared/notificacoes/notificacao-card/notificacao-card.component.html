@@ -1,0 +1,48 @@
+<!--<span>-->
+<!--  {{notificacao.message}}-->
+<!--  <br/>-->
+<!--  <a [routerLink]="['/dashboard/devedor/editar', notificacao.usuarioId]">Clique aqui</a> para adicionar um tipo de nefocio padrão.-->
+<!--  <br/>-->
+<!--  Ou, caso não tenha esse tipo de negócio cadastrado, <a routerLink="/dashboard/tipo-negocio/cadastrar">clique aqui</a>-->
+<!--  para cadastrar um novo tipo de negócio.-->
+<!--</span>-->
+<div class="content-container hide-badge-text"
+    [matBadge]="0"
+    [matBadgeSize]="'small'"
+    [matBadgeColor]="'warn'"
+    [matBadgeHidden]="!notificacao || notificacao.lida"
+
+     fxLayout="row"
+     fxLayoutAlign="start center">
+  <div fxFlex="85"
+       fxLayout="row"
+       fxLayoutAlign="start center"
+       (click)="openRelato()">
+    <div class="img-wrapper">
+    <!-- <div> -->
+      <div class="img-container"
+           [ngStyle]="{
+             'height': notificacaoConfig.imgWrapperSize,
+             'width': notificacaoConfig.imgWrapperSize,
+             'background': notificacaoConfig.iconBackgroundColor
+             }">
+        <span class="material-icons"
+              [ngStyle]="{'font-size': notificacaoConfig.iconSize, 'color': notificacaoConfig.iconColor}">
+          assignment_late
+        </span>
+      </div>
+    </div>
+    <div class="ml-1 text-container">
+      <h3 [ngStyle]="{'font-size': notificacaoConfig.titleSize, 'font-weight': notificacaoConfig.titleWeight}">
+        {{notificacao.message}}
+      </h3>
+    </div>
+  </div>
+  <div fxFlex="15"
+       class="background">
+    <span class="material-icons"
+          (click)="deleteNotification($event)">
+      delete
+    </span>
+  </div>
+</div>

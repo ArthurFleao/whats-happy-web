@@ -1,0 +1,21 @@
+<div class="notification-container"
+     *ngFor="let notificacao of notifications">
+  <app-notificacao-card [notificacao]="notificacao"
+                        (delete)="onDelete($event)"
+                        [config]="config">
+  </app-notificacao-card>
+</div>
+
+<div class="notification-container text-muted text-center"
+     *ngIf="!notifications || notifications?.length < 1">
+  Sem notificações no momento.
+</div>
+
+<div class="w-100 text-center mt-2 mb-1">
+  <button mat-raised-button
+          color="primary"
+          *ngIf="showVerMais"
+          [routerLink]="['/dashboard/notificacao/listar']">
+    Ver mais
+  </button>
+</div>

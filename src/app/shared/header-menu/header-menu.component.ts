@@ -1,9 +1,11 @@
+import { NotificacoesService } from './../../services/notificacoes.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Component, OnInit, Input, Output, EventEmitter, HostListener, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { interval, Observer, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { User } from 'src/app/model/user';
+import { Notificacao } from 'src/app/model/notificacao';
 
 @Component({
   selector: 'app-header-menu',
@@ -18,16 +20,17 @@ export class HeaderMenuComponent implements OnInit, OnDestroy {
   @Output()
   openedSideMenuChange = new EventEmitter();
 
-  // quantidadeNotificacoesNaoLidas = 0;
-  // notificacoes: ServerListResponse<NotificacaoModel>;
-  // notificationConfig: NotificationCardConfig;
-  // showNotificacoes = false;
+  quantidadeNotificacoesNaoLidas = 0;
+  notificacoes: Notificacao[];
+  notificationConfig: any;
+  showNotificacoes = false;
   user: Observable<User>;
 
   isMobile: boolean;
 
   constructor(
     private auth: AuthService,
+    private notificacoesService: NotificacoesService,
     private router: Router) {
     this.checkWindow();
 
@@ -53,6 +56,11 @@ export class HeaderMenuComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.user = this.auth.user$;
+    this.auth.user$.subscribe(res => {
+      this.listNotificacoes(res.uid);
+    }, error => {
+      console.error(error);
+    });
     // this.contaService.get().subscribe(res => {
     //   this.conta = res;
     // }, error => {
@@ -85,21 +93,23 @@ export class HeaderMenuComponent implements OnInit, OnDestroy {
     this.router.navigate(['/login']);
   }
 
-  // listNotificacoes() {
-  //   this.notificacaoService.list(5, 0).subscribe(notificacoes => {
-  //     this.notificacoes = notificacoes;
-  //   });
-  // }
+  listNotificacoes(uid) {
+    this.notificacoesService.list(uid).subscribe((notificacoes: any) => {
+      console.log('nots', notificacoes);
 
-  // openNotificacoes() {
-  //   if (this.isMobile) {
-  //     this.router.navigate(['dashboard/notificacao/listar']);
-  //   } else { this.showNotificacoes = !this.showNotificacoes; }
+      this.notificacoes = notificacoes;
+    });
+  }
 
-  // }
-  // onDeleteNotification(not: NotificacaoModel) {
-  //   this.notificacaoService.delete(not).subscribe(() => {
-  //     this.listNotificacoes();
-  //   });
-  // }
+  openNotificacoes() {
+    if (this.isMobile) {
+      this.router.navigate(['/notificacoes']);
+    } else { this.showNotificacoes = !this.showNotificacoes; }
+
+  }
+  onDeleteNotification(not: Notificacao) {
+    // this.notificacoesService.delete(not).subscribe(() => {
+    //   this.listNotificacoes();
+    // });
+  }
 }
