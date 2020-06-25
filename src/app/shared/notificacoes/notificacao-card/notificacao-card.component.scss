@@ -1,4 +1,4 @@
-.content-container {
+.not-content-container {
   position: relative;
   cursor: pointer;
   border-radius: 10px;
@@ -51,7 +51,7 @@
   }
 }
 
-.content-container:hover {
+.not-content-container:hover {
   transition: all 250ms ease-in-out;
   background-color: #01afc333;
 }
