@@ -7,6 +7,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AngularFireModule } from '@angular/fire';
+import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -172,6 +173,7 @@ const material = [
     AngularFireModule.initializeApp(environment.firebase),
     BrowserAnimationsModule,
     AngularFirestoreModule,
+    AngularFireMessagingModule,
     NgxMaskModule.forRoot({
       showMaskTyped : false,
     }),
