@@ -12,19 +12,25 @@ import 'moment/locale/pt-br';
 export class AppComponent {
   constructor(private afMessaging: AngularFireMessaging) {
     moment.locale('pt-BR');
+    this.requestPermission();
+    this.afMessaging.messages
+      .subscribe((message) => {
+        console.log('mensagem no subscribe geral', message);
+      });
   }
 
   requestPermission() {
     this.afMessaging.requestToken
       .subscribe(
-        (token) => { console.log('Permission granted! Save to the server!', token); },
+        (token) => {
+          console.log('Permission granted! Save to the server!', token);
+        },
         (error) => { console.error(error); },
       );
   }
 
   listen() {
-    this.afMessaging.messages
-      .subscribe((message) => { console.log(message); });
+
   }
 
 }

@@ -1,3 +1,4 @@
+import { NotificacoesService } from './../../services/notificacoes.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -8,9 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomePageComponent implements OnInit {
 
-  constructor(private auth: AuthService) { }
+  constructor(private auth: AuthService, private notificacoes: NotificacoesService) { }
 
   ngOnInit(): void {
+    this.auth.user$.subscribe(res => {
+      this.notificacoes.list(res.uid).subscribe(res => {
+        console.log('notifiacoes changed', res);
+      }, error => {
+        console.error(error);
+      });
+    }, error => {
+      console.error(error);
+    });
   }
 
 }

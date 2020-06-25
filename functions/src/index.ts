@@ -17,6 +17,23 @@ export const onRelatoChanged = functions.firestore.document('pacientes/{userId}/
   const relatoAnterior = change.before.data();
   const relatoAtual = change.after.data();
 
+  if (!relatoAnterior) { // se o relato é novo
+    console.log('relato é novo');
+
+    db.collection('pacientes').doc(userId).get().then((result) => {
+      const responsavelUID = result.data()?.responsavel.id;
+      sendNotification({
+        message: 'Seu paciente enviou um novo relato!',
+        pacienteUID: userId,
+        relatoId,
+        responsavelUID,
+      }, responsavelUID);
+    }).catch((err) => {
+      console.error(err);
+    });
+
+  }
+
   if (relatoAnterior?.relato !== relatoAtual?.relato) {
     sendToNaturalLanguageApi(relatoAtual?.relato).then((result: any) => {
       saveDataToRelato(userId, relatoId, { analiseRelato: result });
@@ -44,6 +61,14 @@ export const onRelatoChanged = functions.firestore.document('pacientes/{userId}/
   });
 });
 
+function sendNotification(data: any, destinatario: any) {
+  db.collection('notificacoes/' + destinatario + '/notificacoes').doc(data.relatoId).set(data).then((result) => {
+    console.log('notificação salva no bd');
+  }).catch((err) => {
+    console.error(err);
+  });
+}
+
 function saveDataToRelato(idPaciente: any, idRelato: any, data: any) {
   db.collection(`pacientes/${idPaciente}/relatos`).doc(idRelato).update(data).then((result) => {
     console.log('data saved to relato');
@@ -56,7 +81,7 @@ function sendToNaturalLanguageApi(texto: string) {
   const request: any = {
     document: {
       content: texto,
-      laguage:'pt-BR',                
+      laguage: 'pt-BR',
       type: "PLAIN_TEXT",
     },
     features: {
