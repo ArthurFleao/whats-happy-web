@@ -1,3 +1,4 @@
+import { ErrorHandlerService } from './../../services/error-handler.service';
 import { NotificacoesService } from './../../services/notificacoes.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Component, OnInit, Input, Output, EventEmitter, HostListener, OnDestroy } from '@angular/core';
@@ -6,6 +7,7 @@ import { interval, Observer, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { User } from 'src/app/model/user';
 import { Notificacao } from 'src/app/model/notificacao';
+import { SnackService } from 'src/app/services/snack.service';
 
 @Component({
   selector: 'app-header-menu',
@@ -30,6 +32,8 @@ export class HeaderMenuComponent implements OnInit, OnDestroy {
 
   constructor(
     private auth: AuthService,
+    private eh: ErrorHandlerService,
+    private snack: SnackService,
     private notificacoesService: NotificacoesService,
     private router: Router) {
     this.checkWindow();
@@ -98,6 +102,12 @@ export class HeaderMenuComponent implements OnInit, OnDestroy {
       console.log('nots', notificacoes);
 
       this.notificacoes = notificacoes;
+      this.quantidadeNotificacoesNaoLidas = 0;
+      this.notificacoes.forEach(not => {
+        if (!not.lida) {
+          this.quantidadeNotificacoesNaoLidas++;
+        }
+      });
     });
   }
 
@@ -108,8 +118,10 @@ export class HeaderMenuComponent implements OnInit, OnDestroy {
 
   }
   onDeleteNotification(not: Notificacao) {
-    // this.notificacoesService.delete(not).subscribe(() => {
-    //   this.listNotificacoes();
-    // });
+    this.notificacoesService.delete(not.responsavelUID, not.uid).then((result) => {
+      this.snack.success('Notificação excluída com sucesso!', 'Adeus!');
+    }).catch((err) => {
+      this.eh.handle(err);
+    });
   }
 }

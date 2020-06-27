@@ -23,8 +23,10 @@ export const onRelatoChanged = functions.firestore.document('pacientes/{userId}/
     db.collection('pacientes').doc(userId).get().then((result) => {
       const responsavelUID = result.data()?.responsavel.id;
       sendNotification({
-        message: 'Seu paciente enviou um novo relato!',
+        message: 'enviou um novo relato!',
+        type: 'novo-relato',
         pacienteUID: userId,
+        data: new Date().toISOString(),
         relatoId,
         responsavelUID,
       }, responsavelUID);
@@ -61,7 +63,39 @@ export const onRelatoChanged = functions.firestore.document('pacientes/{userId}/
   });
 });
 
+
+function prepareDataForNotification(data: any) {
+  let bodyString = data.nomePaciente || 'Seu paciente';
+  bodyString += ' acabou de publicar um novo relato, venha ver como ele está se sentindo!'
+  const payload = {
+    notification: {
+      title: data.message,
+      body: bodyString
+    }
+  };
+
+  return payload;
+}
+
 function sendNotification(data: any, destinatario: any) {
+  db.collection('dadosUsuario').doc(destinatario).get().then((result) => {
+    if (result.data()?.deviceId) {
+      db.collection('dadosUsuario').doc(data.pacienteUID).get().then((userData) => {
+        let newData = data;
+        newData.nomePaciente = userData.data()?.nomeCompleto;
+        newData = prepareDataForNotification(data);
+        admin.messaging().sendToDevice(result.data()?.deviceId, newData).then((not) => {
+          console.log('notificacao enviada');
+        }).catch((err) => {
+          console.error(err);
+        });
+      }).catch((err) => {
+        console.error(err);
+      });
+    }
+  }).catch((err) => {
+    console.error(err);
+  });
   db.collection('notificacoes/' + destinatario + '/notificacoes').doc(data.relatoId).set(data).then((result) => {
     console.log('notificação salva no bd');
   }).catch((err) => {

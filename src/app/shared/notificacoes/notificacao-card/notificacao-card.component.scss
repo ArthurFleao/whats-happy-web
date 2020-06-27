@@ -1,3 +1,8 @@
+.data {
+  position: absolute;
+  bottom: -13px;
+  right: 10px;
+}
 .not-content-container {
   position: relative;
   cursor: pointer;
@@ -13,11 +18,11 @@
         position: absolute;
         left: 50%;
         top: 50%;
-        transform: translate(-50%,-50%);
+        transform: translate(-50%, -50%);
         color: white;
       }
     }
-}
+  }
 
   .text-container {
     * {
@@ -28,7 +33,8 @@
     }
   }
 
-  .img-wrapper, .text-container {
+  .img-wrapper,
+  .text-container {
     z-index: 1;
   }
 
@@ -50,7 +56,6 @@
     }
   }
 }
-
 .not-content-container:hover {
   transition: all 250ms ease-in-out;
   background-color: #01afc333;

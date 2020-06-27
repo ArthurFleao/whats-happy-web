@@ -6,22 +6,16 @@
 <!--  Ou, caso não tenha esse tipo de negócio cadastrado, <a routerLink="/dashboard/tipo-negocio/cadastrar">clique aqui</a>-->
 <!--  para cadastrar um novo tipo de negócio.-->
 <!--</span>-->
-<div class="not-content-container hide-badge-text"
-    [matBadge]="0"
-    [matBadgeSize]="'small'"
-    [matBadgeColor]="'warn'"
-    [matBadgeHidden]="!notificacao || notificacao.lida"
-
-     fxLayout="row"
-     fxLayoutAlign="start center">
-  <div fxFlex="85"
-       fxLayout="row"
-       fxLayoutAlign="start center"
-       (click)="openRelato()">
+<div (mouseenter)="marcarComoLida()" class="not-content-container hide-badge-text" [matBadge]="0"
+     [matBadgeSize]="'small'" [matBadgeColor]="'warn'" [matBadgeHidden]="!notificacao || notificacao.lida"
+     fxLayout="row" fxLayoutAlign="start center">
+  <div class="data">
+    <p class="text-muted" [matTooltip]="notificacao.data" >{{dataFromNow}}</p>
+  </div>
+  <div style="padding-bottom: 5px;" fxFlex="85" fxLayout="row" fxLayoutAlign="start center" (click)="openRelato()">
     <div class="img-wrapper">
-    <!-- <div> -->
-      <div class="img-container"
-           [ngStyle]="{
+      <!-- <div> -->
+      <div class="img-container" [ngStyle]="{
              'height': notificacaoConfig.imgWrapperSize,
              'width': notificacaoConfig.imgWrapperSize,
              'background': notificacaoConfig.iconBackgroundColor
@@ -38,10 +32,8 @@
       </h3>
     </div>
   </div>
-  <div fxFlex="15"
-       class="background">
-    <span class="material-icons"
-          (click)="deleteNotification($event)">
+  <div fxFlex="15" class="background">
+    <span class="material-icons" (click)="deleteNotification($event)">
       delete
     </span>
   </div>
