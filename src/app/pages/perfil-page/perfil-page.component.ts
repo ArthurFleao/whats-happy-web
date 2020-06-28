@@ -12,6 +12,7 @@ import { DadosUsuario } from './../../model/dadosUsuario';
 import { SnackService } from 'src/app/services/snack.service';
 // redirecionamento
 import { Router } from '@angular/router';
+import { User } from 'src/app/model/user';
 
 @Component({
   selector: 'app-perfil-page',
@@ -26,6 +27,8 @@ export class PerfilPageComponent implements OnInit {
   loadingData = true;
   myUid: string;
   showCrp: boolean;
+  private user = new User();
+  flag: boolean;
 
   constructor(
     private authService: AuthService,
@@ -37,13 +40,16 @@ export class PerfilPageComponent implements OnInit {
     fb: FormBuilder
   ) {
     // recupera id do usuário logado
-    this.authService.me().then(res => {
-      this.myUid = res.uid;
+    this.authService.user$.subscribe(user => {
+      console.log("////////////////////////////////////////")
+      this.user = user;
+
+      this.myUid = this.user.uid;
 
       // chama funcao do auth.service para recuperar dados do usuario logado
       this.db.getUserData(this.myUid).subscribe((resDadosUsuario: DadosUsuario) => {
         this.dadosUsuario = resDadosUsuario;
-        this.dadosUsuario.email = res.email;
+        this.dadosUsuario.email = this.user.dadosUsuario.email;
         this.authService.user$.subscribe(resauth => {
           console.log('res', resauth);
           if (resauth.dadosPsicologo?.crp) {
@@ -56,12 +62,12 @@ export class PerfilPageComponent implements OnInit {
         }, error => {
           console.error(error);
         });
+      });
       }, error => {
         this.eh.handle(error);
         this.loadingData = false; // indica que terminou de carregar
       });
 
-    });
   }
 
   ngOnInit(): void {
@@ -81,6 +87,61 @@ export class PerfilPageComponent implements OnInit {
       this.loading = false; // indica que terminou de carregar
       this.eh.handle(err);
     });
+  }
+
+  disableUser(){
+    //se for paciente
+    if(this.user.isPaciente == true && this.user.isPsicologo == false ){
+
+      console.log("1 if")
+
+      this.db.disablePaciente(this.myUid).then((result) => {
+        this.loading = false;
+        this.snack.success('Usuário tipo paciente foi desabilitado!');
+        this.flag = true
+      }).catch((err) => {
+        this.loading= false;
+        this.eh.handle(err);
+      });
+    }else
+    //se for psicologo
+    if(this.user.isPaciente == false && this.user.isPsicologo == true){
+      console.log("2 if")
+      this.db.disablePsicologo(this.myUid).then((result) => {
+        this.loading = false;
+        this.snack.success('Usuário tipo psicologo foi desabilitado!');
+        this.flag = true
+      }).catch((err) => {
+        this.loading= false;
+        this.eh.handle(err);
+      });
+    }else
+    //se for ambos
+    if(this.user.isPaciente == true && this.user.isPsicologo == true){
+      console.log("3 if")
+      this.db.disablePaciente(this.myUid).then((result) => {
+        this.loading = false;
+        this.snack.success('Usuário tipo paciente foi desabilitado!');
+      }).catch((err) => {
+        this.loading= false;
+        this.eh.handle(err);
+      });
+
+      this.db.disablePsicologo(this.myUid).then((result) => {
+        this.loading = false;
+        this.snack.success('Usuário tipo psicologo foi desabilitado!');
+      }).catch((err) => {
+        this.loading= false;
+        this.eh.handle(err);
+      });
+
+      this.flag = true
+    }
+
+    //logout do sistema
+    if(this.flag == true){
+      this.authService.logout();
+    }
   }
 
 }
