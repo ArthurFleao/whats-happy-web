@@ -22,6 +22,8 @@ export class ListarPacientesPageComponent implements OnInit {
   pacientes = new Subject<Array<any>>();
   loadingDisabling: any;
   showDesabilitados = false;
+  noHabilitados = true;
+  noDesabilitados = true;
 
   constructor(
     private authService: AuthService,
@@ -37,7 +39,6 @@ export class ListarPacientesPageComponent implements OnInit {
 
       // chama funcao do auth.service para recuperar dados do usuario logado
       this.db.getListaPacientes(this.myUid).subscribe(res => {
-
         const arrayTodosPacientes = [];
         res.forEach((paciente: any) => {
           // coloca todos os pacientes do psicologo no array
@@ -66,10 +67,12 @@ export class ListarPacientesPageComponent implements OnInit {
 
   enableOrDisableUser(paciente) {
     this.loadingDisabling = true;
+
     if (paciente.disabled) {
       this.db.enablePaciente(paciente.uid).then((result) => {
         this.snack.success('Paciente foi habilitado!');
         this.loadingDisabling = false;
+        this.noDesabilitados = true;
         paciente.disabled = false;
       }).catch((err) => {
         this.loadingDisabling = false;
@@ -79,6 +82,7 @@ export class ListarPacientesPageComponent implements OnInit {
     else {
       this.db.disablePaciente(paciente.uid).then((result) => {
         this.loadingDisabling = false;
+        this.noHabilitados = true;
         this.snack.success('Paciente foi desabilitado!');
         paciente.disabled = true;
       }).catch((err) => {
@@ -89,12 +93,19 @@ export class ListarPacientesPageComponent implements OnInit {
   }
 
   changeShouldShow() {
+    this.noHabilitados = true;
+    this.noDesabilitados = true;
     this.showDesabilitados = !this.showDesabilitados;
+
   }
 
   shouldShow(paciente) {
-    return this.showDesabilitados ? paciente.disabled ? true : false : paciente.disabled ? false : true;
-    // return true;
+    if (paciente.disabled) {
+      this.noDesabilitados = false;
+    } else {
+      this.noHabilitados = false;
+    }
+    return this.showDesabilitados ? paciente.disabled ? true : false : paciente.disabled ? false : true; // suga esse sextário
   }
 
   ngOnInit(): void {

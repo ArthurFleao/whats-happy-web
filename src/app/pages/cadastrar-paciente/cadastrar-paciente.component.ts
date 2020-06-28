@@ -1,10 +1,11 @@
+import { takeUntil } from 'rxjs/operators';
 import { ErrorHandlerService } from './../../services/error-handler.service';
 import { ConvitesService } from './../../services/convites.service';
 import { DadosService } from '../../services/dados.service';
 import { Paciente } from './../../model/paciente';
 import { DadosUsuario } from './../../model/dadosUsuario';
 import { AuthService } from './../../services/auth.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, OnDestroy } from '@angular/core';
 import { SnackService } from 'src/app/services/snack.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,9 +15,10 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './cadastrar-paciente.component.html',
   styleUrls: ['./cadastrar-paciente.component.scss']
 })
-export class CadastroPacienteComponent implements OnInit {
+export class CadastroPacienteComponent implements OnInit, OnDestroy {
   loading = false; // carregando?
   convite: any;
+  private onDestroy$ = new EventEmitter();
   conviteId;
   bootstrap = {
     email: undefined,
@@ -33,10 +35,12 @@ export class CadastroPacienteComponent implements OnInit {
               private route: ActivatedRoute) {
     this.route.paramMap.subscribe(params => {
       this.conviteId = params.get('id');
-      this.convites.getConvite(params.get('id')).subscribe(res => {
+      this.convites.getConvite(params.get('id')).pipe(takeUntil(this.onDestroy$)).subscribe(res => {
         this.convite = res;
         this.bootstrap.email = this.convite?.email;
         this.bootstrap.nomeCompleto = this.convite?.nomeCompleto;
+        console.log('convite update', res);
+
 
         if (!this.convite) {
           this.snack.warning('Link de convite inválido!');
@@ -57,6 +61,9 @@ export class CadastroPacienteComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+  this.onDestroy$.next();
+  }
   ngOnInit(): void {
   }
   test() {

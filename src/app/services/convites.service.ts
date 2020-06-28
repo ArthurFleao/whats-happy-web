@@ -37,7 +37,6 @@ export class ConvitesService {
             cv.psicologo = psi;
             cv.psicologo.uid = psiUid;
             observer.next(convite);
-            observer.complete();
           }, error => {
             this.eh.handle(error);
             observer.error();

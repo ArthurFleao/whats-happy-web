@@ -7,11 +7,6 @@
   </div>
 
   <div fxLayout="row wrap" fxLayoutAlign="start">
-    <ng-container *ngIf="(pacientes | async)" >
-      <art-message-box *ngIf="(pacientes | async)?.length === 0"
-                       [message]="'Você não possui nenhum paciente cadastrado.'">
-      </art-message-box>
-    </ng-container>
     <div fxFlex="85" class="mt-2" *ngFor="let paciente of pacientes | async">
       <app-person-card [grayIt]="showDesabilitados" *ngIf="shouldShow(paciente)" [person]="paciente">
         <art-button [routerLink]="['/paciente',paciente.uid, 'relatos']" routerLinkActive="router-link-active">
@@ -25,4 +20,14 @@
     </div>
   </div>
 
+  <ng-container *ngIf="(pacientes | async)">
+    <art-message-box *ngIf="!showDesabilitados && noHabilitados"
+                     [message]="'Você não possui nenhum paciente cadastrado, ou todos estão desabilitados.'">
+    </art-message-box>
+  </ng-container>
+  <ng-container *ngIf="(pacientes | async)">
+    <art-message-box *ngIf="showDesabilitados && noDesabilitados"
+                     [message]="'Você não possui nenhum paciente desabilitado.'">
+    </art-message-box>
+  </ng-container>
 </app-card>

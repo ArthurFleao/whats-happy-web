@@ -1,3 +1,4 @@
+import { Clipboard } from '@angular/cdk/clipboard';
 import { SnackService } from './../../services/snack.service';
 import { ErrorHandlerService } from './../../services/error-handler.service';
 import { ConvitesService } from 'src/app/services/convites.service';
@@ -14,13 +15,20 @@ export class ConviteCardComponent implements OnInit {
   @Input()
   convite: Convite;
   loadingAction = false;
+  link: string;
   constructor(
+    private clipboard: Clipboard,
     private convitesService: ConvitesService,
     private eh: ErrorHandlerService,
     private snack: SnackService,
   ) { }
 
   ngOnInit(): void {
+    this.link = window.location.origin + '/convite/' + this.convite.uid;
+  }
+  copyLink() {
+    this.clipboard.copy(this.link);
+    this.snack.success('Link copiado para a àrea de transferência!');
   }
 
   desabilitar() {
