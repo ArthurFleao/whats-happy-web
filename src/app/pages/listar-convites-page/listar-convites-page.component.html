@@ -1,0 +1,17 @@
+<app-card [title]="'Lista de convites'">
+
+  <div class="centralizer" *ngIf="loading">
+    <mat-spinner color="primary"></mat-spinner>
+  </div>
+  <art-message-box *ngIf="convites && convites.length === 0"
+                   [message]="'Nenhum convite ativo ou desabilitado atualmente.'">
+  </art-message-box>
+
+  <div *ngIf="!loading">
+    <div class="mt-2" *ngFor="let convite of convites">
+      <app-convite-card [convite]="convite">
+      </app-convite-card>
+    </div>
+  </div>
+
+</app-card>

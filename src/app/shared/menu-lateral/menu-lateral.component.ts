@@ -44,9 +44,15 @@ export class MenuLateralComponent implements OnInit {
     // itens de menu do psicologo
     {
       perfilUsuario: 'psicologo',
-      tituloItemMenu: 'Cadastrar Paciente',
+      tituloItemMenu: 'Convidar Paciente',
       link: '/convidar',
-      icone: 'person_add'
+      icone: 'contact_mail'
+    },
+    {
+      perfilUsuario: 'psicologo',
+      tituloItemMenu: 'Lista de Convites',
+      link: '/listarConvites',
+      icone: 'recent_actors'
     },
 
     {

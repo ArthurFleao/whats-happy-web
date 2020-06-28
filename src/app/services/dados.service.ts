@@ -132,15 +132,7 @@ export class DadosService {
 
   }
 
-  listarConvites(uid){
 
-    // pegar a referencia da coleção psicologo
-    const psicologoRef = this.afs
-      .collection('psicologos')
-      .doc(uid);
-
-    return this.afs.collection('convites', ref => ref.where('psicologo', '==', psicologoRef.ref)).get();
-  }
 
 
   /////////////////////////////// ATUALIZAR PSICOLOGO RESPONSAVEL //////////////////////////////////////
