@@ -42,13 +42,17 @@ export class CadastroPacienteComponent implements OnInit {
           this.snack.warning('Link de convite inválido!');
           this.router.navigate(['/login']);
         } else
-        if (this.convite.used === true) {
-          this.snack.warning('Esse convite já foi usado!');
-          this.router.navigate(['/login']);
-        }
+          if (this.convite.cancelado === true) {
+            this.snack.warning('Esse convite foi cancelado pelo psicólogo!');
+            this.router.navigate(['/login']);
+          } else
+            if (this.convite.used === true) {
+              this.snack.warning('Esse convite já foi usado!');
+              this.router.navigate(['/login']);
+            }
       }, error => {
-          this.router.navigate(['/login']);
-          this.eh.handle(error);
+        this.router.navigate(['/login']);
+        this.eh.handle(error);
       });
     });
   }
@@ -56,7 +60,7 @@ export class CadastroPacienteComponent implements OnInit {
   ngOnInit(): void {
   }
   test() {
-//    console.log('test convite', this.convite);
+    //    console.log('test convite', this.convite);
   }
 
   onRegister(values) { // ao clicar em cadastrar

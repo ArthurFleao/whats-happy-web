@@ -50,7 +50,7 @@ export class MenuLateralComponent implements OnInit {
     },
     {
       perfilUsuario: 'psicologo',
-      tituloItemMenu: 'Listar Convites',
+      tituloItemMenu: 'Lista de Convites',
       link: '/listarConvites',
       icone: 'recent_actors'
     },
