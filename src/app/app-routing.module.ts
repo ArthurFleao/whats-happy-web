@@ -17,6 +17,7 @@ import { ProntuarioPageComponent } from './pages/prontuario-page/prontuario-page
 import { ListarPacientesPageComponent } from './pages/listar-pacientes-page/listar-pacientes-page.component';
 import { RegistrarConsultaPageComponent } from './pages/registrar-consulta-page/registrar-consulta-page.component';
 import { ListarConvitesComponent } from './pages/listar-convites/listar-convites.component';
+import { VerRelatosPageComponent } from './pages/ver-relatos-page/ver-relatos-page.component';
 
 
 const redirectUnauthorizedToHome = () => redirectUnauthorizedTo(['login']);
@@ -42,6 +43,10 @@ const routes: Routes = [
   },
 
   { path: 'listarConvites', component: ListarConvitesComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToHome } },
+
+  { path: 'verRelatos', component: VerRelatosPageComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToHome } },
+
+
 
 ];
 

@@ -88,6 +88,7 @@ import { ListarConvitesComponent } from './pages/listar-convites/listar-convites
 import { ValdemortModule } from 'ngx-valdemort';
 import { SexoPipe } from './pipes/sexo.pipe';
 import { IdadePipe } from './pipes/idade.pipe';
+import { VerRelatosPageComponent } from './pages/ver-relatos-page/ver-relatos-page.component';
 
 const material = [
   ClipboardModule,
@@ -164,6 +165,7 @@ const material = [
     ListarConvitesComponent,
     SexoPipe,
     IdadePipe,
+    VerRelatosPageComponent,
   ],
   imports: [
     material,
