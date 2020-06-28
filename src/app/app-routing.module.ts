@@ -16,7 +16,7 @@ import { PerfilPageComponent } from './pages/perfil-page/perfil-page.component';
 import { ProntuarioPageComponent } from './pages/prontuario-page/prontuario-page.component';
 import { ListarPacientesPageComponent } from './pages/listar-pacientes-page/listar-pacientes-page.component';
 import { RegistrarConsultaPageComponent } from './pages/registrar-consulta-page/registrar-consulta-page.component';
-import { ListarConvitesComponent } from './pages/listar-convites/listar-convites.component';
+import { ListarConvitesPageComponent } from './pages/listar-convites-page/listar-convites-page.component';
 import { VerRelatosPageComponent } from './pages/ver-relatos-page/ver-relatos-page.component';
 
 
@@ -42,7 +42,7 @@ const routes: Routes = [
     ]
   },
 
-  { path: 'listarConvites', component: ListarConvitesComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToHome } },
+  { path: 'listarConvites', component: ListarConvitesPageComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToHome } },
 
   { path: 'verRelatos', component: VerRelatosPageComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToHome } },
 

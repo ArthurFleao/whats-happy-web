@@ -1,0 +1,31 @@
+<mat-card>
+  <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+
+    <div fxFlex="50" fxFlex.lt-md="100">
+      <div style="margin-bottom: 10px;">
+        <h1 style="margin-bottom: 0;">
+          {{convite.nomeCompleto}}
+        </h1>
+        <small>{{convite.email}}</small>
+      </div>
+      <p *ngIf="convite.used" class="color-green">Convite já foi aceito!</p>
+      <p *ngIf="!convite.used && !convite.cancelado" class="text-muted">Convite ainda não utilizado.</p>
+      <p *ngIf="!convite.used && convite.cancelado" class="color-red">Convite está desabilitado e não pode ser usado.</p>
+    </div>
+    <div fxFlex="50" fxFlex.lt-md="100">
+      <div *ngIf="!convite.used && !convite.cancelado" fxFlex class="mr-1">
+        <art-button [loading]="loadingAction" (click)="desabilitar()" [color]="'warn'">Desabilitar Convite
+        </art-button>
+      </div>
+      <div *ngIf="!convite.used && convite.cancelado" fxFlex class="mr-1">
+        <art-button [loading]="loadingAction" (click)="reabilitar()" [color]="'success'">Reabilitar Convite
+        </art-button>
+      </div>
+      <div *ngIf="convite.used || convite.cancelado" fxFlex class="mr-1">
+        <art-button [loading]="loadingAction" (click)="excluir()" [color]="'warn'">
+          Excluir Convite
+        </art-button>
+      </div>
+    </div>
+  </div>
+</mat-card>

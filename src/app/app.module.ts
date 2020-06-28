@@ -84,11 +84,13 @@ import { RegistrarConsultaPageComponent } from './pages/registrar-consulta-page/
 import { FormRegistrarConsultaComponent } from './shared/form-registrar-consulta/form-registrar-consulta.component'; // Importando o módulo
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import {NgxMaskModule} from 'ngx-mask';
-import { ListarConvitesComponent } from './pages/listar-convites/listar-convites.component';
+import { ListarConvitesPageComponent } from './pages/listar-convites-page/listar-convites-page.component';
 import { ValdemortModule } from 'ngx-valdemort';
 import { SexoPipe } from './pipes/sexo.pipe';
 import { IdadePipe } from './pipes/idade.pipe';
 import { VerRelatosPageComponent } from './pages/ver-relatos-page/ver-relatos-page.component';
+import { ConviteCardComponent } from './shared/convite-card/convite-card.component';
+import { ArtMessageBoxComponent } from './shared/art-message-box/art-message-box.component';
 
 const material = [
   ClipboardModule,
@@ -162,10 +164,12 @@ const material = [
     RecorderComponent,
     RegistrarConsultaPageComponent,
     FormRegistrarConsultaComponent,
-    ListarConvitesComponent,
+    ListarConvitesPageComponent,
     SexoPipe,
     IdadePipe,
     VerRelatosPageComponent,
+    ConviteCardComponent,
+    ArtMessageBoxComponent,
   ],
   imports: [
     material,

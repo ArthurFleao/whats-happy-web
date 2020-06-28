@@ -64,4 +64,22 @@ export class ConvitesService {
     });
   }
 
+  setCanceladoTo(id, state: boolean) {
+    return this.afs.collection('convites').doc(id).update({cancelado: state});
+  }
+
+  delete(id) {
+    return this.afs.collection('convites').doc(id).delete();
+  }
+
+  listarConvites(uid){
+
+    // pegar a referencia da coleção psicologo
+    const psicologoRef = this.afs
+      .collection('psicologos')
+      .doc(uid);
+
+    return this.afs.collection('convites', ref => ref.where('psicologo', '==', psicologoRef.ref)).valueChanges({idField: 'uid'});
+  }
+
 }

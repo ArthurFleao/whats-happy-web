@@ -11,6 +11,9 @@
     <mat-spinner color="primary"></mat-spinner>
   </div>
   <div class="relatos" *ngIf="relatos">
+    <art-message-box *ngIf="relatos && relatos.length === 0"
+                   [message]="'Nenhum relato deste paciente no momento.'">
+  </art-message-box>
     <mat-accordion single>
       <app-relato-card (relatoOpened)="opened($event)" *ngFor="let relato of relatos" [relato]="relato">
 

@@ -1,0 +1,54 @@
+.centralizer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.style-muted {
+  background-color: #e6e6e6;
+
+  p {
+    color: #666666;
+    margin: 20px;
+  }
+}
+
+.style-info {
+  background-color: #cce3f9;
+
+  p {
+    color: #0072ff;
+    margin: 20px;
+  }
+}
+
+.style-warning {
+  background-color: #ffe0ad;
+
+  p {
+    color: #9f6103;
+    margin: 20px;
+  }
+}
+
+.style-danger {
+  background-color: #ffd7d7 p {
+    color: #ff0000;
+    margin: 20px;
+  }
+}
+
+.style-success {
+  background-color: #c6ffc1;
+
+  p {
+    color: #008f1f;
+    margin: 20px;
+  }
+}
+
+.roundness-rounded {
+  border-radius: 10px;
+}
