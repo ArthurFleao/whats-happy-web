@@ -1,14 +1,15 @@
-<div matBadge="." matBadgeColor="warn" matBadgeSize="small" [matBadgeHidden]="!relato.new">
+<div [ngClass]="{'alerta': alerta, 'perigo': perigo}" matBadge="." matBadgeColor="warn" matBadgeSize="small"
+     [matBadgeHidden]="!relato.new">
   <mat-expansion-panel (afterExpand)="opened(); panelOpen = true" (afterCollapse)="panelOpen = false"
                        [hideToggle]="false">
     <mat-expansion-panel-header>
       <mat-panel-title [matTooltip]="getComplete(relato.dataHora)">{{getFromNow(relato.dataHora)}}</mat-panel-title>
       <mat-panel-description>
-        <div class="mr-5">
+        <!-- <div class="mr-5">
           {{relato.grauFelicidade | grau : 'f'}} -
           {{relato.grauDisposicao | grau: 'd'}} -
           {{relato.grauIrritabilidade | grau : 'i'}}
-        </div>
+        </div> -->
         <mat-icon style="margin-right: 5px;" *ngIf="relato.hasAudio">volume_up</mat-icon>
         <div class="mr-5">
           {{sentimentoAudio? 'Áudio ' + sentimentoAudio : ''}}
@@ -20,6 +21,12 @@
       </mat-panel-description>
     </mat-expansion-panel-header>
 
+
+    <div class="centralizer">
+      {{relato.grauFelicidade | grau : 'f'}} -
+      {{relato.grauDisposicao | grau: 'd'}} -
+      {{relato.grauIrritabilidade | grau : 'i'}}
+    </div>
 
     <div *ngIf="relato.audioUploaded">
       <mat-basic-audio-player *ngIf="!audioIsFucked" [audioUrl]="audioUrl" [autoPlay]="false" muted="muted"
@@ -71,7 +78,7 @@
     </div>
 
     <div class="mb-2">
-      <mat-form-field *ngIf="relato.relato"  appearance="outline">
+      <mat-form-field *ngIf="relato.relato" appearance="outline">
         <mat-label>Relato escrito</mat-label>
         <textarea readonly [value]="relato.relato || 'Sem relato escrito.'" matInput cdkTextareaAutosize
                   #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" cdkAutosizeMaxRows="50"></textarea>

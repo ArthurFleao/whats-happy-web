@@ -66,12 +66,217 @@ export class DadosService {
       res.forEach((relato: any) => {
         // let audioTranscrito = '';
         // let noResults = true;
+        if (relato.analiseRelato) {
+          relato.relatoAlertaScore = this.calcularNivelAlerta(relato.analiseRelato, relato.relato);
+        }
+
+        if (relato.analiseAudioTranscrito) {
+          relato.audioAlertaScore = this.calcularNivelAlerta(relato.analiseAudioTranscrito, relato.audioTranscrito);
+        }
+
         relato.dataHora = moment(relato.dataHora);
         relato.pacienteUid = idPaciente;
       });
 
       return res;
     }));
+  }
+
+  private calcularNivelAlerta(analise: any, texto?: string) {
+    let score = 0;
+    analise.forEach((document: any) => {
+      if (document && document !== null) {
+        // SENTIMENT
+        const docScore = document.documentSentiment.score;
+        const docMag = document.documentSentiment.magnitude;
+        if (docScore < 0.25) {
+          score += (Math.abs(docScore) * docMag) * 150; // quanto mais negativo for o relato, mais alerta score
+        }
+        // END SENTIMENT
+        console.log('sentiment score', score);
+
+        // TOKENS
+        document.tokens.forEach(token => {
+          switch (token.lemma) {
+            case 'suicídio':
+              score += 65;
+              break;
+            case 'suicidar':
+              score += 70;
+              break;
+            case 'suicída':
+              score += 70;
+              break;
+            case 'assassinato':
+              score += 50;
+              break;
+            case 'assassinar':
+              score += 65;
+              break;
+            case 'matar':
+              score += 65;
+              break;
+            case 'cortar':
+              score += 30;
+              break;
+            case 'machucar':
+              score += 30;
+              break;
+            case 'agredir':
+              score += 30;
+              break;
+            case 'prédio':
+              score += 40;
+              break;
+            case 'ponte':
+              score += 40;
+              break;
+            case 'carro':
+              score += 30;
+              break;
+            case 'arma':
+              score += 50;
+              break;
+            case 'tiro':
+              score += 50;
+              break;
+            case 'atirar':
+              score += 50;
+              break;
+            case 'cabeça':
+              score += 30;
+              break;
+            case 'peito':
+              score += 30;
+              break;
+            case 'remédio':
+              score += 30;
+              break;
+            case 'overdose':
+              score += 60;
+              break;
+            case 'quero':
+              score += 30;
+              break;
+            case 'pretendo':
+              score += 30;
+              break;
+            case 'preciso':
+              score += 30;
+              break;
+            case 'vou':
+              score += 30;
+              break;
+            case 'acabar':
+              score += 20;
+              break;
+            case 'acabou':
+              score += 20;
+              break;
+            case 'me':
+              score += 15;
+              break;
+            case 'morto':
+              score += 45;
+              break;
+            case 'morrendo':
+              score += 45;
+              break;
+            case 'sangue':
+              score += 50;
+              break;
+            case 'sangrando':
+              score += 50;
+              break;
+            case 'ensanguentado':
+              score += 50;
+              break;
+            case 'faca':
+              score += 50;
+              break;
+            case 'pescoço':
+              score += 50;
+              break;
+            case 'pulso':
+              score += 50;
+              break;
+            case 'pulsos':
+              score += 50;
+              break;
+
+            default:
+              break;
+          }
+        });
+        // END TOKENS
+      }
+
+    });
+
+    if (texto) {
+      if (texto.includes('eu pretendo me matar') ) {
+        score += 100;
+      }
+      if (texto.includes('eu quero me matar') ) {
+        score += 100;
+      }
+      if (texto.includes('eu vou me matar') ) {
+        score += 100;
+      }
+      if (texto.includes('eu pretendo me suicidar') ) {
+        score += 100;
+      }
+      if (texto.includes('eu quero me suicidar') ) {
+        score += 100;
+      }
+      if (texto.includes('eu vou me suicidar') ) {
+        score += 100;
+      }
+      if (texto.includes('vou me') ) {
+        score += 15;
+      }
+      if (texto.includes('quero me') ) {
+        score += 15;
+      }
+      if (texto.includes('me matar') ) {
+        score += 75;
+      }
+      if (texto.includes('me suicidar') ) {
+        score += 75;
+      }
+      if (texto.includes('acabar com') ) {
+        score += 45;
+      }
+      if (texto.includes('acabar com a vida') ) {
+        score += 85;
+      }
+      if (texto.includes('acabar com a minha vida') ) {
+        score += 85;
+      }
+      if (texto.includes('não aguento') ) {
+        score += 40;
+      }
+      if (texto.includes('pular d') ) {
+        score += 40;
+      }
+      if (texto.includes('jogar d') ) {
+        score += 40;
+      }
+      if (texto.includes('pular n') ) {
+        score += 40;
+      }
+      if (texto.includes('jogar n') ) {
+        score += 40;
+      }
+      if (texto.includes('atirar d') ) {
+        score += 40;
+      }
+      if (texto.includes('atirar n') ) {
+        score += 60;
+      }
+    }
+
+    return score;
   }
 
   markRelatoAsSeen(pacienteUid, relatoUid) {
@@ -106,7 +311,7 @@ export class DadosService {
     };
 
     this.afs.collection('notificacoes/' + dados.responsavelUid + '/notificacoes').doc(dados.uid).set(notification).then((result) => {
-      console.log('notificação salva no bd');
+      // console.log('notificação salva no bd');
     }).catch((err) => {
       console.error(err);
     });

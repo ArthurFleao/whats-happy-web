@@ -48,7 +48,7 @@ export class NotificacaoCardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('notificacao', this.notificacao);
+    // console.log('notificacao', this.notificacao);
 
     this.dataFromNow = moment(this.notificacao.data).fromNow();
     this.notificacao.data = moment(this.notificacao.data).format('DD/MM/YYYY HH:mm');

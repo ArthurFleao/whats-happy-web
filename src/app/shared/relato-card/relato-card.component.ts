@@ -27,6 +27,8 @@ export class RelatoCardComponent implements OnInit, OnDestroy {
   palavrasRelato: any[];
   analisandoRelato: boolean;
   analisandoAudio: boolean;
+  alerta = false;
+  perigo = false;
 
   constructor(
     private audioStore: AudioStorageService,
@@ -43,6 +45,7 @@ export class RelatoCardComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.checkAudio();
     this.atualizaSentiments();
+    this.checkAlerta();
     this.afs.collection('pacientes/' + this.relato.pacienteUid + '/relatos').doc(this.relato.uid).valueChanges()
       .pipe(takeUntil(this.onDestroy$))
       .subscribe((res: Relato) => {
@@ -53,9 +56,39 @@ export class RelatoCardComponent implements OnInit, OnDestroy {
         this.relato = updateRelato;
         this.checkAudio();
         this.atualizaSentiments();
+        this.checkAlerta();
       }, error => {
         console.error(error);
       });
+  }
+
+
+  checkAlerta() {
+    if (this.relato.relatoAlertaScore) {
+      if (this.relato.relatoAlertaScore >= 150) {
+        this.perigo = true;
+      } else {
+        this.perigo = false;
+        if (this.relato.relatoAlertaScore >= 80) {
+          this.alerta = true;
+        } else {
+          this.alerta = false;
+        }
+      }
+    }
+    if (this.relato.audioAlertaScore) {
+      if (this.relato.audioAlertaScore >= 150) {
+        this.perigo = true;
+      } else {
+        this.perigo = false;
+        if (this.relato.audioAlertaScore >= 80) {
+          this.alerta = true;
+        } else {
+          this.alerta = false;
+        }
+      }
+    }
+
   }
 
   checkAudio() {

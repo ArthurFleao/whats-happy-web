@@ -191,3 +191,15 @@ mat-flat-button.mat-green,
 .mat-badge.hide-badge-text .mat-badge-content {
   color: transparent;
 }
+
+
+.alerta {
+  .mat-expansion-panel {
+    background: #ffe2a2 !important;
+  }
+}
+.perigo {
+  .mat-expansion-panel {
+    background: #ffa2a2 !important;
+  }
+}

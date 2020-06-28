@@ -14,7 +14,7 @@ export class HomePageComponent implements OnInit {
   ngOnInit(): void {
     this.auth.user$.subscribe(res => {
       this.notificacoes.list(res.uid).subscribe(res => {
-        console.log('notifiacoes changed', res);
+        // console.log('notifiacoes changed', res);
       }, error => {
         console.error(error);
       });

@@ -16,4 +16,6 @@ export class Relato {
   confiabilidade?: number;
   analiseRelato?: any;
   analiseAudioTranscrito?: any;
+  relatoAlertaScore?: number;
+  audioAlertaScore?: number;
 }

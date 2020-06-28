@@ -34,7 +34,7 @@ export class NotificacoesService {
 
   marcarComoLida(userId, notificacaoId) {
     return this.afs.collection('notificacoes/' + userId + '/notificacoes').doc(notificacaoId).update({ lida: true }).then((result) => {
-      console.log('notificacao lida', notificacaoId);
+      // console.log('notificacao lida', notificacaoId);
     }).catch((err) => {
       console.error(err);
     });
