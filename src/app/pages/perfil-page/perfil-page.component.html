@@ -5,5 +5,7 @@
   <app-form-cadastro [includeCrp]="showCrp" class="w-100" [bootstrap]="dadosUsuario" *ngIf="!loadingData" [flagTravarCampo]="true" (submited)="updateData($event)">
     <!-- Botão será inserido no <ng-content> do app-form-cadastro  -->
     <art-button [type]="'submit'" [loading]="loading">Salvar edição</art-button>
+  <art-button [loading]="loading" (click)="disableUser()" [color]="'red'">Desabilitar Conta de Usuário</art-button>
+
   </app-form-cadastro>
 </app-card>
