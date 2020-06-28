@@ -7,7 +7,7 @@
       {{(user | async)?.dadosUsuario?.nomeCompleto? 'Bem-vindo(a), ' + (user | async)?.dadosUsuario?.nomeCompleto + '!' : 'Bem-vindo(a)!'}}
     </p>
     <div>
-      <i class="fas fa-bell header-icon"
+      <i *ngIf="notificacoes"  class="fas fa-bell header-icon animate__animated animate__fadeIn"
          [matBadge]="quantidadeNotificacoesNaoLidas"
          [matBadgeHidden]="quantidadeNotificacoesNaoLidas < 1"
          [matBadgeSize]="'small'"

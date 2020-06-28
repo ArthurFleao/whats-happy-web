@@ -4,4 +4,7 @@ export class Notificacao {
   relatoId: string;
   responsavelUID: string;
   lida: boolean;
+  uid?: string;
+  data: string;
+  type?: string;
 }

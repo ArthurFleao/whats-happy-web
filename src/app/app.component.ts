@@ -1,3 +1,5 @@
+import { AuthService } from './services/auth.service';
+import { DadosService } from './services/dados.service';
 import { Component } from '@angular/core';
 import * as moment from 'moment';
 import { AngularFireMessaging } from '@angular/fire/messaging';
@@ -10,27 +12,33 @@ import 'moment/locale/pt-br';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(private afMessaging: AngularFireMessaging) {
+  constructor(
+    private afMessaging: AngularFireMessaging,
+    private auth: AuthService,
+    private dados: DadosService) {
+    this.auth.user$.subscribe(res => {
+      this.requestPermission(res.uid);
+    }, error => {
+      console.error(error);
+    });
     moment.locale('pt-BR');
-    this.requestPermission();
     this.afMessaging.messages
       .subscribe((message) => {
         console.log('mensagem no subscribe geral', message);
       });
   }
 
-  requestPermission() {
+  requestPermission(uid) {
     this.afMessaging.requestToken
       .subscribe(
         (token) => {
-          console.log('Permission granted! Save to the server!', token);
+          this.dados.dadosUsuarioUpdate(uid, { deviceId: token }).then((result) => {
+            console.log('token do man salvo no banco', token);
+          }).catch((err) => {
+            console.error(err);
+          });
         },
         (error) => { console.error(error); },
       );
   }
-
-  listen() {
-
-  }
-
 }

@@ -38,6 +38,9 @@ export class DadosService {
   dadosUsuarioSave(id, dados: DadosUsuario) {
     return this.afs.collection('dadosUsuario').doc(id).set(dados);
   }
+  dadosUsuarioUpdate(id, dados: any) {
+    return this.afs.collection('dadosUsuario').doc(id).update(dados);
+  }
 
   // armazenar dados do psicologo (CRP)
   psicologoSave(id, objeto: Psicologo) {
@@ -131,28 +134,28 @@ export class DadosService {
 
   listarConvites(uid){
 
-    //pegar a referencia da coleção psicologo
+    // pegar a referencia da coleção psicologo
     const psicologoRef = this.afs
       .collection('psicologos')
       .doc(uid);
 
-    return this.afs.collection("convites", ref => ref.where('psicologo', '==', psicologoRef.ref)).get()
+    return this.afs.collection('convites', ref => ref.where('psicologo', '==', psicologoRef.ref)).get();
   }
 
 
-  ///////////////////////////////ATUALIZAR PSICOLOGO RESPONSAVEL //////////////////////////////////////
+  /////////////////////////////// ATUALIZAR PSICOLOGO RESPONSAVEL //////////////////////////////////////
   updateResponsavel(pacienteId, psicologoResponsavelId){
 
-    //pegar a referencia da coleção psicologo
+    // pegar a referencia da coleção psicologo
     const psicologoResponsavelRef = this.afs
       .collection('psicologos')
       .doc(psicologoResponsavelId);
 
-      console.log("updateResponsavel Ref", psicologoResponsavelRef.ref)
+    console.log('updateResponsavel Ref', psicologoResponsavelRef.ref);
 
-      this.afs.collection('pacientes').doc(pacienteId).update({
+    this.afs.collection('pacientes').doc(pacienteId).update({
         responsavel: psicologoResponsavelRef.ref
-      })
+      });
 
   }
 
