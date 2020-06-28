@@ -97,6 +97,20 @@ export class DadosService {
       paciente: this.afs.collection('pacientes').doc(dados.uid).ref
     });
 
+    const notification = {
+      message: 'aceitou seu convite e agora é seu paciente!',
+      type: 'convite-aceito',
+      pacienteUID: dados.uid,
+      data: new Date().toISOString(),
+      responsavelUID: dados.responsavelUid,
+    };
+
+    this.afs.collection('notificacoes/' + dados.responsavelUid + '/notificacoes').doc(dados.uid).set(notification).then((result) => {
+      console.log('notificação salva no bd');
+    }).catch((err) => {
+      console.error(err);
+    });
+
     return Promise.all([pac, data, psi]);
 
   }
@@ -136,7 +150,7 @@ export class DadosService {
 
 
   /////////////////////////////// ATUALIZAR PSICOLOGO RESPONSAVEL //////////////////////////////////////
-  updateResponsavel(pacienteId, psicologoResponsavelId){
+  updateResponsavel(pacienteId, psicologoResponsavelId) {
 
     // pegar a referencia da coleção psicologo
     const psicologoResponsavelRef = this.afs
@@ -146,8 +160,8 @@ export class DadosService {
     console.log('updateResponsavel Ref', psicologoResponsavelRef.ref);
 
     this.afs.collection('pacientes').doc(pacienteId).update({
-        responsavel: psicologoResponsavelRef.ref
-      });
+      responsavel: psicologoResponsavelRef.ref
+    });
 
   }
 

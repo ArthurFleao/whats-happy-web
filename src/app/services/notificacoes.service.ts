@@ -9,6 +9,15 @@ export class NotificacoesService {
 
   constructor(private afs: AngularFirestore, private auth: AuthService) { }
 
+
+  sendNotification(data, destinatario) {
+    this.afs.collection('notificacoes/' + destinatario + '/notificacoes').doc(data.relatoId).set(data).then((result) => {
+      console.log('notificação salva no bd');
+    }).catch((err) => {
+      console.error(err);
+    });
+  }
+
   list(userId) {
     return this.afs.collection('notificacoes/' + userId + '/notificacoes').valueChanges({ idField: 'uid' });
   }

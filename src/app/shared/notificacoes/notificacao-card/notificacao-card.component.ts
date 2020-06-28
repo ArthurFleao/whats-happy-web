@@ -52,7 +52,7 @@ export class NotificacaoCardComponent implements OnInit {
 
     this.dataFromNow = moment(this.notificacao.data).fromNow();
     this.notificacao.data = moment(this.notificacao.data).format('DD/MM/YYYY HH:mm');
-    if (this.notificacao.type === 'novo-relato') {
+    if (this.notificacao.type === 'novo-relato' || this.notificacao.type === 'convite-aceito') {
       const originalMessage = this.notificacao.message;
       this.notificacao.message = 'Seu paciente ' + originalMessage;
       this.dados.getUserData(this.notificacao.pacienteUID).pipe(first()).subscribe((res: DadosUsuario) => {

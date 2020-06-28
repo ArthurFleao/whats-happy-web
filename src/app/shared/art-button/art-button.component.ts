@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'art-button',
   templateUrl: './art-button.component.html',
   styleUrls: ['./art-button.component.scss']
