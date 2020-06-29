@@ -1,3 +1,4 @@
+import { DadosService } from 'src/app/services/dados.service';
 import { takeUntil } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
@@ -33,6 +34,7 @@ export class RelatoCardComponent implements OnInit, OnDestroy {
   constructor(
     private audioStore: AudioStorageService,
     private eh: ErrorHandlerService,
+    private dados: DadosService,
     private afs: AngularFirestore,
   ) { }
 
@@ -53,6 +55,13 @@ export class RelatoCardComponent implements OnInit, OnDestroy {
         updateRelato.pacienteUid = this.relato.pacienteUid;
         updateRelato.uid = this.relato.uid;
         updateRelato.dataHora = this.relato.dataHora;
+        if (updateRelato.analiseRelato) {
+          updateRelato.relatoAlertaScore = this.dados.calcularNivelAlerta(updateRelato.analiseRelato, updateRelato.relato);
+        }
+
+        if (updateRelato.analiseAudioTranscrito) {
+          updateRelato.audioAlertaScore = this.dados.calcularNivelAlerta(updateRelato.analiseAudioTranscrito, updateRelato.audioTranscrito);
+        }
         this.relato = updateRelato;
         this.checkAudio();
         this.atualizaSentiments();

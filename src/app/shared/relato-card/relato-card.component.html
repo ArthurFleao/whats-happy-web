@@ -28,6 +28,13 @@
       {{relato.grauIrritabilidade | grau : 'i'}}
     </div>
 
+    <app-test-box>
+      <button (click)="perigo = true" >set perigo true</button>
+    </app-test-box>
+    <div [ngClass]="{'alerta': alerta, 'perigo': perigo}">
+      test me please baby FIXME
+    </div>
+
     <div *ngIf="relato.audioUploaded">
       <mat-basic-audio-player *ngIf="!audioIsFucked" [audioUrl]="audioUrl" [autoPlay]="false" muted="muted"
                               [displayTitle]="false" [displayVolumeControls]="true">

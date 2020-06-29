@@ -82,7 +82,7 @@ export class DadosService {
     }));
   }
 
-  private calcularNivelAlerta(analise: any, texto?: string) {
+   calcularNivelAlerta(analise: any, texto?: string) {
     let score = 0;
     analise.forEach((document: any) => {
       if (document && document !== null) {
@@ -273,6 +273,9 @@ export class DadosService {
       }
       if (texto.includes('atirar n') ) {
         score += 60;
+      }
+      if (texto.includes('cortar m') ) {
+        score += 40;
       }
     }
 

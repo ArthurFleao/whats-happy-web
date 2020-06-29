@@ -17,7 +17,9 @@ export class AppComponent {
     private auth: AuthService,
     private dados: DadosService) {
     this.auth.user$.subscribe(res => {
-      this.requestPermission(res.uid);
+      if (res.uid){
+        this.requestPermission(res.uid);
+      }
     }, error => {
       console.error(error);
     });
