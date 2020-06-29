@@ -91,6 +91,7 @@ import { IdadePipe } from './pipes/idade.pipe';
 import { VerRelatosPageComponent } from './pages/ver-relatos-page/ver-relatos-page.component';
 import { ConviteCardComponent } from './shared/convite-card/convite-card.component';
 import { ArtMessageBoxComponent } from './shared/art-message-box/art-message-box.component';
+import { NotificacoesPageComponent } from './pages/notificacoes-page/notificacoes-page.component';
 
 const material = [
   ClipboardModule,
@@ -170,6 +171,7 @@ const material = [
     VerRelatosPageComponent,
     ConviteCardComponent,
     ArtMessageBoxComponent,
+    NotificacoesPageComponent,
   ],
   imports: [
     material,

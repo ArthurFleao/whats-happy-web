@@ -13,15 +13,31 @@ export class ListarNotificacoesComponent implements OnInit {
   notifications: Notificacao[];
 
   @Input()
+  showVerMais = false;
+  badgeVerMais: boolean;
+
+  naoLidasVerMais = 0;
+
+
+
+  @Input()
   set notificacoes(value: Notificacao[]) {
     if (value) {
-      this.notifications = value;
+      const newArray = value;
+      this.notifications = [];
+      this.badgeVerMais = false;
+      this.naoLidasVerMais = 0;
       if (this.showVerMais) {
-        this.notifications.forEach((notificacao, index) => {
-          if (index > 4) {
-            this.notifications.splice(index, 1);
+        newArray.forEach((notificacao, index) => {
+          if (index < 5) {
+            this.notifications.push(notificacao);
+          } else if (!notificacao.lida) {
+            this.badgeVerMais = true;
+            this.naoLidasVerMais++;
           }
         });
+      } else {
+        this.notifications = newArray;
       }
     }
   }
@@ -29,8 +45,6 @@ export class ListarNotificacoesComponent implements OnInit {
   @Input()
   config: any;
 
-  @Input()
-  showVerMais = false;
 
   constructor() {
   }

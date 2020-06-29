@@ -1,0 +1,7 @@
+<app-card [title]="'Lista de notificações'">
+  <div class="centralizer" *ngIf="!notificacoes">
+    <mat-spinner color="primary"></mat-spinner>
+  </div>
+  <app-listar-notificacoes *ngIf="notificacoes" (delete)="onDeleteNotification($event)" [notificacoes]="notificacoes">
+  </app-listar-notificacoes>
+</app-card>
