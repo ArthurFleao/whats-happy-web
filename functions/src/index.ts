@@ -132,6 +132,29 @@ function sendToNaturalLanguageApi(texto: string) {
   return client.annotateText(request);
 }
 
+function classificaSentiment(score: number, magnitude: number) {
+  let str = '';
+  const magnitudeAbsoluta = Math.abs(magnitude);
+  if (magnitudeAbsoluta > 2) {
+    str += 'Claramente ';
+  } else {
+    str += 'Provavelmente ';
+  }
+
+  if (score > 0.25) {
+    str += 'Positivo';
+  } else if (score < 0.25) {
+    str += 'Negativo';
+  } else {
+    str += 'Neutro';
+  }
+
+  if (magnitude > 2.5 && Math.abs(score) < 0.25) {
+    str = 'Misto';
+  }
+  return str;
+}
+
 function generateReport(change: any, context: any) {
 
   const userId = context.params.userId; // id do dono do relato
@@ -139,6 +162,7 @@ function generateReport(change: any, context: any) {
   const dp = db.collection('pacientes').doc(userId).get(); // prepara o get dos dados de paciente do dono do relato (para conseguir o id do responsavel)
   const du = db.collection('dadosUsuario').doc(userId).get();  // prepara o get dos dados do usuario (para pegar o nome)
   return Promise.all([dp, du]).then((result) => { // faz os dois gets acima em paralelo (para poupar tempo) e quando eles acabam segue o código
+
 
     const dataPaciente = result[0].data(); // pega os dados de paciente
     const dataUser = result[1].data(); // pega os dados de usuário
@@ -156,6 +180,21 @@ function generateReport(change: any, context: any) {
           data.nomePaciente = dataUser.nomeCompleto; // alem de tudo salva o nome do id do relato
           data.idResponsavel = idResponsavel; // alem de tudo salva o id do responsavel
           data.nomeResponsavel = responsavel.data()?.nomeCompleto; // alem de tudo salva o nome do responsavel
+
+
+          if (data.analiseRelato) {
+            data.relatoAlertaScore = calcularNivelAlerta(data.analiseRelato, data.relato);
+            data.relatoSentiment = classificaSentiment(data.analiseRelato.documentSentiment.score,
+              data.analiseRelato.documentSentiment.magnitude)
+          }
+
+          if (data.analiseAudioTranscrito) {
+            data.audioAlertaScore = calcularNivelAlerta(data.analiseAudioTranscrito, data.audioTranscrito);
+            data.audioSentiment = classificaSentiment(data.analiseAudioTranscrito.documentSentiment.score,
+              data.analiseAudioTranscrito.documentSentiment.magnitude)
+          }
+
+
         }
         // console.log('relato id', context.params.relatoId);
 
@@ -171,6 +210,206 @@ function generateReport(change: any, context: any) {
   }).catch((err) => {
     console.error(err);
   });
+}
+
+function calcularNivelAlerta(analise: any, texto?: string) {
+  let score = 0;
+  analise.forEach((document: any) => {
+    if (document && document !== null) {
+      // SENTIMENT
+      const docScore = document.documentSentiment.score;
+      const docMag = document.documentSentiment.magnitude;
+      if (docScore < 0.25) {
+        score += (Math.abs(docScore) * docMag) * 150; // quanto mais negativo for o relato, mais alerta score
+      }
+      // END SENTIMENT
+      console.log('sentiment score', score);
+
+      // TOKENS
+      document.tokens.forEach((token: { lemma: any; }) => {
+        switch (token.lemma) {
+          case 'suicídio':
+            score += 65;
+            break;
+          case 'suicidar':
+            score += 70;
+            break;
+          case 'suicída':
+            score += 70;
+            break;
+          case 'assassinato':
+            score += 50;
+            break;
+          case 'assassinar':
+            score += 65;
+            break;
+          case 'matar':
+            score += 65;
+            break;
+          case 'cortar':
+            score += 30;
+            break;
+          case 'machucar':
+            score += 30;
+            break;
+          case 'agredir':
+            score += 30;
+            break;
+          case 'prédio':
+            score += 40;
+            break;
+          case 'ponte':
+            score += 40;
+            break;
+          case 'carro':
+            score += 30;
+            break;
+          case 'arma':
+            score += 50;
+            break;
+          case 'tiro':
+            score += 50;
+            break;
+          case 'atirar':
+            score += 50;
+            break;
+          case 'cabeça':
+            score += 30;
+            break;
+          case 'peito':
+            score += 30;
+            break;
+          case 'remédio':
+            score += 30;
+            break;
+          case 'overdose':
+            score += 60;
+            break;
+          case 'quero':
+            score += 30;
+            break;
+          case 'pretendo':
+            score += 30;
+            break;
+          case 'preciso':
+            score += 30;
+            break;
+          case 'vou':
+            score += 30;
+            break;
+          case 'acabar':
+            score += 20;
+            break;
+          case 'acabou':
+            score += 20;
+            break;
+          case 'me':
+            score += 15;
+            break;
+          case 'morto':
+            score += 45;
+            break;
+          case 'morrendo':
+            score += 45;
+            break;
+          case 'sangue':
+            score += 50;
+            break;
+          case 'sangrando':
+            score += 50;
+            break;
+          case 'ensanguentado':
+            score += 50;
+            break;
+          case 'faca':
+            score += 50;
+            break;
+          case 'pescoço':
+            score += 50;
+            break;
+          case 'pulso':
+            score += 50;
+            break;
+          case 'pulsos':
+            score += 50;
+            break;
+
+          default:
+            break;
+        }
+      });
+      // END TOKENS
+    }
+
+  });
+
+  if (texto) {
+    if (texto.includes('eu pretendo me matar')) {
+      score += 100;
+    }
+    if (texto.includes('eu quero me matar')) {
+      score += 100;
+    }
+    if (texto.includes('eu vou me matar')) {
+      score += 100;
+    }
+    if (texto.includes('eu pretendo me suicidar')) {
+      score += 100;
+    }
+    if (texto.includes('eu quero me suicidar')) {
+      score += 100;
+    }
+    if (texto.includes('eu vou me suicidar')) {
+      score += 100;
+    }
+    if (texto.includes('vou me')) {
+      score += 15;
+    }
+    if (texto.includes('quero me')) {
+      score += 15;
+    }
+    if (texto.includes('me matar')) {
+      score += 75;
+    }
+    if (texto.includes('me suicidar')) {
+      score += 75;
+    }
+    if (texto.includes('acabar com')) {
+      score += 45;
+    }
+    if (texto.includes('acabar com a vida')) {
+      score += 85;
+    }
+    if (texto.includes('acabar com a minha vida')) {
+      score += 85;
+    }
+    if (texto.includes('não aguento')) {
+      score += 40;
+    }
+    if (texto.includes('pular d')) {
+      score += 40;
+    }
+    if (texto.includes('jogar d')) {
+      score += 40;
+    }
+    if (texto.includes('pular n')) {
+      score += 40;
+    }
+    if (texto.includes('jogar n')) {
+      score += 40;
+    }
+    if (texto.includes('atirar d')) {
+      score += 40;
+    }
+    if (texto.includes('atirar n')) {
+      score += 60;
+    }
+    if (texto.includes('cortar m')) {
+      score += 40;
+    }
+  }
+
+  return score;
 }
 
 export const onRelatoDeleted = functions.firestore.document('pacientes/{userId}/relatos/{relatoId}').onDelete((change, context) => {
