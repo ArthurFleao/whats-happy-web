@@ -17,6 +17,8 @@ import { SnackService } from 'src/app/services/snack.service';
 export class LoginPageComponent implements OnInit {
   loading = false;
   estado = 'login';
+  showPsicologoDisabledAlert: boolean;
+  myId: any;
   constructor(
     private router: Router,
     private db: DadosService,
@@ -36,15 +38,35 @@ export class LoginPageComponent implements OnInit {
     });
   }
 
+  reativarConta() {
+    this.db.enablePsicologo(this.myId).then((result) => {
+      this.snack.success('Conta reabilitada com sucesso!');
+      this.router.navigate(['home']);
+    }).catch((err) => {
+      console.error(err);
+    });
+  }
+
   onSubmit(values) { // quando clicar no botão submit
     // chama método de login de auth.service
     console.log(values);
     this.loading = true; // indica que está carregando algo
     this.authService.login(values.login, values.senha).then(value => {
-      this.loading = false; // indica que terminou de carregar
-      console.log('deu certo');
-      // redireciona para a pagina home do sistema
-      this.router.navigate(['home']);
+      this.db.getPsicologoData(value.user.uid).subscribe((res: any) => {
+        if (res?.disabled) {
+          this.estado = 'psicoDisabled';
+          this.myId = value.user.uid;
+        }
+        else {
+          // redireciona para a pagina home do sistema
+          this.loading = false; // indica que terminou de carregar
+          this.router.navigate(['home']);
+        }
+      }, error => {
+        this.loading = false; // indica que terminou de carregar
+        console.error(error);
+      });
+
     })
       .catch(err => {
         this.loading = false;

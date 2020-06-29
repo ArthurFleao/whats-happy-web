@@ -294,7 +294,30 @@ export const maintainUserData = functions.firestore.document('dadosUsuario/{user
   });
 });
 
-export const checkDeactivation = functions.firestore.document('pacientes/{userId}').onWrite((change, context) => {
+export const checkPsicologoDeactivation = functions.firestore.document('psicologos/{userId}').onWrite((change, context) => {
+  if (change) {
+
+    const psicoAnterior = change.before.data();
+    const psicoAtual = change.after.data();
+
+    if (psicoAnterior?.disabled !== psicoAtual?.disabled) {
+      if (psicoAtual?.disabled) {
+        db.collection('psicologos').doc(change.after.id).collection('pacientes').get().then((result) => {
+          result.forEach(paciente => {
+            db.collection('pacientes').doc(paciente.id).update({ disabled: true }).then((dbu) => {
+              console.log('paciente disabled: ') + paciente.id;
+            }).catch((err) => {
+              console.error(err);
+            });
+          });
+        }).catch((err) => {
+          console.error(err);
+        });
+      }
+    }
+  }
+});
+export const checkPacienteDeactivation = functions.firestore.document('pacientes/{userId}').onWrite((change, context) => {
   if (change) {
     const data = change.after.data();
     const uid = (change.after.id);

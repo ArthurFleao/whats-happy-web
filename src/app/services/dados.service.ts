@@ -82,7 +82,7 @@ export class DadosService {
     }));
   }
 
-   calcularNivelAlerta(analise: any, texto?: string) {
+  calcularNivelAlerta(analise: any, texto?: string) {
     let score = 0;
     analise.forEach((document: any) => {
       if (document && document !== null) {
@@ -214,67 +214,67 @@ export class DadosService {
     });
 
     if (texto) {
-      if (texto.includes('eu pretendo me matar') ) {
+      if (texto.includes('eu pretendo me matar')) {
         score += 100;
       }
-      if (texto.includes('eu quero me matar') ) {
+      if (texto.includes('eu quero me matar')) {
         score += 100;
       }
-      if (texto.includes('eu vou me matar') ) {
+      if (texto.includes('eu vou me matar')) {
         score += 100;
       }
-      if (texto.includes('eu pretendo me suicidar') ) {
+      if (texto.includes('eu pretendo me suicidar')) {
         score += 100;
       }
-      if (texto.includes('eu quero me suicidar') ) {
+      if (texto.includes('eu quero me suicidar')) {
         score += 100;
       }
-      if (texto.includes('eu vou me suicidar') ) {
+      if (texto.includes('eu vou me suicidar')) {
         score += 100;
       }
-      if (texto.includes('vou me') ) {
+      if (texto.includes('vou me')) {
         score += 15;
       }
-      if (texto.includes('quero me') ) {
+      if (texto.includes('quero me')) {
         score += 15;
       }
-      if (texto.includes('me matar') ) {
+      if (texto.includes('me matar')) {
         score += 75;
       }
-      if (texto.includes('me suicidar') ) {
+      if (texto.includes('me suicidar')) {
         score += 75;
       }
-      if (texto.includes('acabar com') ) {
+      if (texto.includes('acabar com')) {
         score += 45;
       }
-      if (texto.includes('acabar com a vida') ) {
+      if (texto.includes('acabar com a vida')) {
         score += 85;
       }
-      if (texto.includes('acabar com a minha vida') ) {
+      if (texto.includes('acabar com a minha vida')) {
         score += 85;
       }
-      if (texto.includes('não aguento') ) {
+      if (texto.includes('não aguento')) {
         score += 40;
       }
-      if (texto.includes('pular d') ) {
+      if (texto.includes('pular d')) {
         score += 40;
       }
-      if (texto.includes('jogar d') ) {
+      if (texto.includes('jogar d')) {
         score += 40;
       }
-      if (texto.includes('pular n') ) {
+      if (texto.includes('pular n')) {
         score += 40;
       }
-      if (texto.includes('jogar n') ) {
+      if (texto.includes('jogar n')) {
         score += 40;
       }
-      if (texto.includes('atirar d') ) {
+      if (texto.includes('atirar d')) {
         score += 40;
       }
-      if (texto.includes('atirar n') ) {
+      if (texto.includes('atirar n')) {
         score += 60;
       }
-      if (texto.includes('cortar m') ) {
+      if (texto.includes('cortar m')) {
         score += 40;
       }
     }

@@ -1,4 +1,8 @@
-<div class="centralizer style-{{style}} roundness-{{roundness}}">
-  <p>{{message}}</p>
-  <p><ng-content></ng-content></p>
+<div class="style-{{style}} roundness-{{roundness}}" fxLayout="row wrap" fxLayoutAlign="center center">
+  <div fxFlex="100">
+    <p>{{message}}</p>
+  </div>
+  <div fxFlex="40">
+    <ng-content></ng-content>
+  </div>
 </div>

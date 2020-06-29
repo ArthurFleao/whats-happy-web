@@ -1,28 +1,36 @@
-  <mat-card class="card-login">
-    <mat-card-header>
-      <div class="centralizer">
-        <img src="assets/img/logo.png" alt="LOGO">
-      </div>
-    </mat-card-header>
+<mat-card class="card-login">
+  <mat-card-header>
+    <div class="centralizer">
+      <img src="assets/img/logo.png" alt="LOGO">
+    </div>
+  </mat-card-header>
   <app-test-box>
-    <button (click)="test()" >
+    <button (click)="test()">
       test register function
     </button>
   </app-test-box>
-    <mat-card-content [ngSwitch]="estado" class="content">
-      <div *ngSwitchCase="'login'" fxLayout="column" fxLayoutAlign="center center">
-        <h1 class="text-muted animate__animated animate__fadeInDown">Entrar</h1>
-        <app-form-login class="w-100 animate__animated animate__fadeIn" (submited)="onSubmit($event)">
-          <art-button [type]="'submit'" [loading]="loading">Entrar</art-button>
-          <art-button (click)="estado = 'cadastro'" [disable]="loading" [color]="'secondary'">Cadastrar</art-button>
-        </app-form-login>
-      </div>
-      <div *ngSwitchCase="'cadastro'" fxLayout="column" fxLayoutAlign="center center">
-        <h1 class="text-muted text-muted animate__animated animate__fadeInDown">Cadastre-se como Psicólogo</h1>
-        <app-form-cadastro [includeCrp]="true" class="w-100 animate__animated animate__fadeIn" (submited)="onRegister($event)">
-          <art-button [type]="'submit'" [loading]="loading">Cadastrar</art-button>
-          <art-button (click)="estado = 'login'">Voltar</art-button>
-        </app-form-cadastro>
-      </div>
-    </mat-card-content>
-  </mat-card>
+  <mat-card-content [ngSwitch]="estado" class="content">
+    <div *ngSwitchCase="'login'" fxLayout="column" fxLayoutAlign="center center">
+      <h1 class="text-muted animate__animated animate__fadeInDown">Entrar</h1>
+      <app-form-login class="w-100 animate__animated animate__fadeIn" (submited)="onSubmit($event)">
+        <art-button [type]="'submit'" [loading]="loading">Entrar</art-button>
+        <art-button (click)="estado = 'cadastro'" [disable]="loading" [color]="'secondary'">Cadastrar</art-button>
+      </app-form-login>
+    </div>
+    <div *ngSwitchCase="'cadastro'" fxLayout="column" fxLayoutAlign="center center">
+      <h1 class="text-muted text-muted animate__animated animate__fadeInDown">Cadastre-se como Psicólogo</h1>
+      <app-form-cadastro [includeCrp]="true" class="w-100 animate__animated animate__fadeIn"
+                         (submited)="onRegister($event)">
+        <art-button [type]="'submit'" [loading]="loading">Cadastrar</art-button>
+        <art-button (click)="estado = 'login'">Voltar</art-button>
+      </app-form-cadastro>
+    </div>
+    <div *ngSwitchCase="'psicoDisabled'" fxLayout="column" fxLayoutAlign="center center">
+      <art-message-box class="animate__animated animate__fadeIn" [style]="'danger'"
+                       [message]="'Esta conta de psicólogo está atualmente desabilitada. Se deseja voltar a utiliza-la, reabilite a conta no botão abaixo.'">
+        <art-button [color]="'success'" (click)="reativarConta()">Reativar conta</art-button>
+      </art-message-box>
+      <art-button (click)="estado = 'login'">Voltar</art-button>
+    </div>
+  </mat-card-content>
+</mat-card>
