@@ -3,6 +3,7 @@ import { AuthService } from './auth.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
+import {Notificacao} from '../model/notificacao';
 @Injectable({
   providedIn: 'root'
 })
@@ -11,7 +12,7 @@ export class NotificacoesService {
   constructor(private afs: AngularFirestore, private auth: AuthService) { }
 
 
-  sendNotification(data, destinatario) {
+  sendNotification(data: Notificacao, destinatario) {
     this.afs.collection('notificacoes/' + destinatario + '/notificacoes').doc(data.relatoId).set(data).then((result) => {
       console.log('notificação salva no bd');
     }).catch((err) => {

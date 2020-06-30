@@ -1,10 +1,10 @@
-import { Observable, forkJoin, Subject } from 'rxjs';
-import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { DadosUsuario } from '../model/dadosUsuario';
-import { Psicologo } from '../model/psicologo';
-import { Paciente } from '../model/paciente';
-import { map } from 'rxjs/operators';
+import {Observable, forkJoin, Subject} from 'rxjs';
+import {Injectable} from '@angular/core';
+import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
+import {DadosUsuario} from '../model/dadosUsuario';
+import {Psicologo} from '../model/psicologo';
+import {Paciente} from '../model/paciente';
+import {map} from 'rxjs/operators';
 
 import * as moment from 'moment';
 
@@ -13,7 +13,8 @@ import * as moment from 'moment';
 })
 export class DadosService {
 
-  constructor(private afs: AngularFirestore) { }
+  constructor(private afs: AngularFirestore) {
+  }
 
   // recupera dados do usuario, com base na id fornecida
   getUserData(uid) {
@@ -38,6 +39,7 @@ export class DadosService {
   dadosUsuarioSave(id, dados: DadosUsuario) {
     return this.afs.collection('dadosUsuario').doc(id).set(dados);
   }
+
   dadosUsuarioUpdate(id, dados: any) {
     return this.afs.collection('dadosUsuario').doc(id).update(dados);
   }
@@ -51,8 +53,13 @@ export class DadosService {
     return this.afs.collection('pacientes').doc(id).set(objeto);
   }
 
+  listPsicologos() {
+    return this.afs.collection('psicologos').valueChanges({idField: 'uid'});
+  }
+
+
   listRelatos(idPaciente) {
-    return this.afs.collection(`pacientes/${idPaciente}/relatos/`).valueChanges({ idField: 'uid' }).pipe(map((res: any) => {
+    return this.afs.collection(`pacientes/${idPaciente}/relatos/`).valueChanges({idField: 'uid'}).pipe(map((res: any) => {
 
 
       res.sort((a: any, b: any) => {
@@ -355,8 +362,6 @@ export class DadosService {
   }
 
 
-
-
   /////////////////////////////// ATUALIZAR PSICOLOGO RESPONSAVEL //////////////////////////////////////
   updateResponsavel(pacienteId, psicologoResponsavelId) {
 
@@ -366,12 +371,13 @@ export class DadosService {
       .doc(psicologoResponsavelId);
 
     console.log('updateResponsavel Ref', psicologoResponsavelRef.ref);
-
-    this.afs.collection('pacientes').doc(pacienteId).update({
+    return this.afs.collection('pacientes').doc(pacienteId).update({
       responsavel: psicologoResponsavelRef.ref
     });
 
   }
+
+
 
   // superGet(doc) {
   //   const subs = [];

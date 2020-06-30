@@ -7,6 +7,9 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { forkJoin, Observable, Subject } from 'rxjs';
 import { first, map } from 'rxjs/operators';
 import { SnackService } from 'src/app/services/snack.service';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {ConfirmModalComponent} from '../../shared/notificacoes/confirm-modal/confirm-modal.component';
+import {ResponsavelModalComponent} from '../../shared/responsavel-modal/responsavel-modal.component';
 
 @Component({
   selector: 'app-listar-pacientes-page',
@@ -29,6 +32,7 @@ export class ListarPacientesPageComponent implements OnInit {
     private authService: AuthService,
     private snack: SnackService,
     private db: DadosService,
+    private matDialog: MatDialog,
     private afs: AngularFirestore,
     private eh: ErrorHandlerService,
   ) {
@@ -42,7 +46,7 @@ export class ListarPacientesPageComponent implements OnInit {
         const arrayTodosPacientes = [];
         res.forEach((paciente: any) => {
           // coloca todos os pacientes do psicologo no array
-
+          console.log('paciente', paciente);
           arrayTodosPacientes.push(this.afs.doc(paciente.paciente).valueChanges().pipe(first(), map(pres => {
             const newRes: any = pres;
             newRes.uid = this.afs.doc(paciente.paciente).ref.id;
@@ -63,6 +67,29 @@ export class ListarPacientesPageComponent implements OnInit {
       });
     });
 
+  }
+
+  showTrocarResponsavelModal(paciente) {
+    const height = 300;
+    const dialogConfig = new MatDialogConfig();
+    // The user can't close the dialog by clicking outside its body
+    dialogConfig.disableClose = false;
+    dialogConfig.id = 'modal-component';
+    // dialogConfig.height = height.toString() + 'px';
+    dialogConfig.width = '600px';
+    dialogConfig.data = {
+      paciente,
+      modalHeight: height,
+      noButton: 'Cancelar',
+      yesButtonMatColor: 'warn',
+    };
+    // https://material.angular.io/components/dialog/overview
+    const modalDialog = this.matDialog.open(ResponsavelModalComponent, dialogConfig);
+    modalDialog.afterClosed().subscribe((response) => {
+      console.log(response);
+      if (response) {
+      }
+    });
   }
 
   enableOrDisableUser(paciente) {

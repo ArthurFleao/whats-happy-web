@@ -92,6 +92,7 @@ import { VerRelatosPageComponent } from './pages/ver-relatos-page/ver-relatos-pa
 import { ConviteCardComponent } from './shared/convite-card/convite-card.component';
 import { ArtMessageBoxComponent } from './shared/art-message-box/art-message-box.component';
 import { NotificacoesPageComponent } from './pages/notificacoes-page/notificacoes-page.component';
+import {ResponsavelModalComponent} from './shared/responsavel-modal/responsavel-modal.component';
 
 const material = [
   ClipboardModule,
@@ -172,6 +173,7 @@ const material = [
     ConviteCardComponent,
     ArtMessageBoxComponent,
     NotificacoesPageComponent,
+    ResponsavelModalComponent,
   ],
   imports: [
     material,

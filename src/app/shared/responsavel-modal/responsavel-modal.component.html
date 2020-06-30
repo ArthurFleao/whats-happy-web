@@ -1,0 +1,34 @@
+<div class="content-container">
+  <h2 class="text-center m-0">Trocar responsável</h2>
+  <mat-divider></mat-divider>
+  <p> Ceder o paciente {{paciente.nomeCompleto}} para outro psicologo</p>
+
+  <div class="centralizer">
+    <mat-form-field appearance="outline">
+      <mat-spinner *ngIf="!responsaveisArray" color="primary" diameter="25"
+                   style="position: absolute; top: 0; right: 25px;"></mat-spinner>
+      <mat-label>Responsável:</mat-label>
+      <mat-select (selectionChange)="onChange($event)" [disabled]="!responsaveisArray"
+                  required>
+        <mat-option *ngFor="let responsavel of responsaveisArray" [value]="responsavel">
+          {{responsavel.dadosUsuario.nomeCompleto}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+    <div fxFlex="45" fxFlex.lt-md="100">
+      <art-button (click)="onCloseClicked(false)">Cancelar</art-button>
+    </div>
+
+    <div fxFlex="45" fxFlex.lt-md="100">
+      <art-button [disable]="!responsaveisArray || !responsavelSelected" (click)="onSubmit()">Atribuir responsavel</art-button>
+    </div>
+  </div>
+
+
+
+  <span (click)="onCloseClicked(null)" class="material-icons close-icon">
+    clear
+  </span>
+</div>

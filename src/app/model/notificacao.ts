@@ -1,10 +1,10 @@
 export class Notificacao {
-  message: string;
-  pacienteUID: string;
-  relatoId: string;
-  responsavelUID: string;
-  lida: boolean;
-  uid?: string;
-  data: string;
+  pacienteUID?: string;
+  message?: string;
+  relatoId?: string;
+  responsavelUID?: string;
   type?: string;
+  lida?: boolean;
+  uid?: string;
+  data?: any;
 }

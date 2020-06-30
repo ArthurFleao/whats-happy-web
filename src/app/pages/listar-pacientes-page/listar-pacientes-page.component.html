@@ -12,6 +12,7 @@
         <art-button [routerLink]="['/paciente',paciente.uid, 'relatos']" routerLinkActive="router-link-active">
           Ver Relatos
         </art-button>
+        <art-button (click)="showTrocarResponsavelModal(paciente)" >Trocar responsável</art-button>
         <art-button [loading]="loadingDisabling" (click)="enableOrDisableUser(paciente)"
                     [color]="paciente.disabled? 'green' : 'red'">
           {{paciente.disabled? 'Habilitar' : 'Desabilitar'}} paciente
