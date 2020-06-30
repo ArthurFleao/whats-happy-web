@@ -184,14 +184,14 @@ function generateReport(change: any, context: any) {
 
           if (data.analiseRelato) {
             data.relatoAlertaScore = calcularNivelAlerta(data.analiseRelato, data.relato);
-            data.relatoSentiment = classificaSentiment(data.analiseRelato.documentSentiment.score,
-              data.analiseRelato.documentSentiment.magnitude);
+            data.relatoSentiment = classificaSentiment(data.analiseRelato[0].documentSentiment.score,
+              data.analiseRelato[0].documentSentiment.magnitude);
           }
 
           if (data.analiseAudioTranscrito) {
             data.audioAlertaScore = calcularNivelAlerta(data.analiseAudioTranscrito, data.audioTranscrito);
-            data.audioSentiment = classificaSentiment(data.analiseAudioTranscrito.documentSentiment.score,
-              data.analiseAudioTranscrito.documentSentiment.magnitude);
+            data.audioSentiment = classificaSentiment(data.analiseAudioTranscrito[0].documentSentiment.score,
+              data.analiseAudioTranscrito[0].documentSentiment.magnitude);
           }
 
 

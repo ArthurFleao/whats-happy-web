@@ -84,6 +84,8 @@ export class RegistrarConsultaPageComponent implements OnInit {
 
     this.afs.collection('pacientes').doc(values.dadosUsuario.idPaciente.uid).collection('fichasConsultas').add({
 
+      dataConsulta: values.registroConsulta.dataConsulta,
+      horarioConsulta: values.registroConsulta.horarioConsulta,
       dcHda: values.registroConsulta.dcHda,
       reacoesFrenteDiagnostico: values.registroConsulta.reacoesFrenteDiagnostico,
       estadoEmocionalAtual: values.registroConsulta.estadoEmocionalAtual,

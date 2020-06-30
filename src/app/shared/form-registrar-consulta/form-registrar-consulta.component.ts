@@ -54,6 +54,8 @@ export class FormRegistrarConsultaComponent implements OnInit {
       // ------------------------ ficha de consulta -------------
       registroConsulta: this.fb.group({
         // formName: ['valorInicial', Validator]
+        dataConsulta: [this.bootstrap?.dataConsulta || '', Validators.required],
+        horarioConsulta: [this.bootstrap?.horarioConsulta || '', Validators.required],
         dcHda: [this.bootstrap?.dcHda || '', Validators.required],
         reacoesFrenteDiagnostico: [this.bootstrap?.reacoesFrenteDiagnostico || '', Validators.required],
         estadoEmocionalAtual: [this.bootstrap?.estadoEmocionalAtual || '', Validators.required],

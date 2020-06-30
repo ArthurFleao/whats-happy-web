@@ -50,6 +50,24 @@
     <fieldset formArrayName="registroConsulta">
       <div fxFlex>
         <mat-form-field [appearance]="readOnly? 'fill' :  'outline'">
+          <mat-label>Data da consulta:</mat-label>
+          <textarea [readonly]="readOnly" matInput required formControlName="dataConsulta"
+                    placeholder="01/01/2001" [mask]="'00/00/0000'"></textarea>
+        </mat-form-field>
+        <val-errors controlName="dataConsulta"></val-errors>
+      </div>
+
+      <div fxFlex>
+        <mat-form-field [appearance]="readOnly? 'fill' :  'outline'">
+          <mat-label>Horário da consulta:</mat-label>
+          <textarea [readonly]="readOnly" matInput required formControlName="horarioConsulta"
+                    placeholder="00:00" [mask]="'00:00'"></textarea>
+        </mat-form-field>
+        <val-errors controlName="horarioConsulta"></val-errors>
+      </div>
+
+      <div fxFlex>
+        <mat-form-field [appearance]="readOnly? 'fill' :  'outline'">
           <mat-label>DC/HDA - Diagnóstico clínico e história da doença atual</mat-label>
           <textarea [readonly]="readOnly" matInput required formControlName="dcHda"
                     placeholder="DC/HDA - Diagnóstico clínico e história da doença atual"></textarea>
