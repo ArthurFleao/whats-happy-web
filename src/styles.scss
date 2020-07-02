@@ -192,7 +192,6 @@ mat-flat-button.mat-green,
   color: transparent;
 }
 
-
 .alerta {
   .mat-expansion-panel {
     background: #ffe2a2 !important;
@@ -202,4 +201,20 @@ mat-flat-button.mat-green,
   .mat-expansion-panel {
     background: #ffa2a2 !important;
   }
+}
+
+.chip-div {
+  .mat-chip {
+    font-size: 11px;
+    font-weight: 800;
+  }
+  .c-alert {
+    background-color: #ffa000;
+  }
+
+  .c-danger {
+    background-color: #ff0000;
+    color: white;
+  }
+
 }

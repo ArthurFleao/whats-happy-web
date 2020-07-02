@@ -149,7 +149,7 @@ function classificaSentiment(score: number, magnitude: number) {
     str += 'Neutro';
   }
 
-  if (magnitude > 2.5 && Math.abs(score) < 0.25) {
+  if (magnitude > 2 && Math.abs(score) < 0.25) {
     str = 'Misto';
   }
   return str;

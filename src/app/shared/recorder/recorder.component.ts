@@ -57,7 +57,7 @@ export class RecorderComponent implements OnInit {
       numberOfAudioChannels: 1,
     });
 
-    this.status = 'gravando';
+    this.status = 'GRAVANDO';
     this.recorder.record();
     this.startTime = moment();
     this.interval = setInterval(

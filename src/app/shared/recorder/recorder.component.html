@@ -1,7 +1,10 @@
 <div *ngIf="recorder"  class="centralizer">
-  {{status}}
-  <br>
-  {{recordingTime | async}}
+  <p>
+    {{status}}
+  </p>
+  <p>
+    {{': ' + (recordingTime | async)}}
+  </p>
   <br>
 </div>
 <art-button *ngIf="!recorder" [disable]="disableButtons" (click)="startRecording()">GRAVAR</art-button>

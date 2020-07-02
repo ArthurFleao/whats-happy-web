@@ -12,8 +12,8 @@
 
   <div *ngIf="audioUrl">
     <mat-basic-audio-player [audioUrl]="audioUrl" [autoPlay]="false" muted="muted" [displayTitle]="false"
-                            [displayVolumeControls]="true"></mat-basic-audio-player>
+    [displayVolumeControls]="true"></mat-basic-audio-player>
   </div>
-
   <app-recorder [disableButtons]="loading" (recorded)="onAudioRecorded($event)"></app-recorder>
+
 </app-card>

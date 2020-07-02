@@ -1,10 +1,14 @@
-<div [ngClass]="{'alerta': alerta, 'perigo': perigo}" matBadge="." matBadgeColor="warn" matBadgeSize="small"
+<div style="position: relative;" [ngClass]="{'alerta': alerta, 'perigo': perigo}" matBadge="." matBadgeColor="warn" matBadgeSize="small"
      [matBadgeHidden]="!relato.new">
   <mat-expansion-panel (afterExpand)="opened(); panelOpen = true" (afterCollapse)="panelOpen = false"
                        [hideToggle]="false">
     <mat-expansion-panel-header>
       <mat-panel-title [matTooltip]="getComplete(relato.dataHora)">{{getFromNow(relato.dataHora)}}</mat-panel-title>
       <mat-panel-description>
+        <div class="chip-div">
+          <mat-chip class="c-alert" *ngIf="alerta && !perigo">PREOCUPANTE</mat-chip>
+          <mat-chip class="c-danger" *ngIf="perigo">PERIGOSO</mat-chip>
+        </div>
         <!-- <div class="mr-5">
           {{relato.grauFelicidade | grau : 'f'}} -
           {{relato.grauDisposicao | grau: 'd'}} -

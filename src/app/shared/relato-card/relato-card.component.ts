@@ -153,7 +153,7 @@ export class RelatoCardComponent implements OnInit, OnDestroy {
   classificaSentiment(score: number, magnitude: number) {
     let str = '';
     const magnitudeAbsoluta = Math.abs(magnitude);
-    if (magnitudeAbsoluta > 2) {
+    if (magnitudeAbsoluta > 1.5) {
       str += 'Claramente ';
     } else {
       str += 'Provavelmente ';
@@ -167,7 +167,7 @@ export class RelatoCardComponent implements OnInit, OnDestroy {
       str += 'Neutro';
     }
 
-    if (magnitude > 2.5 && Math.abs(score) < 0.25) {
+    if (magnitude > 2 && Math.abs(score) < 0.25) {
       str = 'Misto';
     }
     return str;

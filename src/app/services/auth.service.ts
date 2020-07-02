@@ -40,6 +40,7 @@ export class AuthService {
       auth.authState.subscribe(userRes => {
         if (userRes?.uid) {
           this.user.uid = userRes.uid;
+          this.user.email = userRes.email;
           // USER DATA SUBSCRIBE
           this.db.getUserData(userRes.uid).subscribe((res: DadosUsuario) => {
             this.user.dadosUsuario = res;

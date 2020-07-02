@@ -6,7 +6,7 @@
       <div fxFlex.lt-md="100" fxFlex="100">
         <mat-form-field appearance="outline">
           <mat-label>E-mail</mat-label>
-          <input matInput required formControlName="email" placeholder="Ex. jose@exemplo.com"
+          <input matInput required formControlName="email" id="email-input" placeholder="Ex. jose@exemplo.com"
                  [readonly]="flagTravarCampo">
         </mat-form-field>
         <val-errors controlName="email"></val-errors>
@@ -14,21 +14,21 @@
       <div fxFlex.lt-md="100" fxFlex="100">
         <mat-form-field appearance="outline">
           <mat-label>Nome Completo</mat-label>
-          <input matInput required formControlName="nomeCompleto" placeholder="Ex: José da silva">
+          <input matInput required formControlName="nomeCompleto" id="nomeCompleto-input" placeholder="Ex: José da silva">
         </mat-form-field>
         <val-errors controlName="nomeCompleto"></val-errors>
       </div>
       <div fxFlex.lt-md="100" fxFlex="100">
         <mat-form-field appearance="outline">
           <mat-label>CPF</mat-label>
-          <input matInput required formControlName="cpf" mask="000.000.000-00" placeholder="Ex: 111.111.111-00">
+          <input matInput required formControlName="cpf" id="cpf-input" mask="000.000.000-00" placeholder="Ex: 111.111.111-00">
         </mat-form-field>
         <val-errors controlName="cpf"></val-errors>
       </div>
       <div *ngIf="includeCrp" fxFlex.lt-md="100" fxFlex="100">
         <mat-form-field appearance="outline">
           <mat-label>CRP</mat-label>
-          <input matInput required formControlName="crp" placeholder="Ex: 06/XXXX/J">
+          <input matInput required formControlName="crp" id="crp-input" placeholder="Ex: 06/XXXX/J">
 
         </mat-form-field>
         <val-errors controlName="crp"></val-errors>
@@ -37,7 +37,7 @@
         <!-- <h4>Gênero</h4> -->
         <mat-form-field appearance="outline">
           <mat-label>Gênero:</mat-label>
-          <mat-select required formControlName="sexo">
+          <mat-select required formControlName="sexo" id="sexo-input">
             <mat-option value="m">Masculino</mat-option>
             <mat-option value="f">Feminino</mat-option>
             <mat-option value="outro">Outro</mat-option>
@@ -49,7 +49,7 @@
       <div fxFlex.lt-md="100" fxFlex="100">
         <mat-form-field appearance="outline">
           <mat-label>Data de Nascimento</mat-label>
-          <input type="date" matInput required formControlName="dataNascimento" placeholder="Ex: 01/01/1990">
+          <input mask="00/00/0000" matInput required formControlName="dataNascimento" id="dataNascimento-input" placeholder="Ex: 01/01/1990">
         </mat-form-field>
         <val-errors controlName="dataNascimento"></val-errors>
       </div>
@@ -62,7 +62,7 @@
               <div fxLayout="row" fxLayoutAlign="start fill">
                 <mat-form-field fxFlex="90" appearance="outline">
                   <mat-label>Telefone</mat-label>
-                  <input matInput required formControlName="telefone" mask="(00) 0000-0000||(00) 0 0000-0000"
+                  <input matInput required formControlName="telefone" id="telefone-input" mask="(00) 0000-0000||(00) 0 0000-0000"
                          placeholder="Ex: (00) 9 9999-9999">
                   <div *ngIf="telefoneItem.get('telefone').invalid && telefoneItem.get('telefone').touched" class="mt-1 animate__animated animate__fadeInDown">
                     <mat-error *ngIf="telefoneItem.get('telefone').hasError('required') && telefoneItem.touched">Faltou
@@ -106,14 +106,14 @@
       <div *ngIf="!flagTravarCampo" fxFlex>
         <mat-form-field appearance="outline">
           <mat-label>Senha</mat-label>
-          <input matInput required formControlName="senha" type="password" placeholder="Insira sua senha">
+          <input matInput required formControlName="senha" id="senha-input" type="password" placeholder="Insira sua senha">
         </mat-form-field>
         <val-errors controlName="senha"></val-errors>
       </div>
       <div *ngIf="!flagTravarCampo" fxFlex>
         <mat-form-field appearance="outline">
           <mat-label>Confirmar Senha</mat-label>
-          <input matInput required formControlName="confirmaSenha" type="password" placeholder="Confirme sua senha">
+          <input matInput required formControlName="confirmaSenha" id="confirmaSenha-input" type="password" placeholder="Confirme sua senha">
         </mat-form-field>
         <val-errors controlName="confirmaSenha"></val-errors>
       </div>
@@ -123,7 +123,7 @@
       <div fxFlex>
         <mat-form-field appearance="outline">
           <mat-label>CEP</mat-label>
-          <input matInput required formControlName="cep" mask="00.000-000" placeholder="Ex: 999999-999">
+          <input matInput required formControlName="cep" id="cep-input" mask="00.000-000" placeholder="Ex: 999999-999">
           <mat-spinner class="animate__animated animate__fadeIn" style="position: absolute; right: 0; top: 0;"
                        [diameter]="35" *ngIf="loadingCep"></mat-spinner>
         </mat-form-field>
@@ -134,7 +134,7 @@
       <div fxFlex>
         <mat-form-field appearance="outline">
           <mat-label>UF</mat-label>
-          <input [attr.disabled]="loadingCep? '' : null" matInput required formControlName="uf" placeholder="Ex: MG">
+          <input [attr.disabled]="loadingCep? '' : null" matInput required formControlName="uf" id="uf-input" placeholder="Ex: MG">
           <mat-spinner class="animate__animated animate__fadeIn" style="position: absolute; right: 0; top: 0;"
                        [diameter]="35" *ngIf="loadingCep"></mat-spinner>
         </mat-form-field>
@@ -144,7 +144,7 @@
       <div fxFlex>
         <mat-form-field appearance="outline">
           <mat-label>Cidade</mat-label>
-          <input [attr.disabled]="loadingCep? '' : null" matInput required formControlName="cidade"
+          <input [attr.disabled]="loadingCep? '' : null" matInput required formControlName="cidade" id="cidade-input"
                  placeholder="Ex: Itajubá">
           <val-errors controlName="cidade"></val-errors>
           <mat-spinner class="animate__animated animate__fadeIn" style="position: absolute; right: 0; top: 0;"
@@ -155,7 +155,7 @@
       <div fxFlex>
         <mat-form-field appearance="outline">
           <mat-label>Bairro</mat-label>
-          <input [attr.disabled]="loadingCep? '' : null" matInput required formControlName="bairro"
+          <input [attr.disabled]="loadingCep? '' : null" matInput required formControlName="bairro" id="bairro-input"
                  placeholder="Ex: Laranjeiras">
           <val-errors controlName="bairro"></val-errors>
           <mat-spinner class="animate__animated animate__fadeIn" style="position: absolute; right: 0; top: 0;"
@@ -166,7 +166,7 @@
       <div fxFlex>
         <mat-form-field appearance="outline">
           <mat-label>Logradouro</mat-label>
-          <input [attr.disabled]="loadingCep? '' : null" matInput required formControlName="logradouro"
+          <input [attr.disabled]="loadingCep? '' : null" matInput required formControlName="logradouro" id="logradouro-input"
                  placeholder="Ex: Av. Brasil">
           <val-errors controlName="logradouro"></val-errors>
           <mat-spinner class="animate__animated animate__fadeIn" style="position: absolute; right: 0; top: 0;"
@@ -177,7 +177,7 @@
       <div fxFlex>
         <mat-form-field appearance="outline">
           <mat-label>Número</mat-label>
-          <input matInput required formControlName="numero" placeholder="Ex: 99">
+          <input matInput required formControlName="numero" id="numero-input" placeholder="Ex: 99">
         </mat-form-field>
         <val-errors controlName="numero"></val-errors>
       </div>

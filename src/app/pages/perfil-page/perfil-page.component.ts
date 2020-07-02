@@ -48,8 +48,11 @@ export class PerfilPageComponent implements OnInit {
 
       // chama funcao do auth.service para recuperar dados do usuario logado
       this.db.getUserData(this.myUid).subscribe((resDadosUsuario: DadosUsuario) => {
+        console.log('res', resDadosUsuario);
+        console.log('user', this.user);
+
         this.dadosUsuario = resDadosUsuario;
-        this.dadosUsuario.email = this.user.dadosUsuario.email;
+        this.dadosUsuario.email = this.user.email;
         this.authService.user$.subscribe(resauth => {
           console.log('res', resauth);
           if (resauth.dadosPsicologo?.crp) {
