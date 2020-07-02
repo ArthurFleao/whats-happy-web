@@ -1,15 +1,15 @@
-import {DadosUsuario} from './../../../model/dadosUsuario';
-import {first} from 'rxjs/operators';
-import {DadosService} from 'src/app/services/dados.service';
-import {NotificacoesService} from './../../../services/notificacoes.service';
-import {ConfirmModalComponent} from './../confirm-modal/confirm-modal.component';
-import {Notificacao} from './../../../model/notificacao';
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import {Router} from '@angular/router';
+import { DadosUsuario } from './../../../model/dadosUsuario';
+import { first } from 'rxjs/operators';
+import { DadosService } from 'src/app/services/dados.service';
+import { NotificacoesService } from './../../../services/notificacoes.service';
+import { ConfirmModalComponent } from './../confirm-modal/confirm-modal.component';
+import { Notificacao } from './../../../model/notificacao';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import * as moment from 'moment';
-import {ErrorHandlerService} from '../../../services/error-handler.service';
-import {SnackService} from '../../../services/snack.service';
+import { ErrorHandlerService } from '../../../services/error-handler.service';
+import { SnackService } from '../../../services/snack.service';
 
 @Component({
   selector: 'app-notificacao-card',
@@ -24,6 +24,8 @@ export class NotificacaoCardComponent implements OnInit {
   notificacao: Notificacao;
   dataFromNow: string;
   private nomePaciente: string;
+  preocupante: boolean;
+  perigoso: boolean;
 
   @Input() set config(value) {
     this.notificacaoConfig = {
@@ -36,7 +38,7 @@ export class NotificacaoCardComponent implements OnInit {
     };
 
     if (value) {
-      this.notificacaoConfig = {...this.notificacaoConfig, ...value};
+      this.notificacaoConfig = { ...this.notificacaoConfig, ...value };
     }
   }
 
@@ -57,7 +59,7 @@ export class NotificacaoCardComponent implements OnInit {
 
     this.dataFromNow = moment(this.notificacao.data).fromNow();
     this.notificacao.data = moment(this.notificacao.data).format('DD/MM/YYYY HH:mm');
-    if (this.notificacao.type === 'novo-relato' || this.notificacao.type === 'convite-aceito') {
+    if (this.notificacao.type === 'novo-relato' || this.notificacao.type === 'convite-aceito' || this.notificacao.type === 'novo-relato-perigoso' || this.notificacao.type === 'novo-relato-preocupante') {
       const originalMessage = this.notificacao.message;
       this.notificacao.message = 'Seu paciente ' + originalMessage;
       this.dados.getUserData(this.notificacao.pacienteUID).pipe(first()).subscribe((res: DadosUsuario) => {
@@ -65,6 +67,13 @@ export class NotificacaoCardComponent implements OnInit {
       }, error => {
         console.error(error);
       });
+    }
+
+    if (this.notificacao.type === 'novo-relato-preocupante') {
+      this.preocupante = true;
+    }
+    if (this.notificacao.type === 'novo-relato-perigoso') {
+      this.perigoso = true;
     }
 
     if (this.notificacao.type === 'troca-responsavel') {

@@ -19,7 +19,6 @@ export const onRelatoChanged = functions.firestore.document('pacientes/{userId}/
 
   if (!relatoAnterior) { // se o relato é novo
     console.log('relato é novo');
-
     db.collection('pacientes').doc(userId).get().then((result) => {
       const responsavelUID = result.data()?.responsavel.id;
       sendNotification({
@@ -33,27 +32,74 @@ export const onRelatoChanged = functions.firestore.document('pacientes/{userId}/
     }).catch((err) => {
       console.error(err);
     });
-
   }
+
 
   if (relatoAnterior?.relato !== relatoAtual?.relato) {
     sendToNaturalLanguageApi(relatoAtual?.relato).then((result: any) => {
-      saveDataToRelato(userId, relatoId, {analiseRelato: result});
+      saveDataToRelato(userId, relatoId, { analiseRelato: result });
     }).catch((err: any) => {
       console.error('Erro natural language relato', err);
-      saveDataToRelato(userId, relatoId, {erroAnaliseRelato: err});
+      saveDataToRelato(userId, relatoId, { erroAnaliseRelato: err });
     });
   }
 
   if (relatoAtual?.hasAudio && !relatoAtual?.analiseAudioTranscrito && relatoAtual?.audioTranscrito) {
     sendToNaturalLanguageApi(relatoAtual?.audioTranscrito).then((result: any) => {
-      saveDataToRelato(userId, relatoId, {analiseAudioTranscrito: result});
+      saveDataToRelato(userId, relatoId, { analiseAudioTranscrito: result });
     }).catch((err: any) => {
       console.error('Erro natural language auido', err);
 
-      saveDataToRelato(userId, relatoId, {erroAnaliseAudioTranscrito: err});
+      saveDataToRelato(userId, relatoId, { erroAnaliseAudioTranscrito: err });
     });
   }
+
+
+
+  let score;
+
+  if (relatoAnterior?.analiseRelato !== relatoAtual?.analiseRelato) {
+    score = calcularNivelAlerta(relatoAtual?.analiseRelato, relatoAtual?.relato);
+  }
+
+  if (relatoAtual?.analiseAudioTranscrito !== relatoAnterior?.analiseAudioTranscrito) {
+    score = calcularNivelAlerta(relatoAtual?.analiseAudioTranscrito, relatoAtual?.audioTranscrito);
+  }
+
+  if (score) {
+    if (score >= 80 && score < 150) {
+      db.collection('pacientes').doc(userId).get().then((result) => {
+        const responsavelUID = result.data()?.responsavel.id;
+        sendNotification({
+          message: 'enviou um relato que foi classificado pelo sistema como PREOCUPANTE!',
+          type: 'novo-relato-preocupante',
+          pacienteUID: userId,
+          data: new Date().toISOString(),
+          relatoId,
+          responsavelUID,
+        }, responsavelUID);
+      }).catch((err) => {
+        console.error(err);
+      });
+    }
+    if (score > 150) {
+      db.collection('pacientes').doc(userId).get().then((result) => {
+        const responsavelUID = result.data()?.responsavel.id;
+        sendNotification({
+          message: 'enviou um relato que foi classificado pelo sistema como PERIGOSO!',
+          type: 'novo-relato-perigoso',
+          pacienteUID: userId,
+          data: new Date().toISOString(),
+          relatoId,
+          responsavelUID,
+        }, responsavelUID);
+      }).catch((err) => {
+        console.error(err);
+      });
+    }
+  }
+
+  console.log('score:', score);
 
 
   return generateReport(change, context).then((result) => {
@@ -492,43 +538,43 @@ export const onFileStored = functions.storage.object().onFinalize(async (object)
 
     }).catch((err) => {
       console.error(err);
-      saveDataToRelato(pacienteId, relatoId, {transcriptionError: true});
+      saveDataToRelato(pacienteId, relatoId, { transcriptionError: true });
 
     });
 
   }).catch((err) => {
     console.error('Transcription failed: ', err);
-    saveDataToRelato(pacienteId, relatoId, {transcriptionError: true});
+    saveDataToRelato(pacienteId, relatoId, { transcriptionError: true });
   });
 });
 
 export const maintainUserData = functions.firestore.document('dadosUsuario/{userId}').onWrite((change, context) => {
-  db.collection('psicologos').doc(change.after.ref.id).get().then(function(doc) {
+  db.collection('psicologos').doc(change.after.ref.id).get().then(function (doc) {
     if (doc.exists) {
       doc.ref.update(
         {
           dadosUsuario: change.after.data()
         }).then((result) => {
-        console.log(result);
-      }).catch((err) => {
-        console.log(err);
-      });
+          console.log(result);
+        }).catch((err) => {
+          console.log(err);
+        });
     }
-  }).catch(function(error) {
+  }).catch(function (error) {
     console.log('Error getting document:', error);
   });
-  db.collection('pacientes').doc(change.after.ref.id).get().then(function(doc) {
+  db.collection('pacientes').doc(change.after.ref.id).get().then(function (doc) {
     if (doc.exists) {
       doc.ref.update(
         {
           dadosUsuario: change.after.data()
         }).then((result) => {
-        console.log(result);
-      }).catch((err) => {
-        console.log(err);
-      });
+          console.log(result);
+        }).catch((err) => {
+          console.log(err);
+        });
     }
-  }).catch(function(error) {
+  }).catch(function (error) {
     console.log('Error getting document:', error);
   });
 });
@@ -543,7 +589,7 @@ export const checkPsicologoDeactivation = functions.firestore.document('psicolog
       if (psicoAtual?.disabled) {
         db.collection('psicologos').doc(change.after.id).collection('pacientes').get().then((result) => {
           result.forEach(paciente => {
-            db.collection('pacientes').doc(paciente.id).update({disabled: true}).then((dbu) => {
+            db.collection('pacientes').doc(paciente.id).update({ disabled: true }).then((dbu) => {
               console.log('paciente disabled: ') + paciente.id;
             }).catch((err) => {
               console.error(err);
@@ -573,8 +619,8 @@ export const checkPacienteDeactivation = functions.firestore.document('pacientes
         console.log('enrou no 2 if');
 
         db.collection('psicologos/' + atual.responsavel.id + '/pacientes').doc(uid).set({
-            paciente: pacienteRef
-          }).then(resposta => {
+          paciente: pacienteRef
+        }).then(resposta => {
 
           db.collection('psicologos/' + anterior.responsavel.id + '/pacientes').doc(uid).delete().then(res => {
             console.log('dpsicolog anterior deletado');
@@ -590,14 +636,14 @@ export const checkPacienteDeactivation = functions.firestore.document('pacientes
 
     if (atual) {
       if (atual.disabled === true) {
-        admin.auth().updateUser(uid, {disabled: true}).then(res => {
+        admin.auth().updateUser(uid, { disabled: true }).then(res => {
           // console.log('user disabled: ', uid);
 
         }).catch(err => {
           console.error('error disabling user', err);
         });
       } else {
-        admin.auth().updateUser(uid, {disabled: false}).then(res => {
+        admin.auth().updateUser(uid, { disabled: false }).then(res => {
           // console.log('user enabled: ', uid);
 
         }).catch(err => {

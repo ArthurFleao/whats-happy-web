@@ -6,7 +6,7 @@
 <!--  Ou, caso não tenha esse tipo de negócio cadastrado, <a routerLink="/dashboard/tipo-negocio/cadastrar">clique aqui</a>-->
 <!--  para cadastrar um novo tipo de negócio.-->
 <!--</span>-->
-<div (mouseenter)="marcarComoLida()" class="not-content-container hide-badge-text" [matBadge]="0"
+<div (mouseenter)="marcarComoLida()"[matBadge]="0" [ngClass]="{'not-content-container hide-badge-text': true, 'alerta': preocupante, 'perigo': perigoso}"
      [matBadgeSize]="'small'" [matBadgeColor]="'warn'" [matBadgeHidden]="!notificacao || notificacao.lida"
      fxLayout="row" fxLayoutAlign="start center">
   <div class="data">
