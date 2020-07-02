@@ -10,7 +10,7 @@
   <div class="centralizer" *ngIf="loadingRelatos">
     <mat-progress-bar mode="query" ></mat-progress-bar>
   </div>
-  <div class="relatos" *ngIf="relatos">
+  <div style="margin-top: 15px;" class="relatos" *ngIf="relatos">
     <mat-accordion single>
       <app-relato-card class="mt-2" (relatoOpened)="opened($event)" *ngFor="let relato of relatos" [relato]="relato">
 
