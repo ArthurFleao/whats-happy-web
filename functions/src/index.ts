@@ -181,7 +181,7 @@ function sendToNaturalLanguageApi(texto: string) {
 function classificaSentiment(score: number, magnitude: number) {
   let str = '';
   const magnitudeAbsoluta = Math.abs(magnitude);
-  if (magnitudeAbsoluta > 2) {
+  if (magnitudeAbsoluta > 1.5) {
     str += 'Claramente ';
   } else {
     str += 'Provavelmente ';
